@@ -65,6 +65,10 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdReportLog,                    { "Log",                    "/cmdReportLog"                    } },
   { cmdReportTiming,                 { "Timing report",          "/cmdReportTiming"                 } },
   { cmdReportDebug,                  { "Debug report",           "/cmdReportDebug"                  } },
+  
+  { cmdResetDeviceMenu,              { "Restart menu",           "/cmdResetDeviceMenu"              } },
+  { cmdResetDeviceYes,               { "Continue restart",       "/cmdResetDeviceYes"               } },
+  { cmdResetDeviceNo,                { "Return without restart", "/cmdResetDeviceNo"                } },
     
   { cmdMonday,                       { "Monday",                 "/cmdMonday"                       } },
   { cmdTuesday,                      { "Tuesday",                "/cmdTuesday"                      } },
@@ -227,10 +231,6 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
   // STEP 1: Change the screen based on the command
   switch (message.command)  {
-    case cmdMenuOverruleToday:            screen = scnOverruleToday;        break;
-    case cmdMenuOverruleTomorrow:         screen = scnOverruleTomorrow;     break;
-    case cmdMenuOverruleMultipleDays:     screen = scnOverruleMultiple;     break;
-    case cmdMenuSettings:                 screen = scnSettingsMain;         break;
     case cmdOverruleTodayWorkFromHome:    screen = scnMain;                 break;
     case cmdOverruleTodayWorkAtOffice:    screen = scnMain;                 break;
     case cmdOverruleTodayWeekend:         screen = scnMain;                 break;
@@ -242,6 +242,11 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     case cmdOverruleTomorrowWeekend:      screen = scnMain;                 break;
     case cmdOverruleTomorrowAway:         screen = scnMain;                 break;
     case cmdOverruleTomorrowAutomatic:    screen = scnMain;                 break;
+
+    case cmdMenuOverruleToday:            screen = scnOverruleToday;        break;
+    case cmdMenuOverruleTomorrow:         screen = scnOverruleTomorrow;     break;
+    case cmdMenuOverruleMultipleDays:     screen = scnOverruleMultiple;     break;
+    case cmdMenuSettings:                 screen = scnSettingsMain;         break;
     
     case cmdMenuWeekSchedule:             screen = scnSettingsWeekSchedule; break;
     case cmdMenuHomeTimes:                screen = scnSettingsHomeTimes;    break;
@@ -263,6 +268,10 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     case cmdWorkAtOffice:                 screen = scnSettingsWeekSchedule; break;
     case cmdWeekend:                      screen = scnSettingsWeekSchedule; break;
     case cmdAllDayAway:                   screen = scnSettingsWeekSchedule; break;
+
+    case cmdResetDeviceMenu:              screen = scnResetDevice;          break;    
+    case cmdResetDeviceYes:               screen = scnMain;                 break;    
+    case cmdResetDeviceNo:                screen = scnMain;                 break;    
     
   } // switch (message.command) 
 
@@ -374,6 +383,7 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
              "[" + btnInline(cmdMenuTemperature)  + "," + btnInline(cmdMenuSensorOffset) + "]," +
              "[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
              "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
+             "[" + btnInline(cmdResetDeviceMenu)                                         + "]," +
              "[" + btnInline(cmdMenuMain)                                                + "]]";
 
       break;
@@ -488,6 +498,15 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
              "["+ btnInline(cmdMenuSettings)                                          + "]]";
 
       break;
+
+    case scnResetDevice:
+      response = "DO YOU REALLY WANT TO REBOOT THE THERMOSTAT?\n";
+
+      keys= "[["+ btnInline(cmdResetDeviceYes) + "]," +
+             "["+ btnInline(cmdResetDeviceNo ) + "]]";
+             
+      break;
+
   } // switch (screen)
 
   // STEP 3: OVVERRIDE RESPONSE FOR CERTAIN COMMANDS
