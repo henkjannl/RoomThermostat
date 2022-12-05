@@ -1,0 +1,105 @@
+******************************************
+Date	Time	Message	
+1970-01-01	01:00:12	Thermostat restarted
+2022-01-30	10:44:40	WeekendWakeUp
+2022-01-30	22:30:01	WeekendSleep
+2022-01-30	22:30:02	WeekendSleep
+2022-01-30	22:30:04	WeekendSleep
+2022-01-30	22:30:08	WeekendSleep
+2022-01-30	22:30:09	WeekendSleep
+2022-01-30	22:30:12	WeekendSleep
+2022-01-30	22:30:16	WeekendSleep
+2022-01-30	22:30:17	WeekendSleep
+2022-01-30	22:30:21	WeekendSleep
+2022-01-30	22:30:22	WeekendSleep
+2022-01-30	22:30:26	WeekendSleep
+2022-01-30	22:30:27	WeekendSleep
+2022-01-30	22:30:30	WeekendSleep
+2022-01-30	22:30:34	WeekendSleep
+2022-01-30	22:30:35	WeekendSleep
+2022-01-30	22:30:39	WeekendSleep
+2022-01-30	22:30:40	WeekendSleep
+2022-01-30	22:30:42	WeekendSleep
+2022-01-30	22:30:46	WeekendSleep
+2022-01-30	22:30:47	WeekendSleep
+2022-01-30	22:30:51	WeekendSleep
+2022-01-30	22:30:53	WeekendSleep
+2022-01-30	22:30:56	WeekendSleep
+2022-01-30	22:30:58	WeekendSleep
+2022-01-30	22:31:00	WeekendSleep
+2022-01-31	06:45:01	WorkFromOfficeWakeUp
+2022-01-31	06:45:02	WorkFromOfficeWakeUp
+2022-01-31	06:45:06	WorkFromOfficeWakeUp
+2022-01-31	06:45:07	WorkFromOfficeWakeUp
+2022-01-31	06:45:10	WorkFromOfficeWakeUp
+2022-01-31	06:45:14	WorkFromOfficeWakeUp
+2022-01-31	06:45:15	WorkFromOfficeWakeUp
+2022-01-31	06:45:19	WorkFromOfficeWakeUp
+2022-01-31	06:45:20	WorkFromOfficeWakeUp
+2022-01-31	06:45:23	WorkFromOfficeWakeUp
+2022-01-31	06:45:26	WorkFromOfficeWakeUp
+2022-01-31	06:45:28	WorkFromOfficeWakeUp
+2022-01-31	06:45:31	WorkFromOfficeWakeUp
+2022-01-31	06:45:33	WorkFromOfficeWakeUp
+2022-01-31	06:45:37	WorkFromOfficeWakeUp
+2022-01-31	06:45:38	WorkFromOfficeWakeUp
+2022-01-31	06:45:42	WorkFromOfficeWakeUp
+2022-01-31	06:45:43	WorkFromOfficeWakeUp
+2022-01-31	06:45:47	WorkFromOfficeWakeUp
+2022-01-31	06:45:48	WorkFromOfficeWakeUp
+2022-01-31	06:45:51	WorkFromOfficeWakeUp
+2022-01-31	06:45:55	WorkFromOfficeWakeUp
+2022-01-31	06:45:56	WorkFromOfficeWakeUp
+2022-01-31	06:46:00	WorkFromOfficeWakeUp
+1970-01-01	00:00:12	Thermostat restarted
+2022-02-03	18:20:13	WorkFromOfficeWakeUp
+2022-02-03	18:21:21	Thermostat restarted
+2022-02-03	18:21:21	WorkFromOfficeWakeUp
+2022-02-03	19:00:48	Thermostat restarted
+2022-02-03	19:00:48	WorkFromOfficeWakeUp
+1970-01-01	01:00:12	Thermostat restarted
+2022-02-03	19:01:34	WorkFromOfficeWakeUp
+2022-02-03	19:02:27	Thermostat restarted
+2022-02-03	19:02:27	WorkFromOfficeWakeUp
+2022-02-03	21:30:02	WorkFromOfficeSleep
+2022-02-04	06:06:59	Thermostat restarted
+2022-02-04	06:45:00	WorkFromOfficeWakeUp
+2022-02-04	08:00:00	WorkFromOfficeGoOut
+2022-02-04	21:30:02	WorkFromHomeSleep
+2022-02-05	09:00:02	WeekendWakeUp
+2022-02-05	22:30:03	WeekendSleep
+2022-02-06	09:00:01	WeekendWakeUp
+2022-02-06	22:30:00	WeekendSleep
+2022-02-07	06:45:01	WorkFromOfficeWakeUp
+2022-02-07	08:00:00	WorkFromOfficeGoOut
+2022-02-07	21:30:03	WorkFromHomeSleep
+2022-02-08	06:45:03	WorkFromOfficeWakeUp
+2022-02-08	08:00:03	WorkFromOfficeGoOut
+1970-01-01	01:00:12	Thermostat restarted
+2022-02-12	10:55:33	WeekendWakeUp
+2022-02-12	17:24:22	Thermostat restarted
+2022-02-12	17:24:22	WeekendWakeUp
+2022-02-12	22:30:00	WeekendSleep
+2022-02-13	09:00:02	WeekendWakeUp
+2022-02-13	22:30:01	WeekendSleep
+2022-02-14	06:45:00	WorkFromOfficeWakeUp
+2022-02-14	08:00:00	WorkFromOfficeGoOut
+2022-02-14	21:30:04	WorkFromHomeSleep
+2022-02-15	06:45:03	WorkFromOfficeWakeUp
+2022-02-15	08:00:01	WorkFromOfficeGoOut
+2022-02-15	21:30:00	WorkFromHomeSleep
+2022-02-16	06:45:00	WorkFromOfficeWakeUp
+2022-02-16	08:00:02	WorkFromOfficeGoOut
+2022-02-16	21:30:03	WorkFromHomeSleep
+2022-02-17	06:45:01	WorkFromOfficeWakeUp
+2022-02-17	08:00:00	WorkFromOfficeGoOut
+1970-01-01	01:00:07	Thermostat restarted
+2022-02-17	17:40:32	WorkFromOfficeWakeUp
+2022-02-17	21:30:00	WorkFromOfficeSleep
+2022-02-18	01:00:07	Thermostat restarted
+2022-02-18	13:11:43	WorkFromOfficeWakeUp
+2022-02-18	13:12:14	Thermostat restarted
+2022-02-18	13:12:16	WorkFromOfficeWakeUp
+1970-01-01	00:00:12	Thermostat restarted
+2022-02-19	11:27:57	Thermostat restarted
+2022-02-19	11:28:00	WeekendWakeUp

@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "Thermostat")(type "KiCad")(uri "${KIPRJMOD}/Thermostat.kicad_sym")(options "")(descr ""))
+)

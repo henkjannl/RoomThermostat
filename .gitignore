@@ -1,3 +1,7 @@
+# JSON file with personal settings such as wifi password and Telegram keys
+config*.jsn
+MyCredentials.h
+
 # Prerequisites
 *.d
 

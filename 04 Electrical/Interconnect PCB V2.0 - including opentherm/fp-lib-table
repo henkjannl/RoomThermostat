@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name "Thermostat")(type "KiCad")(uri "${KIPRJMOD}/Thermostat.pretty")(options "")(descr ""))
+  (lib (name "Display")(type "KiCad")(uri "${KIPRJMOD}/Display.pretty")(options "")(descr ""))
+)
