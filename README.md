@@ -1,4 +1,4 @@
-# Remote thermostat
+# Roomthermostat
 I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi or internet are down.
 
 This is a fully (software & mechanics & electronics) open source room thermostat, based on an ESP32 microcontroller and the OpenTherm protocol.
