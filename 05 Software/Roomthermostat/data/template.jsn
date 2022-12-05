@@ -1,0 +1,8 @@
+{
+    "AccessPoints": [
+        { "SSID": "ssid1", "password": "password1", "timezone" : "Europe/Amsterdam" },
+        { "SSID": "ssid2", "password": "password2", "timezone" : "Europe/Amsterdam" },
+        { "SSID": "ssid3", "password": "password3", "timezone" : "Europe/Amsterdam" }
+    ]
+}
+
