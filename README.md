@@ -52,7 +52,7 @@ I think the total bill of materials is about €35
 
 ## First use
 In order to use the software, the user must first:
-* make a copy of `config - template.jsn` (located in the `..\RoomThermoStat\05 Software\Roomthermostat\data` folder)
+* make a copy of `template.jsn` (located in the `..\RoomThermoStat\05 Software\Roomthermostat\data` folder)
 * rename the copy `config.jsn` 
 * fill in details of one or more WiFi routers, including the timezone in which each router is located (`lon` and `lat` are currently not used)
 * upload the data to SPIFFS using the ESP32 sketch upload data tool
