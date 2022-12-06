@@ -128,7 +128,7 @@ The flow of events and messages is as follows:
 ### User presses key
 * the ISR is running at about 30 Hz and is kept a small as possible. Most actions are carried out by the Menu. The ISR of the keyboard only sends a message to the menu, containing the key that was pressed 
 * the Backlight is controlled by the Display. In some cases, a button press does not result in a command to the controller (e.g., pressing the 'up'-button while the top menu item was already selected). In these cases, the backlight should also switch on. Therefore, the menu always sends a `cmdBacklightOn` command directly to the Backlight
-* Telegram can take a few seconds to return. To improve responsivity of the keyboard, Telegram is temporarily disabled while the user is interacting with the keyboard. Telegram will be re-enabled as son as the blacklight switches off
+* Telegram can take a few seconds to return. To improve responsivity of the keyboard, Telegram is temporarily disabled while the user is interacting with the keyboard. Telegram will be re-enabled as soon as the blacklight switches off
 * the first key press is only used to switch on the backlight. If the backlight is off while a key is pressed, the key is ignored and the backlight is woken up
 
 

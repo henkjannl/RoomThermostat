@@ -129,10 +129,6 @@ void Controller::control() {
   dayType_t daytype;
   
   Serial.println("Controller::control()");
-  //controllerData->logBusyTime.start(btController);  
-
-  // Measure temperature
-  //temperatureSensor->measure(); // Should happen automatically 
 
   // Current day and time
   time_t now;

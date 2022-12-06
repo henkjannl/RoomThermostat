@@ -5,8 +5,8 @@
 #include <OpenTherm.h>
 
 #define RECONNECT_INTERVAL   5*60*1000
-#define TEMP_MEAS_INTERVAL     30*1000 
-#define BOILER_INTERVAL        60*1000
+#define TEMP_MEAS_INTERVAL     10*1000 
+#define BOILER_INTERVAL        20*1000 // Was 3 minutes, but potential difference between proto and this version
 
 OneWire oneWire(PIN_ONE_WIRE_BUS);                         // Bus for the temperature sensors 
 DallasTemperature dallasSensor(&oneWire);                  // Driver for temperature sensors
@@ -29,7 +29,7 @@ class PID {
 
     // Upper and lower bounds on requested boiler temperature
     float outputHigh = 80;
-    float outputLow  =  0;
+    float outputLow  = 10;
       
     float setpoint=4.0;
     
@@ -174,8 +174,8 @@ void BoilerCommunicate() {
   static bool  lastEnableCentralHeating      = false; 
   static bool  lastEnableHotWater            = false;
   static bool  lastEnableCooling             = false;
-  static float lastBoilerTemperatureSetpoint = -300;
-  static float lastDomesticHotWaterSetpoint  = -300;
+  static float lastBoilerTemperatureSetpoint =  -300;
+  static float lastDomesticHotWaterSetpoint  =  -300;
 
   userEventMessage_t message;
   
@@ -210,7 +210,7 @@ void BoilerCommunicate() {
     else if (controllerData.boilerPercentage < 0.50) controllerData.dspFlameIcon = iconFlame5; 
     else if (controllerData.boilerPercentage < 0.65) controllerData.dspFlameIcon = iconFlame6; 
     else if (controllerData.boilerPercentage < 0.80) controllerData.dspFlameIcon = iconFlame7; 
-    else                                              controllerData.dspFlameIcon = iconFlame8; 
+    else                                             controllerData.dspFlameIcon = iconFlame8; 
   }
   else controllerData.dspFlameIcon = iconFlame0;
 
@@ -219,7 +219,7 @@ void BoilerCommunicate() {
   time(&now); // Get current time
   struct tm * localTime;
   localTime = localtime(&now);
-  int currDay  = localTime->tm_yday;
+  int currDay = localTime->tm_yday;
   timeValue_t currTime = timeValue_t(localTime->tm_hour, localTime->tm_min);
   
   // Switch keyboard off (just to make sure, potentially not required)
@@ -247,9 +247,6 @@ void BoilerCommunicate() {
         lastEnableHotWater                  = controllerData.enableHotWater;
         lastEnableCooling                   = controllerData.enableCooling;
   
-        controllerData.boilerResponse       = boilerSuccess;
-        controllerData.lastBoilerUpdate     = currTime;
-        controllerData.boilerOnline         = true;
         controllerData.centralHeatingActive = opentherm.isCentralHeatingActive(response);
         controllerData.hotWaterActive       = opentherm.isHotWaterActive(response);
         controllerData.flameOn              = opentherm.isFlameOn(response);
@@ -257,20 +254,17 @@ void BoilerCommunicate() {
 
       case OpenThermResponseStatus::NONE:
         Serial.println("Boiler enable response: none");
-        controllerData.boilerResponse = boilerNone;
-        controllerData.boilerOnline   = false;
+        controllerData.boilerOnline         = false;
       break;
 
       case OpenThermResponseStatus::INVALID:
         Serial.println("Boiler enable response: invalid");
-        controllerData.boilerResponse = boilerInvalid;
-        controllerData.boilerOnline   = false;
+        controllerData.boilerOnline         = false;
       break;
 
       case OpenThermResponseStatus::TIMEOUT:
         Serial.println("Boiler response: timeout");
-        controllerData.boilerResponse = boilerTimeout;
-        controllerData.boilerOnline   = false;
+        controllerData.boilerOnline         = false;
       break;
     } // switch (opentherm.getLastResponseStatus() )
   } // if firstStatus    
@@ -289,7 +283,7 @@ void BoilerCommunicate() {
       case OpenThermResponseStatus::SUCCESS:
         firstTemperature                = false;
         lastBoilerTemperatureSetpoint   = controllerData.requestedBoilerTemperature; // Update last requested setpoint
-        controllerData.lastBoilerUpdate = currTime;
+        controllerData.boilerResponse   = boilerSuccess;
       break;
 
       case OpenThermResponseStatus::NONE:
@@ -325,7 +319,7 @@ void BoilerCommunicate() {
     }
   }
 
-  if (opentherm.getLastResponseStatus()==OpenThermResponseStatus::SUCCESS) {
+  if ( controllerData.boilerOnline ) {
     controllerData.lastBoilerUpdate                  = currTime;
     controllerData.actualBoilerTemperature           = opentherm.getBoilerTemperature();
     controllerData.actualDomesticHotWaterTemperature = opentherm.getDHWTemperature();
@@ -338,7 +332,7 @@ void BoilerCommunicate() {
   //controllerData.logBusyTime.finish(btOpentherm);  
 
   controllerData.dspShowerIcon = controllerData.hotWaterActive ? iconShowerOn : iconShowerOff;
-  controllerData.dspBoilerIcon = ( controllerData.boilerResponse == boilerSuccess ) ? iconBoilerConnected : iconBoilerLost;
+  controllerData.dspBoilerIcon = ( controllerData.boilerOnline ) ? iconBoilerConnected : iconBoilerLost;
 
   if(!controllerData.boilerOnline) {
     controllerData.centralHeatingActive = false;
