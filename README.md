@@ -72,6 +72,7 @@ The hardware consists of:
 * 3 touch buttons (stainless steel screws, ISO7380-1, M5 x 16 + nut ISO4032 M5)
 * 16 magnets (ø10 x 2.75 mm)
 * a PCB designed in KiCad. This is optional, components can also be connected with wires, although it is less reliable
+
 I think the total bill of materials is about €35
 
 
