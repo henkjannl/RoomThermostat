@@ -3,7 +3,10 @@ I wanted to create a room thermostat that can be controlled remotely ('honey, di
 
 This is a fully (software & mechanics & electronics) open source room thermostat, based on an ESP32 microcontroller and the OpenTherm protocol.
 
-<img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
+<p align="center">
+    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
+</p>
+
 
 
 Every weekday can be programmed to be one of four kinds:
@@ -33,21 +36,10 @@ The thermostat can be controlled by three touchbuttons on the device or via Tele
 
 The Telegram main menu looks like this:
 
-<img src="02 User interface\Telegram menu.png" alt="events and messages" width="400"/> 
+<p align="center">
+  <img src="02 User interface\Telegram menu.png" alt="events and messages" width="400"/> 
+</p>
 
-
-## Electronic hardware 
-The hardware consists of:
-* an ESP32 (mh-et-live-minikit-d1)
-* an OpenTherm adaptor designed by Ihor Melnyk (DIYless Master OpenTherm Shield - https://diyless.com/product/master-opentherm-shield)
-* a 2.4" 320x240 TFT screen (ILI9341)
-* a 3D printed housing designed in FreeCad
-* a PCB designed in KiCad
-* up to 4 Dallas DS18B20 temperature sensors
-* a 4k7 resistor
-* 3 touch buttons (stainless steel screws, ISO7380-1, M5 x 16 + nut ISO4032 M5)
-* 8 magnets (ø10 x 2.75 mm)
-I think the total bill of materials is about €35
 
 
 ## First use
@@ -69,15 +61,33 @@ Also, a number of libraries must be installed in Arduino:
 Big shout out to everyone for creating and maintaining these beautiful pieces of work!
 
 
+## Electronic hardware 
+The hardware consists of:
+* an ESP32 (mh-et-live-minikit-d1)
+* an OpenTherm adaptor designed by Ihor Melnyk (DIYless Master OpenTherm Shield - https://diyless.com/product/master-opentherm-shield)
+* a 2.4" 320x240 TFT screen (ILI9341)
+* a 3D printed housing designed in FreeCad
+* up to 4 Dallas DS18B20 temperature sensors
+* a 4k7 resistor
+* 3 touch buttons (stainless steel screws, ISO7380-1, M5 x 16 + nut ISO4032 M5)
+* 16 magnets (ø10 x 2.75 mm)
+* a PCB designed in KiCad. This is optional, components can also be connected with wires, although it is less reliable
+I think the total bill of materials is about €35
+
+
 ## Mechanical hardware
 
-There are two main parts to 3D print, a **front panel** and a **rear panel**. The rear panel can be screwed to the wall. The front panel is clicked on the rear panel through magnets.
+There are two options:
+* Connecting electronics via the cross connect PCB - the casing then consists of two panels, see ```03 Mechanical\RoomThermostat.FCStd```
+* Connecting electronics via wires - the casing then consists of three panels, see ```03 Mechanical\RoomThermostat with PCB.FCStd```
 
-Both panels need to be stopped in some layer during printing to add round magnets before recommencing the printing. In total, 2x4x2 = 16 magnets are needed, dimensions ø10 x 2.75 mm (available on AliExpress)
+In case of the PCB, there are two main parts to 3D print, a **front panel** and a **rear panel**. The rear panel can be screwed to the wall. The front panel is clicked on the rear panel through magnets.
 
-It is possible to add up to four Dallas temperature sensors on the PCB (but two also works).
+Both prints need to be paused in some layer during printing to add round magnets before recommencing the printing.
 
-There are central ventilation openings on the bottom and top of the device to cool the ESP32 and prevent cross talk between the heat of the ESP32 and the temperature sensors. There are ventilation openings in front of each temperature sensors also to measure the room temperature as accurate as possible.
+It is possible to add up to four Dallas temperature sensors on the PCB (but fewer sensors should also work).
+
+There are central ventilation openings on the bottom and top of the device to cool the ESP32 and prevent thermal cross talk between the heat of the ESP32 and the temperature sensors. There are ventilation openings in front of each temperature sensor also to measure the room temperature as accurate as possible.
 
 The sofware has an **adjust sensor offset** feature to add or subtract a value from the measured temperature for calibration. That means that if the temperature measured by the thermostate is different from the actual room temperature, this can be corrected through the hardware buttons or via Telegram. 
 
@@ -116,7 +126,9 @@ The touch buttons are also disabled while OpenTherm communicates with the boiler
 The flow of events and messages is as follows:
 <br>
 
+<p align="center">
 <img src="01 System/Events and messages.png" alt="events and messages" width="800"/> 
+</p>
 
 <br><br>
 
@@ -167,15 +179,14 @@ The flow of events and messages is as follows:
 * Arduino programs to test individual pieces of hardware are located in `..\RoomThermoStat\05 Software\Tests`
 * Current version of the Arduino software is located in `..\RoomThermoStat\05 Software\Roomthermostat`
 
-## To do
+# To do
 
 Potential improvements:
-* re-introduce FreeRTOS
-* introduce permanent 'off' mode, for instance during the summer
 * much code can be simplified to remove structures that were used in previous attempts to get the code working
+* try to get FreeRTOS working again to improve performance of buttons and Telegram
+* introduce permanent 'off' mode, for instance during the summer
 * hardware: add a capacitor to prevent brownout of the ESP32 at startup
 * save logdata through WiFi connection (Deta?)
-* try to get FreeRTOS working again to improve performance of buttons and Telegram
 * implement OTA software updates
 * optimize actual heater control functionality
     * take into account the weather in the control strategy
