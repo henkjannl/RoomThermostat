@@ -50,6 +50,20 @@ In order to use the software, the user must first:
 * upload the data to SPIFFS using the ESP32 sketch upload data tool
 * copy `User_Setup.h` and `User_Setup_Select.h` to the `..\Arduino\libraries\TFT_eSPI` folder (perhaps good to backup the existing versions)
 
+The format of the `config.json` file is as follows:
+
+```JSON
+{
+    "AccessPoints": [
+        { "SSID": "SSIDOfWifi1", "password": "PasswordOfWifi1", "timezone" : "Europe/Amsterdam" },
+        { "SSID": "SSIDOfWifi2", "password": "PasswordOfWifi2", "timezone" : "Europe/Amsterdam" }
+    ],
+    "BotName"     : "Name of the bot",
+    "BotUsername" : "Username of the bot",
+    "BotToken"    : "##########:XXXXXXXXXXXXXXXXXXXXXXXX",
+    "ChatID"      : "########"
+}
+```
 
 Also, a number of libraries must be installed in Arduino:
 * `TFT_eSPI` by Bodmer - https://github.com/Bodmer/TFT_eSPI

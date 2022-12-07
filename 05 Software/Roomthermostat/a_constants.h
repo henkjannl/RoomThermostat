@@ -96,6 +96,7 @@ const char EMOTICON_DOWN_ARROW[]          = {0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f,
 const char EMOTICON_FLAME[]               = {0xf0, 0x9f, 0x94, 0xa5, 0x0};
 const char EMOTICON_FOOTSTEPS[]           = {0xf0, 0x9f, 0x91, 0xa3, 0x0};
 const char EMOTICON_GEAR[]                = {0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x0};
+// const char EMOTICON_GEAR[]                = ":gear:";
 const char EMOTICON_GLASSES[]             = {0xf0, 0x9f, 0x91, 0x93, 0x0};
 const char EMOTICON_HAMMER_WRENCH[]       = {0xf0, 0x9f, 0x9b, 0xa0, 0x0};
 const char EMOTICON_HOURGLASS[]           = {0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x0};
@@ -105,6 +106,7 @@ const char EMOTICON_LAMP[]                = {0xf0, 0x9f, 0x92, 0xa1, 0x0};
 const char EMOTICON_MAGIC_STICK[]         = {0xf0, 0x9f, 0xaa, 0x84, 0x0};
 const char EMOTICON_OFFICE[]              = {0xf0, 0x9f, 0x8f, 0xa2, 0x0};
 const char EMOTICON_PIN[]                 = {0xf0, 0x9f, 0x93, 0x8d, 0x0};
+// const char EMOTICON_PIN[]                 = ":dart:";
 const char EMOTICON_POINTING_FINGER[]     = {0xf0, 0x9f, 0x91, 0x89, 0x0};
 const char EMOTICON_RED_QUESTION_MARK[]   = {0xe2, 0x9d, 0x93, 0x0};
 const char EMOTICON_RUNNER[]              = {0xf0, 0x9f, 0x8f, 0x83, 0x0};
@@ -142,7 +144,7 @@ std::map<sender_t, string> senderLabels = {
 enum screen_t { scnHome, scnMain, scnOverruleToday, scnOverruleTomorrow, scnOverruleMultiple, 
   scnOverruleMultipleSchedule, scnSettingsMain, scnSettingsWeekSchedule, scnSettingsDaySchedule, 
   scnSettingsHomeTimes, scnSettingsOfficeTimes, scnSettingsWeekendTimes, scnSettingsTemperature, 
-  scnSettingsSensorOffset, scnInvalid };
+  scnSettingsSensorOffset, scnResetDevice, scnInvalid };
 
 std::map<screen_t, string> screenTitle = { 
   { scnHome,                     "Home"                         }, 

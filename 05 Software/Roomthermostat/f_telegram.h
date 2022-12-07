@@ -574,8 +574,8 @@ class TelegramHandler {
     void handleNewMessages(int numNewMessages);
     void handleQueueCommand(userEventMessage_t & message);
   
-    void handleCallback( String & chatID, String & callback)           { userConversation[chatID].handleCallback(callback);            };
-    bool respondToUser( String & chatID, userEventMessage_t & message) { return userConversation[chatID].respondToUser( *bot, message); };
+    void handleCallback( String & chatID, String & callback) { userConversation[chatID].handleCallback(callback);            };
+    bool respondToUser( String & chatID, userEventMessage_t & message);
 
     void enableTelegram()  { enabled=true;   };
     void disableTelegram() { enabled=false;  };
@@ -615,21 +615,19 @@ TelegramHandler::TelegramHandler(ControllerData_t & controllerData, QueueHandle_
 void TelegramHandler::begin() {
   // Setup secure connection for Telegram
   securedClient->setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
-
   bot->updateToken(controllerData->botToken);
-
-  // Add first chatID to list
-  TelegramChat newTelegramChat=TelegramChat( *controllerData, controllerQueue, telegramQueue);
-
-  userConversation[controllerData->botChatID]=newTelegramChat;
 
   const String commands = F("["
                             "{\"command\":\"start\",   \"description\":\"Welcome message\"}" // no comma on last command                            
                             "]");
   bot->setMyCommands(commands);
 
-  userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
-  respondToUser(controllerData->botChatID, command);
+  // Add first chatID to list
+  TelegramChat newTelegramChat=TelegramChat( *controllerData, controllerQueue, telegramQueue);
+  userConversation[controllerData->botChatID]=newTelegramChat;
+
+  // userEventMessage_t command = userEventMessage_t(controllerData->botChatID, scnMain, cmdStartTelegram);
+  // respondToUser(controllerData->botChatID, command);
 };
 
 void TelegramHandler::handleNewMessages(int numNewMessages){
@@ -678,6 +676,11 @@ void TelegramHandler::checkNewMessages() {
     handleNewMessages(numNewMessages);
     numNewMessages = bot->getUpdates(bot->last_message_received + 1);
   }
+};
+
+bool TelegramHandler::respondToUser( String & chatID, userEventMessage_t & message) { 
+  Serial.printf("respondToUser ChatID: %s [%s]\n", chatID, commandLabels[message.command].c_str() );
+  return userConversation[chatID].respondToUser( *bot, message); 
 };
 
 

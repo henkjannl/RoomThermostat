@@ -8,16 +8,6 @@
 #define TEMP_MEAS_INTERVAL     10*1000 
 #define BOILER_INTERVAL        20*1000 // Was 3 minutes, but potential difference between proto and this version
 
-OneWire oneWire(PIN_ONE_WIRE_BUS);                         // Bus for the temperature sensors 
-DallasTemperature dallasSensor(&oneWire);                  // Driver for temperature sensors
-OpenTherm opentherm(PIN_OPENTHERM_IN, PIN_OPENTHERM_OUT);  // Driver for boiler
-PID pidController;    
-
-//Interrupthandler for OpenTherm
-void ICACHE_RAM_ATTR handleInterrupt() {
-  opentherm.handleInterrupt();
-}
-
 /* ======================================
    PID CONTROLLER CLASS DEFINITION
    ====================================== */
@@ -99,37 +89,19 @@ float PID::newValue(float newTemperature) {
   return boilerTemperature;
 };
 
+/* ======================================
+   GLOBAL VARIABLES
+   ====================================== */
+OneWire oneWire(PIN_ONE_WIRE_BUS);                         // Bus for the temperature sensors 
+DallasTemperature dallasSensor(&oneWire);                  // Driver for temperature sensors
+OpenTherm opentherm(PIN_OPENTHERM_IN, PIN_OPENTHERM_OUT);  // Driver for boiler
+PID pidController;    
 
-void TemperatureMeasure();
+//Interrupthandler for OpenTherm
+void ICACHE_RAM_ATTR handleInterrupt() {
+  opentherm.handleInterrupt();
+}
 
-void TemperatureSensorConnect() {
-  
-  // Initialize thermometer
-  dallasSensor.begin();
-
-  controllerData.numSensors=dallasSensor.getDeviceCount();
-  Serial.printf("%d device(s) found on OneWire bus\n", controllerData.numSensors);
-
-  for(int i=0; i<controllerData.numSensors; i++) {
-
-    if ( (i<MAX_NUM_SENSORS) and dallasSensor.getAddress(controllerData.sensorAddress[i], i) ) {
-      
-        Serial.print("Dallas 18B20 found on address:\t");
-        for (uint8_t j = 0; j < 8; j++) Serial.printf("%02X ", controllerData.sensorAddress[i][j]);
-        Serial.println();
-  
-        // Set the therometer precision
-        dallasSensor.setResolution(controllerData.sensorAddress[i], TEMPERATURE_PRECISION);
-        Serial.printf("Resolution of sensor set to: %d\n",dallasSensor.getResolution(controllerData.sensorAddress[i]));
-      }  
-  }
-    
-  Serial.printf("Parasite power on OneWire bus is: %s\n", dallasSensor.isParasitePowerMode() ? "ON": "OFF");
-  controllerData.temperatureMeasurementOK = (controllerData.numSensors>0);
-
-  // Do the first temperature measurement
-  TemperatureMeasure();
-};
 
 void TemperatureMeasure() {
   float measuredTemperature;
@@ -167,6 +139,36 @@ void TemperatureMeasure() {
 
   //controllerData.logBusyTime.finish(btTemperature);  
 }
+
+
+void TemperatureSensorConnect() {
+  
+  // Initialize thermometer
+  dallasSensor.begin();
+
+  controllerData.numSensors=dallasSensor.getDeviceCount();
+  Serial.printf("%d device(s) found on OneWire bus\n", controllerData.numSensors);
+
+  for(int i=0; i<controllerData.numSensors; i++) {
+
+    if ( (i<MAX_NUM_SENSORS) and dallasSensor.getAddress(controllerData.sensorAddress[i], i) ) {
+      
+        Serial.print("Dallas 18B20 found on address:\t");
+        for (uint8_t j = 0; j < 8; j++) Serial.printf("%02X ", controllerData.sensorAddress[i][j]);
+        Serial.println();
+  
+        // Set the therometer precision
+        dallasSensor.setResolution(controllerData.sensorAddress[i], TEMPERATURE_PRECISION);
+        Serial.printf("Resolution of sensor set to: %d\n",dallasSensor.getResolution(controllerData.sensorAddress[i]));
+      }  
+  }
+    
+  Serial.printf("Parasite power on OneWire bus is: %s\n", dallasSensor.isParasitePowerMode() ? "ON": "OFF");
+  controllerData.temperatureMeasurementOK = (controllerData.numSensors>0);
+
+  // Do the first temperature measurement
+  TemperatureMeasure();
+};
 
 void BoilerCommunicate() {  
   static bool  firstEnable                   = true;
