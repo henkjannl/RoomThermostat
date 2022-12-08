@@ -51,7 +51,9 @@ Then we select ```All day away``` in the next menu since we are going on a holid
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="400"/> 
 </p>
 
-Then we select ```4 days``` multiple times in the next menu until we have 9 days, ending on a Saturday:
+The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
+
+Then we select ```More days``` button multiple times in the next menu until we have 9 days, ending on a Saturday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="400"/> 
@@ -82,6 +84,8 @@ Finally, we select ```back to the main menu```:
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="400"/> 
 </p>
+
+The hardware unit will display the select the scheme of the next seven days.
 
 Of course it is also possible to do these steps after we leave, without the need to overrule the current day. As we are returning home during the next Saturday, we can also overrule the current day to ensure the house is comfortable upon arrival.
 
