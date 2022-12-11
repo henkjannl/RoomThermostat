@@ -744,6 +744,7 @@ void TelegramHandler::begin() {
   String message="/start";
   responseToMessage(controllerData->botChatID, message);
   updateLabels(controllerData->botChatID);
+  Serial.printf("747 Start message sent without lastMessageID\n");
   bot->sendMessageWithInlineKeyboard(controllerData->botChatID, String(EMOTICON_THERMOMETER) + " Thermostat just started", "Markdown", keyboard(controllerData->botChatID));
 };
 
@@ -774,6 +775,7 @@ void TelegramHandler::handleNewMessages(int numNewMessages){
       Serial.printf("handleNewMessages() %s\n", bot->messages[i].text.c_str());
       response = responseToMessage(chatID, bot->messages[i].text);
       updateLabels(chatID);
+      Serial.printf("778 Message response sent without lastMessageID\n");
       bot->sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(chatID));
     }    
     else if (bot->messages[i].type=="callback_query") {
@@ -808,6 +810,8 @@ void TelegramHandler::handleQueueCommand(userEventMessage_t & message) {
   
     Serial.printf("Message length: %d\n", response.length() );
     Serial.printf("Response:\n%s\n", response.c_str() );
+    Serial.printf("Keyboard:\n%s\n", keyboard(chatID).c_str() );
+    Serial.printf("MessageID:\t%d\n", userConversation[chatID].lastMessageID );
     
     bool sent = bot->sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(chatID), userConversation[chatID].lastMessageID);
   

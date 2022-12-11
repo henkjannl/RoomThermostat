@@ -223,7 +223,8 @@ void Controller::control() {
 
   for(int i=0; i<7; i++) {
     daytype=controllerData->regularWeek[dayOfWeek];  // 0=Sunday
-    controllerData->dayIcons[i]=DAYTYPE_TO_ICON[daytype];
+    controllerData->dayTypes[i]=daytype;
+    controllerData->dayTypeOverruled[i]=false;
     dayOfWeek++;
     if(dayOfWeek>6) dayOfWeek=0;
   };
@@ -231,18 +232,23 @@ void Controller::control() {
   // Override multiple days if needed
   if(controllerData->overrideMultiple!=dtAuto) {
     for(int i=0; i < controllerData->overrideMultipleCount; i++) {
-      if(i<7) controllerData->dayIcons[i]=DAYTYPE_OVERRULED_TO_ICON[ controllerData->overrideMultiple ];
+      if(i<7) {
+        controllerData->dayTypes        [i] = controllerData->overrideMultiple;
+        controllerData->dayTypeOverruled[i] = true;
+      }
     };  
   };
 
   // Override today if needed
   if( controllerData->overrideToday != dtAuto) {
-    controllerData->dayIcons[0]=DAYTYPE_OVERRULED_TO_ICON[ controllerData->overrideToday ];
+    controllerData->dayTypes        [0] = controllerData->overrideToday;
+    controllerData->dayTypeOverruled[0] = true;
   }
 
   // Override tomorrow if needed
   if(controllerData->overrideTomorrow!=dtAuto) {
-    controllerData->dayIcons[1]=DAYTYPE_OVERRULED_TO_ICON[controllerData->overrideTomorrow];
+    controllerData->dayTypes        [1] = controllerData->overrideTomorrow;
+    controllerData->dayTypeOverruled[1] = true;
   }
 
   // Log the boiler actions at the whole hour

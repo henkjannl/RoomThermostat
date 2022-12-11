@@ -67,7 +67,7 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdReportDebug,                  { "Debug report",           "/cmdReportDebug"                  } },
   
   { cmdResetDeviceMenu,              { "Restart menu",           "/cmdResetDeviceMenu"              } },
-  { cmdResetDeviceYes,               { "Continue restart",       "/cmdResetDeviceYes"               } },
+  { cmdResetDeviceYes,               { String(EMOTICON_WARNING) + " Continue restart", "/cmdResetDeviceYes" } },
   { cmdResetDeviceNo,                { "Return without restart", "/cmdResetDeviceNo"                } },
     
   { cmdMonday,                       { "Monday",                 "/cmdMonday"                       } },
@@ -118,6 +118,7 @@ class TelegramChat {
     TelegramChat(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue );
     String chatID = "";
     int lastMessageID = 0;
+    int lastMessageWithKeyboard = 0;
     String userName = "";
 
     screen_t screen = scnMain;
@@ -125,7 +126,8 @@ class TelegramChat {
     tgCommandList commands = TELEGRAM_COMMANDS;
 
     void handleCallback(String & callback);
-    bool respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message);
+    String keyboard();
+    void respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message);
     
   protected:
     ControllerData_t *controllerData;
@@ -203,7 +205,155 @@ String TelegramChat::btnInline(command_t command) {
   return "{ \"text\" : \"" + commands[command].label + "\", \"callback_data\" : \"" + commands[command].callback+ "\" }";
 };
 
-bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message) {
+String TelegramChat::keyboard() {
+  
+  switch (screen) {
+      
+    case scnOverruleToday: 
+
+      return "[["+ btnInline(cmdOverruleTodayWorkFromHome) + "]," +
+              "["+ btnInline(cmdOverruleTodayWorkAtOffice) + "]," +
+              "["+ btnInline(cmdOverruleTodayWeekend)      + "]," +
+              "["+ btnInline(cmdOverruleTodayAway)         + "]," +
+              "["+ btnInline(cmdOverruleTodayAutomatic)    + "]," +
+              "["+ btnInline(cmdMenuMain)                  + "]]";
+
+      break;
+    
+    case scnOverruleTomorrow: 
+      return "[["+ btnInline(cmdOverruleTomorrowWorkFromHome) + "]," +
+              "["+ btnInline(cmdOverruleTomorrowWorkAtOffice) + "]," +
+              "["+ btnInline(cmdOverruleTomorrowWeekend)      + "]," +
+              "["+ btnInline(cmdOverruleTomorrowAway)         + "]," +
+              "["+ btnInline(cmdOverruleTomorrowAutomatic)    + "]," +
+              "["+ btnInline(cmdMenuMain)                     + "]]";
+      break;
+
+    case scnOverruleMultiple: 
+
+      commands[cmdOverruleMultipleFewerDays].label = String(controllerData->overrideMultipleCount-1) + " days";
+      commands[cmdOverruleMultipleMoreDays ].label = String(controllerData->overrideMultipleCount+1) + " days";
+
+      return "[["+ btnInline(cmdOverruleMultipleWorkFromHome) + "]," +
+              "["+ btnInline(cmdOverruleMultipleWorkAtOffice) + "]," +
+              "["+ btnInline(cmdOverruleMultipleWeekend)      + "]," +
+              "["+ btnInline(cmdOverruleMultipleAway)         + "]," +
+              "["+ btnInline(cmdOverruleMultipleFewerDays)    + "," + btnInline(cmdOverruleMultipleAutomatic) + "," + btnInline(cmdOverruleMultipleMoreDays) + "]," +
+              "["+ btnInline(cmdMenuMain)                     + "]]";
+              
+      break;
+
+    case scnSettingsMain: 
+  
+      return "[[" + btnInline(cmdMenuWeekSchedule) + "," + btnInline(cmdMenuHomeTimes)    + "]," +
+              "[" + btnInline(cmdMenuOfficeTimes)  + "," + btnInline(cmdMenuWeekendTimes) + "]," +
+              "[" + btnInline(cmdMenuTemperature)  + "," + btnInline(cmdMenuSensorOffset) + "]," +
+              "[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
+              "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
+              "[" + btnInline(cmdResetDeviceMenu)                                         + "]," +
+              "[" + btnInline(cmdMenuMain)                                                + "]]";
+
+      break;
+      
+    case scnSettingsWeekSchedule: 
+      return "[["+ btnInline(cmdMonday)    + "," + btnInline(cmdTuesday)  + "]," +
+              "["+ btnInline(cmdWednesday) + "," + btnInline(cmdThursday) + "]," +
+              "["+ btnInline(cmdFriday)    + "," + btnInline(cmdSaturday) + "]," +
+              "["+ btnInline(cmdSunday)                                   + "]," +
+              "["+ btnInline(cmdMenuSettings)                             + "]]";
+    
+      break;
+        
+    case scnSettingsDaySchedule: 
+
+      return "[["+ btnInline(cmdWorkFromHome) + "]," +
+              "["+ btnInline(cmdWorkAtOffice) + "]," +
+              "["+ btnInline(cmdWeekend)      + "]," +
+              "["+ btnInline(cmdAllDayAway)   + "]," +
+              "["+ btnInline(cmdMenuSettings) + "]]";
+             
+      break;
+    
+    case scnSettingsHomeTimes: 
+      
+      commands[cmdHomeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workFromHomeWakeUp -timeValue_t(0,15) ).str().c_str());
+      commands[cmdHomeWakeUpLater      ].label = "wake "    +String( (controllerData->workFromHomeWakeUp +timeValue_t(0,15) ).str().c_str());
+      commands[cmdHomeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workFromHomeSleep  -timeValue_t(0,15) ).str().c_str());
+      commands[cmdHomeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workFromHomeSleep  +timeValue_t(0,15) ).str().c_str());
+    
+      return "[["+ btnInline(cmdHomeWakeUpEarlier)     + "," + btnInline(cmdHomeWakeUpLater)    + "]," +
+              "["+ btnInline(cmdHomeGoToSleepEarlier)  + "," + btnInline(cmdHomeGoToSleepLater) + "]," +
+              "["+ btnInline(cmdMenuSettings)                                                   + "]]";
+      break;
+      
+    case scnSettingsOfficeTimes: 
+
+      commands[ cmdOfficeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeWakeUpLater      ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp +timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeLeaveEarlier     ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeLeaveLater       ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  +timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeComeHomeEarlier  ].label = "come in " +String( (controllerData->workAtOfficeComeIn -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeComeHomeLater    ].label = "come in " +String( (controllerData->workAtOfficeComeIn +timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdOfficeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  +timeValue_t(0,15) ).str().c_str());
+      
+      return "[["+ btnInline(cmdOfficeWakeUpEarlier)     + "," + btnInline(cmdOfficeWakeUpLater)    + "]," +
+              "["+ btnInline(cmdOfficeLeaveEarlier)      + "," + btnInline(cmdOfficeLeaveLater)     + "]," +
+              "["+ btnInline(cmdOfficeComeHomeEarlier)   + "," + btnInline(cmdOfficeComeHomeLater)  + "]," +
+              "["+ btnInline(cmdOfficeGoToSleepEarlier)  + "," + btnInline(cmdOfficeGoToSleepLater) + "]," +
+              "["+ btnInline(cmdMenuSettings)                                                       + "]]";
+      break;
+      
+    case scnSettingsWeekendTimes: 
+
+      commands[ cmdWeekendWakeUpEarlier    ].label = "wake "    +String( (controllerData->weekendWakeUp -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdWeekendWakeUpLater      ].label = "wake "    +String( (controllerData->weekendWakeUp +timeValue_t(0,15) ).str().c_str());
+      commands[ cmdWeekendGoToSleepEarlier ].label = "sleep "   +String( (controllerData->weekendSleep  -timeValue_t(0,15) ).str().c_str());
+      commands[ cmdWeekendGoToSleepLater   ].label = "sleep "   +String( (controllerData->weekendSleep  +timeValue_t(0,15) ).str().c_str());
+      
+      return "[["+ btnInline(cmdWeekendWakeUpEarlier)     + "," + btnInline(cmdWeekendWakeUpLater)    + "]," +
+              "["+ btnInline(cmdWeekendGoToSleepEarlier)  + "," + btnInline(cmdWeekendGoToSleepLater) + "]," +
+              "["+ btnInline(cmdMenuSettings)                                                         + "]]";
+
+      break;
+      
+    case scnSettingsTemperature: 
+
+      commands[ cmdHighTemperatureDown ].label = "High " + String(controllerData->highTemp-0.5, 1) + "°C";
+      commands[ cmdHighTemperatureUp   ].label = "High " + String(controllerData->highTemp+0.5, 1) + "°C";
+      commands[ cmdLowTemperatureDown  ].label = "Low "  + String(controllerData->lowTemp -0.5, 1) + "°C";
+      commands[ cmdLowTemperatureUp    ].label = "Low "  + String(controllerData->lowTemp +0.5, 1) + "°C";
+
+      return "[["+ btnInline(cmdHighTemperatureDown) + "," + btnInline(cmdHighTemperatureUp) + "]," +
+              "["+ btnInline(cmdLowTemperatureDown)  + "," + btnInline(cmdLowTemperatureUp)  + "]," +
+              "["+ btnInline(cmdMenuSettings)                                                + "]]";
+
+      break;
+
+    case scnSettingsSensorOffset: 
+      return "[["+ btnInline(cmdSensorOffsetDown) + "," + btnInline(cmdSensorOffsetUp) + "]," +
+              "["+ btnInline(cmdMenuSettings)                                          + "]]";
+
+      break;
+
+    case scnResetDevice:
+      return "[["+ btnInline(cmdResetDeviceYes) + "]," +
+              "["+ btnInline(cmdResetDeviceNo ) + "]]";
+             
+      break;
+
+    default:
+
+      return "[[" + btnInline(cmdSetpointLower)        + ", " + btnInline(cmdSetpointHigher) + "]," +
+              "[" + btnInline(cmdOverruleTodayAway)    + ", " + btnInline(cmdSetpointAuto)   + "]," +
+              "[" + btnInline(cmdMenuOverruleToday)                                          + "]," +
+              "[" + btnInline(cmdMenuOverruleTomorrow)                                       + "]," +
+              "[" + btnInline(cmdMenuOverruleMultipleDays)                                   + "]," +
+              "[" + btnInline(cmdMenuSettings)         + ", " + btnInline(cmdUpdateStatus)   + "]]";
+
+  } // switch (screen)
+}
+void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message) {
   time_t now;
   struct tm * localTime;
   timeValue_t currTime;
@@ -215,7 +365,6 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   //char buffer2[BUFLEN];
 
   String response=""; // Mesage to the user
-  String keys = "";   // Keyboard
   
   Serial.printf("TelegramChat::respondToUser() cmd= %s\n", commandLabels[message.command].c_str() );
 
@@ -269,9 +418,11 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     case cmdWeekend:                      screen = scnSettingsWeekSchedule; break;
     case cmdAllDayAway:                   screen = scnSettingsWeekSchedule; break;
 
+    case cmdStartTelegram:                screen = scnMain;                 break;    
+
     case cmdResetDeviceMenu:              screen = scnResetDevice;          break;    
-    case cmdResetDeviceYes:               screen = scnMain;                 break;    
-    case cmdResetDeviceNo:                screen = scnMain;                 break;    
+    case cmdResetDeviceYes:               ESP.restart();                    break;    
+    case cmdResetDeviceNo:                screen = scnSettingsMain;         break;    
     
   } // switch (message.command) 
 
@@ -297,7 +448,7 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
           strftime(buffer, BUFLEN, "%A %e %B", localTime);
           response=  "*Multiple days are set to*\n";
           response+= "'" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for\n";
-          response+= String(controllerData->overrideMultipleCount) + " days ending " + buffer + "\n";
+          response+= String(controllerData->overrideMultipleCount) + "' days ending " + buffer + "\n";
         break;
     
         case spOverrideToday:
@@ -310,43 +461,25 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         break;
       } // switch(controllerData->reasonForSetpoint)
 
-      keys= "[[" + btnInline(cmdSetpointLower)        + ", " + btnInline(cmdSetpointHigher) + "]," +
-             "[" + btnInline(cmdOverruleTodayAway)    + ", " + btnInline(cmdSetpointAuto)   + "]," +
-             "[" + btnInline(cmdMenuOverruleToday)                                          + "]," +
-             "[" + btnInline(cmdMenuOverruleTomorrow)                                       + "]," +
-             "[" + btnInline(cmdMenuOverruleMultipleDays)                                   + "]," +
-             "[" + btnInline(cmdMenuSettings)         + ", " + btnInline(cmdUpdateStatus)   + "]]";
+      response += "*Day settings starting today:*\n";
 
       break; // screen==scnMain
     
     case scnOverruleToday: 
 
       if( controllerData->overrideToday == dtAuto )
-        response= String("Today is not overruled");
+        response= String("Today is not overruled\n");
       else
         response= String("Today is overruled to be '") + String(DAY_TYPES[controllerData->overrideToday].c_str()) + "'.\n";
-
-      keys = "[["+ btnInline(cmdOverruleTodayWorkFromHome) + "]," +
-              "["+ btnInline(cmdOverruleTodayWorkAtOffice) + "]," +
-              "["+ btnInline(cmdOverruleTodayWeekend)      + "]," +
-              "["+ btnInline(cmdOverruleTodayAway)         + "]," +
-              "["+ btnInline(cmdOverruleTodayAutomatic)    + "]," +
-              "["+ btnInline(cmdMenuMain)                  + "]]";
 
       break;
     
     case scnOverruleTomorrow: 
       if( controllerData->overrideTomorrow == dtAuto )
-        response= String("Tomorrow is not overruled");
+        response= String("Tomorrow is not overruled\n");
       else
         response= String("Tomorrow is overruled to be '") + String(DAY_TYPES[controllerData->overrideTomorrow].c_str()) + "'.\n";
 
-      keys = "[["+ btnInline(cmdOverruleTomorrowWorkFromHome) + "]," +
-              "["+ btnInline(cmdOverruleTomorrowWorkAtOffice) + "]," +
-              "["+ btnInline(cmdOverruleTomorrowWeekend)      + "]," +
-              "["+ btnInline(cmdOverruleTomorrowAway)         + "]," +
-              "["+ btnInline(cmdOverruleTomorrowAutomatic)    + "]," +
-              "["+ btnInline(cmdMenuMain)                     + "]]";
       break;
 
     case scnOverruleMultiple: 
@@ -359,51 +492,29 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         localTime->tm_mday += controllerData->overrideMultipleCount-1; // controllerData->overrideMultipleCount = 1 means today
         mktime(localTime);
         strftime(buffer, BUFLEN, "%A %e %B", localTime);
-        response  = String("Multiple days are set to '") + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "'for " +
-                    String(controllerData->overrideMultipleCount) + "' days\n" + 
-                    String("last day is ") + buffer + "\n";
+        response  = String("Multiple days are set to '") + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " +
+                    String(controllerData->overrideMultipleCount) + "' days.\n" + 
+                    String("Last day is ") + buffer + "\n";
       };
 
-      commands[cmdOverruleMultipleFewerDays].label = String(controllerData->overrideMultipleCount-1) + " days";
-      commands[cmdOverruleMultipleMoreDays ].label = String(controllerData->overrideMultipleCount+1) + " days";
       
-      keys= "[["+ btnInline(cmdOverruleMultipleWorkFromHome) + "]," +
-             "["+ btnInline(cmdOverruleMultipleWorkAtOffice) + "]," +
-             "["+ btnInline(cmdOverruleMultipleWeekend)      + "]," +
-             "["+ btnInline(cmdOverruleMultipleAway)         + "]," +
-             "["+ btnInline(cmdOverruleMultipleFewerDays)    + "," + btnInline(cmdOverruleMultipleAutomatic) + "," + btnInline(cmdOverruleMultipleMoreDays) + "]," +
-             "["+ btnInline(cmdMenuMain)                     + "]]";
       break;
 
     case scnSettingsMain: 
-      response = ""; // default response is fine
+      response = "*Day settings starting today:*\n";
   
-      keys= "[[" + btnInline(cmdMenuWeekSchedule) + "," + btnInline(cmdMenuHomeTimes)    + "]," +
-             "[" + btnInline(cmdMenuOfficeTimes)  + "," + btnInline(cmdMenuWeekendTimes) + "]," +
-             "[" + btnInline(cmdMenuTemperature)  + "," + btnInline(cmdMenuSensorOffset) + "]," +
-             "[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
-             "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
-             "[" + btnInline(cmdResetDeviceMenu)                                         + "]," +
-             "[" + btnInline(cmdMenuMain)                                                + "]]";
-
       break;
       
     case scnSettingsWeekSchedule: 
-      response  = "*Current schedule:*\n" 
-                  "Mo" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[1] ] ) + " "
-                  "Tu" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[2] ] ) + " "
-                  "We" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[3] ] ) + " "
-                  "Th" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[4] ] ) + " "
-                  "Fr" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[5] ] ) + " "
-                  "Sa" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[6] ] ) + " "
-                  "Su" + String( DAYTYPE__TO_EMOTICON[ controllerData->regularWeek[0] ] ) + "\n\n";
+      response  = "*Current schedule:*\n"                   
+                  "Mo" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[1] ] ) + " "
+                  "Tu" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[2] ] ) + " "
+                  "We" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[3] ] ) + " "
+                  "Th" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[4] ] ) + " "
+                  "Fr" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[5] ] ) + " "
+                  "Sa" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[6] ] ) + " "
+                  "Su" + String( DAYTYPE_TO_EMOTICON[ controllerData->regularWeek[0] ] ) + "\n";
 
-      keys= "[["+ btnInline(cmdMonday)    + "," + btnInline(cmdTuesday)  + "]," +
-             "["+ btnInline(cmdWednesday) + "," + btnInline(cmdThursday) + "]," +
-             "["+ btnInline(cmdFriday)    + "," + btnInline(cmdSaturday) + "]," +
-             "["+ btnInline(cmdSunday)                                   + "]," +
-             "["+ btnInline(cmdMenuSettings)                             + "]]";
-    
       break;
         
     case scnSettingsDaySchedule: 
@@ -418,26 +529,12 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         case cmdSaturday:  response= String("Saturday is now set to be '"  ) + DAY_TYPES[controllerData->regularWeek[6]].c_str() + "'\n"; break;
       }  
 
-      keys= "[["+ btnInline(cmdWorkFromHome) + "]," +
-             "["+ btnInline(cmdWorkAtOffice) + "]," +
-             "["+ btnInline(cmdWeekend)      + "]," +
-             "["+ btnInline(cmdAllDayAway)   + "]," +
-             "["+ btnInline(cmdMenuSettings) + "]]";
-             
       break;
     
     case scnSettingsHomeTimes: 
       response = "*Home times:*\n"
                  "Wake up at " + controllerData->workFromHomeWakeUp.str() + " sleep at " + controllerData->workFromHomeSleep.str() + "\n";
-
-      commands[cmdHomeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workFromHomeWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeWakeUpLater      ].label = "wake "    +String( (controllerData->workFromHomeWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workFromHomeSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workFromHomeSleep  +timeValue_t(0,15) ).str().c_str());
     
-      keys= "[["+ btnInline(cmdHomeWakeUpEarlier)     + "," + btnInline(cmdHomeWakeUpLater)    + "]," +
-             "["+ btnInline(cmdHomeGoToSleepEarlier)  + "," + btnInline(cmdHomeGoToSleepLater) + "]," +
-             "["+ btnInline(cmdMenuSettings)                                                   + "]]";
       break;
       
     case scnSettingsOfficeTimes: 
@@ -445,34 +542,11 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                   "Wake up at "   + controllerData->workAtOfficeWakeUp.str() + " go out at " + controllerData->workAtOfficeGoOut.str() + "\n"
                   "come home at " + controllerData->workAtOfficeComeIn.str() + " sleep at "  + controllerData->workAtOfficeSleep.str() + "\n";
 
-      commands[ cmdOfficeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeWakeUpLater      ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeLeaveEarlier     ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeLeaveLater       ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeComeHomeEarlier  ].label = "come in " +String( (controllerData->workAtOfficeComeIn -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeComeHomeLater    ].label = "come in " +String( (controllerData->workAtOfficeComeIn +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  +timeValue_t(0,15) ).str().c_str());
-      
-      keys= "[["+ btnInline(cmdOfficeWakeUpEarlier)     + "," + btnInline(cmdOfficeWakeUpLater)    + "]," +
-             "["+ btnInline(cmdOfficeLeaveEarlier)      + "," + btnInline(cmdOfficeLeaveLater)     + "]," +
-             "["+ btnInline(cmdOfficeComeHomeEarlier)   + "," + btnInline(cmdOfficeComeHomeLater)  + "]," +
-             "["+ btnInline(cmdOfficeGoToSleepEarlier)  + "," + btnInline(cmdOfficeGoToSleepLater) + "]," +
-             "["+ btnInline(cmdMenuSettings)                                                       + "]]";
       break;
       
     case scnSettingsWeekendTimes: 
       response = "*Weekend times:*\n"
                  "Wake up at " + controllerData->weekendWakeUp.str() + " sleep at " + controllerData->weekendSleep.str() + "\n";
-
-      commands[ cmdWeekendWakeUpEarlier    ].label = "wake "    +String( (controllerData->weekendWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendWakeUpLater      ].label = "wake "    +String( (controllerData->weekendWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendGoToSleepEarlier ].label = "sleep "   +String( (controllerData->weekendSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendGoToSleepLater   ].label = "sleep "   +String( (controllerData->weekendSleep  +timeValue_t(0,15) ).str().c_str());
-      
-      keys= "[["+ btnInline(cmdWeekendWakeUpEarlier)     + "," + btnInline(cmdWeekendWakeUpLater)    + "]," +
-             "["+ btnInline(cmdWeekendGoToSleepEarlier)  + "," + btnInline(cmdWeekendGoToSleepLater) + "]," +
-             "["+ btnInline(cmdMenuSettings)                                                         + "]]";
 
       break;
       
@@ -480,43 +554,33 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
       response = String("*Set temperature values:*\n") +
                  "Low temperature is " + String(controllerData->lowTemp,1) + "°C, high temperature is " + String(controllerData->highTemp, 1) + "°C\n";
 
-      commands[ cmdHighTemperatureDown ].label = "High " + String(controllerData->highTemp-0.5, 1) + "°C";
-      commands[ cmdHighTemperatureUp   ].label = "High " + String(controllerData->highTemp+0.5, 1) + "°C";
-      commands[ cmdLowTemperatureDown  ].label = "Low "  + String(controllerData->lowTemp -0.5, 1) + "°C";
-      commands[ cmdLowTemperatureUp    ].label = "Low "  + String(controllerData->lowTemp +0.5, 1) + "°C";
-
-      keys= "[["+ btnInline(cmdHighTemperatureDown) + "," + btnInline(cmdHighTemperatureUp) + "]," +
-             "["+ btnInline(cmdLowTemperatureDown)  + "," + btnInline(cmdLowTemperatureUp)  + "]," +
-             "["+ btnInline(cmdMenuSettings)                                                + "]]";
-
       break;
 
     case scnSettingsSensorOffset: 
       response = "Sensor offset set to " + String(controllerData->sensorOffset, 1) + "°C measured temperature is " + String(controllerData->measuredTemperature(), 1) + "°C\n";
 
-      keys= "[["+ btnInline(cmdSensorOffsetDown) + "," + btnInline(cmdSensorOffsetUp) + "]," +
-             "["+ btnInline(cmdMenuSettings)                                          + "]]";
-
       break;
 
     case scnResetDevice:
-      response = "DO YOU REALLY WANT TO REBOOT THE THERMOSTAT?\n";
+      response = String(EMOTICON_WARNING) + "*DO YOU REALLY WANT TO REBOOT THE THERMOSTAT?*\n";
 
-      keys= "[["+ btnInline(cmdResetDeviceYes) + "]," +
-             "["+ btnInline(cmdResetDeviceNo ) + "]]";
-             
       break;
 
   } // switch (screen)
 
-  // STEP 3: OVVERRIDE RESPONSE FOR CERTAIN COMMANDS
+  // STEP 3: OVERRIDE DEFAULT RESPONSE FOR CERTAIN COMMANDS
   switch (message.command)  {
+
     case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;
+    
     case cmdSetpointLower:     response= "The setpoint temperature is lowered to "    + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdSetpointAuto:      response= "The setpoint is set back to automatic\n"; break;
     case cmdSetpointHigher:    response= "The setpoint temperature is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdOverruleTodayAway: response= "Status changed to 'Away'\n"; break;
-    case cmdUpdateStatus:      response = ""; break; // The standard response is good enough
+
+    case cmdUpdateStatus:      
+      response = "*Day settings starting today:*\n";
+    break; 
 
     case cmdReportBoiler: 
       switch(controllerData->boilerResponse) {
@@ -551,6 +615,13 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
       break;        
 
   } // switch (message.command) end of STEP 3
+
+  if( ( screen != scnSettingsWeekSchedule ) and 
+      ( screen != scnResetDevice ) and 
+      ( screen != scnSettingsDaySchedule ) ) {
+    for(int i=0; i<7; i++) response += String( DAYTYPE_TO_EMOTICON[ controllerData->dayTypes[ i ] ] ) + " ";
+    response+="\n";
+  }
   
   response+= "*" + currentTime() + " " +
                    EMOTICON_BULLSEYE    + " " + String(controllerData->temperatureSetpoint,   1) + "°C " +
@@ -559,7 +630,11 @@ bool TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                    String( controllerData->hotWaterActive ? EMOTICON_SHOWER : "") +
              "*";
 
-  return bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keys, lastMessageID);
+  if( lastMessageWithKeyboard>0 ) {
+    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(), lastMessageWithKeyboard);
+  } else {
+    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard() );
+  }
 };
 
 
@@ -575,7 +650,7 @@ class TelegramHandler {
     void handleQueueCommand(userEventMessage_t & message);
   
     void handleCallback( String & chatID, String & callback) { userConversation[chatID].handleCallback(callback);            };
-    bool respondToUser( String & chatID, userEventMessage_t & message);
+    void respondToUser( String & chatID, userEventMessage_t & message);
 
     void enableTelegram()  { enabled=true;   };
     void disableTelegram() { enabled=false;  };
@@ -626,8 +701,13 @@ void TelegramHandler::begin() {
   TelegramChat newTelegramChat=TelegramChat( *controllerData, controllerQueue, telegramQueue);
   userConversation[controllerData->botChatID]=newTelegramChat;
 
-  // userEventMessage_t command = userEventMessage_t(controllerData->botChatID, scnMain, cmdStartTelegram);
-  // respondToUser(controllerData->botChatID, command);
+  // Send first message to the user
+  bot->sendMessageWithInlineKeyboard( controllerData->botChatID, 
+                                      String(EMOTICON_THERMOMETER) + " Thermostat just started", 
+                                      "Markdown", 
+                                      userConversation[controllerData->botChatID].keyboard() 
+                                    );
+                                    
 };
 
 void TelegramHandler::handleNewMessages(int numNewMessages){
@@ -650,6 +730,8 @@ void TelegramHandler::handleNewMessages(int numNewMessages){
     // Update data in conversation
     userConversation[chatID].chatID = chatID;
     userConversation[chatID].lastMessageID = bot->messages[i].message_id;
+    Serial.printf("Set chat[%s].lastMessageID: %d\n", chatID, userConversation[chatID].lastMessageID );
+
     userConversation[chatID].userName = bot->messages[i].from_name;
     if (userConversation[chatID].userName == "") userConversation[chatID].userName = "Guest";
 
@@ -659,10 +741,12 @@ void TelegramHandler::handleNewMessages(int numNewMessages){
 
       userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
       respondToUser(chatID, command);
+
       //userConversation[chatID].responseToMessage( *bot, message);
     }    
     else if (bot->messages[i].type=="callback_query") {
       Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot->messages[i].text.c_str());
+      userConversation[chatID].lastMessageWithKeyboard = bot->messages[i].message_id;
       handleCallback(chatID, bot->messages[i].text); // Sends commands to the controller or to the Telegram Queue
     }
   } // for i
@@ -671,6 +755,7 @@ void TelegramHandler::handleNewMessages(int numNewMessages){
 void TelegramHandler::checkNewMessages() {
   int numNewMessages = bot->getUpdates(bot->last_message_received + 1);
 
+  Serial.println("telegramHandler.checkNewMessages()");
   while (numNewMessages) {
     Serial.println("got response");
     handleNewMessages(numNewMessages);
@@ -678,9 +763,9 @@ void TelegramHandler::checkNewMessages() {
   }
 };
 
-bool TelegramHandler::respondToUser( String & chatID, userEventMessage_t & message) { 
+void TelegramHandler::respondToUser( String & chatID, userEventMessage_t & message) { 
   Serial.printf("respondToUser ChatID: %s [%s]\n", chatID, commandLabels[message.command].c_str() );
-  return userConversation[chatID].respondToUser( *bot, message); 
+  userConversation[chatID].respondToUser( *bot, message); 
 };
 
 
@@ -688,12 +773,15 @@ bool TelegramHandler::respondToUser( String & chatID, userEventMessage_t & messa
  *  GlOBAL DECLARATIONS                                                *
  ***********************************************************************/
 WiFiClientSecure securedClient;                                                                      // Secure wifi client
-UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram
+UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram, bot token not yet retrieved by ControllerData since SPIFFS not yet up
 TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
 
 void beginTelegram() {
   bot.maxMessageLength = 3000;
   telegramHandler.begin( );
+
+  Serial.printf("Startup: Pointer to bot: %p\n", &bot);
+  
 }
 
 void checkTelegramIfNeeded() {
@@ -704,7 +792,6 @@ void checkTelegramIfNeeded() {
       
     // Do not poll too often. Telegram would get bored with us
     if ( millis() - lastTimeTelegramPolled > TELEGRAM_INTERVAL ) {
-      Serial.println("telegramHandler.checkNewMessages()");
       telegramHandler.checkNewMessages();
       lastTimeTelegramPolled=millis();
     }  
@@ -730,9 +817,7 @@ void checkTelegramIfNeeded() {
             
         if( chatID.length()>1 ) {
           Serial.printf("Handle queue command for chatID: %s\n", chatID);
-          bool sent = telegramHandler.respondToUser(chatID, message);
-
-          Serial.printf("sendMessageWithInlineKeyboard success: %s\n", sent ? "Y" : "N");  
+          telegramHandler.respondToUser(chatID, message);
         }
         
       }; // switch( message.command )

@@ -149,7 +149,11 @@ void Display::displayHomeScreen() {
     // Day icons
     int x=8;
     for(int i=0; i<7; i++) {
-      drawJpeg(tft, ICONS[controllerData->dayIcons[i]].c_str(), x, 208);
+      if( controllerData->dayTypeOverruled[i] ) {
+        drawJpeg(tft, ICONS[ DAYTYPE_OVERRULED_TO_ICON[ controllerData->dayTypes[i] ] ].c_str(), x, 208);
+      } else {
+        drawJpeg(tft, ICONS[ DAYTYPE_TO_ICON          [ controllerData->dayTypes[i] ] ].c_str(), x, 208);
+      }
       x+=40;
     }
   };      
