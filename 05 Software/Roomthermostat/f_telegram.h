@@ -776,7 +776,7 @@ WiFiClientSecure securedClient;                                                 
 UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram, bot token not yet retrieved by ControllerData since SPIFFS not yet up
 TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
 
-void beginTelegram() {
+void startTelegram() {
   bot.maxMessageLength = 3000;
   telegramHandler.begin( );
 

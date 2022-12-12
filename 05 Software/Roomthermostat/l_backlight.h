@@ -21,21 +21,6 @@ void changeBacklight(uint8_t newIndex) {
   }
 }
 
-void startBacklight() {
-  userEventMessage_t message;
-
-  // configure LED PWM functionalities
-  ledcSetup(BACKLIGHT_LED_CHANNEL, BACKLIGHT_FREQUENCY, BACKLIGHT_RESOLUTION);
-  
-  // attach the channel to the GPIO to be controlled
-  ledcAttachPin(PIN_BACKLIGHT, BACKLIGHT_LED_CHANNEL);
-
-  ledcWrite(BACKLIGHT_LED_CHANNEL, 0);
-
-  message = userEventMessage_t(sndBacklight, cmdBacklightOn);
-  xQueueSend( backlightQueue, &message, ( TickType_t ) 0 );
-};
-
 void checkBacklight() {
   static unsigned long lastTimeBacklightOn  = 0; // When this timer expires, the backlight starts dimming
   static unsigned long lastBacklightDim = 0;     // This corresponds to each dim step
@@ -106,4 +91,20 @@ void checkBacklight() {
       } // if( backlightSwitchedOn )
   } // if ( (millis() - lastBacklightDim > BACKLIGHT_DIM_STEP) ) 
 */
-}
+};
+
+void startBacklight() {
+  userEventMessage_t message;
+
+  // configure LED PWM functionalities
+  ledcSetup(BACKLIGHT_LED_CHANNEL, BACKLIGHT_FREQUENCY, BACKLIGHT_RESOLUTION);
+  
+  // attach the channel to the GPIO to be controlled
+  ledcAttachPin(PIN_BACKLIGHT, BACKLIGHT_LED_CHANNEL);
+
+  ledcWrite(BACKLIGHT_LED_CHANNEL, 0);
+
+  message = userEventMessage_t(sndBacklight, cmdBacklightOn);
+  xQueueSend( backlightQueue, &message, ( TickType_t ) 0 );
+  checkBacklight();
+};

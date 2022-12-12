@@ -26,6 +26,7 @@
         create an additional debug screen (done in telegram)
   1.0.6 Simple logger added
         Low temperature of boiler control reduced to 0°C
+        Telegram module simplified to be more in line with architectural graph
 
   TO DO:
   cleanup Serial.print..
@@ -122,8 +123,14 @@ void setup() {
   Serial.println("Loading config data");
   controllerData.loadConfig(SPIFFS, CONFIG_FILE);
 
+  Serial.println("Initializing menu");
+  startMenu();
+
   Serial.println("Initializing temperature sensors and boiler");
   startTemperature();
+
+  Serial.println("Initializing controller");
+  startController();
 
   Serial.println("Initializing display");
   startDisplay();
@@ -131,23 +138,14 @@ void setup() {
   Serial.println("Initializing backlight");
   startBacklight();
 
-  Serial.println("Initializing controller");
-  //startController();
-
   Serial.println("Initializing WiFi");
   setupWifi(controllerData);
 
   Serial.println("Initializing Telegram handler");
-  beginTelegram(); 
-
-  Serial.println("Initializing menu");
-  startMenu();
+  startTelegram(); 
 
   Serial.println("Initializing keyboard");
   startKeyboard();
-
-  sendMessage(sndBacklight, cmdMenuHome,      menuQueue);       // Goto home screen
-  sendMessage(sndMenu,      cmdUpdateScreen,  controllerQueue); // Control setpoint and display screen
 
   // Enable watchdog
   Serial.println("Configuring watchdog");

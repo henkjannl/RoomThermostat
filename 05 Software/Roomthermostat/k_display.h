@@ -10,7 +10,7 @@
 class Display {
   public:
     Display(TFT_eSPI & tft, ControllerData_t & controllerData, screen_t (*selectedScreen)(), command_t (*selectedMenuItem)() );
-    void begin();
+    void start();
     void processMessage(const userEventMessage_t message);
     void displayHomeScreen();
     void displayMenuScreen();
@@ -30,7 +30,7 @@ Display::Display(TFT_eSPI & tft, ControllerData_t & controllerData, screen_t (*s
   this->selectedMenuItem = selectedMenuItem;  // This is a pointer to the menu structure to obtain the current menu item
 };
 
-void Display::begin() {
+void Display::start() {
   // Initialize screen
   disableKeyboard();
   tft->init();
@@ -326,5 +326,5 @@ void checkDisplayQueue() {
 
 // Start the the display handler
 void startDisplay() {
-  display.begin();
+  display.start();
 }

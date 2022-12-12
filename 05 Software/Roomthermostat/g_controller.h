@@ -398,3 +398,9 @@ void processControllerIfNeeded() {
     
   }; // if( xQueueReceive( controllerQueue..
 }
+
+
+void startController() {
+  sendMessage(sndMenu, cmdUpdateScreen, controllerQueue);
+  processControllerIfNeeded();
+};
