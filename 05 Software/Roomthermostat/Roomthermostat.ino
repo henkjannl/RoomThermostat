@@ -237,6 +237,7 @@ void loop() {
     
     Serial.println( String("Software version: ") + VERSION );
     Serial.println( String("- Time since reboot: ") + secondsToDuration(t1/1e6) ); 
+    Serial.println( String("- Keyboard polling microseconds: ") + String(keyboardMicroSeconds) ); 
     Serial.println( String("- Temperature measurement successful: ") + String(controllerData.temperatureMeasurementOK ? "Y" : "N") ); 
     Serial.println( String("- Total free bytes in the heap: ") + String(heapInfo.total_free_bytes) ); 
     Serial.println( String("- Total bytes allocated to data in the heap: ") + String(heapInfo.total_allocated_bytes) ); 
@@ -245,7 +246,6 @@ void loop() {
     Serial.println( String("- Number of blocks allocated in the heap: ") + String(heapInfo.allocated_blocks) ); 
     Serial.println( String("- Number of free blocks in the heap: ") + String(heapInfo.free_blocks) ); 
     Serial.println( String("- Total number of blocks in the heap: ") + String(heapInfo.total_blocks) ); 
-    
   }
 
   // Reset watchdog timer

@@ -358,32 +358,36 @@ void checkTemperatureIfNeeded() {
   static unsigned long lastReconnect=0;     // last time temperaturesensors were reconnected was done
   static unsigned long lastBoilerConnect=0; // last time boiler was talked to
   userEventMessage_t message;
-  
-  if (millis() - lastTempMeas > TEMP_MEAS_INTERVAL) {
-    TemperatureMeasure();
 
-    // Request controller to calculate new setpoint
-    // Send new temperature to display without switching on backlight
-    sendMessage(sndTemperature, cmdSilentUpdate, controllerQueue);
+  // To improve responsiveness, only communicate with the boiler if the backlight is off
+  if( !controllerData.backLightOn ) {
     
-    lastTempMeas=millis();
-  }
-
-  if( millis() - lastBoilerConnect > BOILER_INTERVAL ) {
-
-    // Request controller to calculate new setpoint
-    sendMessage(sndTemperature, cmdBoilerSending, controllerQueue);
-    lastBoilerConnect=millis();
-  }
-
-  if (millis() - lastReconnect > RECONNECT_INTERVAL) {
-    if(!controllerData.temperatureMeasurementOK) TemperatureSensorConnect();
-    lastReconnect=millis();
-  }
-
-  if( xQueueReceive( temperatureQueue, &message, 0) == pdPASS ) {
-    Serial.printf("%s > Temperature [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed );
-    BoilerCommunicate();
-    sendMessage(sndTemperature, cmdSilentUpdate, controllerQueue);
+    if (millis() - lastTempMeas > TEMP_MEAS_INTERVAL) {
+      TemperatureMeasure();
+  
+      // Request controller to calculate new setpoint
+      // Send new temperature to display without switching on backlight
+      sendMessage(sndTemperature, cmdSilentUpdate, controllerQueue);
+      
+      lastTempMeas=millis();
+    }
+  
+    if( millis() - lastBoilerConnect > BOILER_INTERVAL ) {
+  
+      // Request controller to calculate new setpoint
+      sendMessage(sndTemperature, cmdBoilerSending, controllerQueue);
+      lastBoilerConnect=millis();
+    }
+  
+    if (millis() - lastReconnect > RECONNECT_INTERVAL) {
+      if( !controllerData.temperatureMeasurementOK ) TemperatureSensorConnect();
+      lastReconnect=millis();
+    }
+  
+    if( xQueueReceive( temperatureQueue, &message, 0) == pdPASS ) {
+      Serial.printf("%s > Temperature [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed );
+      BoilerCommunicate();
+      sendMessage(sndTemperature, cmdSilentUpdate, controllerQueue);
+    }
   }
 }

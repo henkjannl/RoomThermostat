@@ -18,7 +18,7 @@ class Controller {
     void increaseSensorOffset() { controllerData->sensorOffset+=0.1; }
     void decreaseSensorOffset() { controllerData->sensorOffset-=0.1; };
     void setpointLower();
-    void setpointAuto()         { controllerData->overrideTempNow=false; };    
+    void setpointHigh()         { controllerData->overrideTempNow=true; controllerData->overrideSetpoint = controllerData->highTemp; };
     void setpointHigher();
     void goAway();
     
@@ -72,11 +72,12 @@ void Controller::processCommand(userEventMessage_t messageToController) {
     case cmdControl                      : break; // Don't call control, it is called for every function after the switch statement
     case cmdBoilerSending                : break;
     case cmdUpdateScreen                 : break; 
+    case cmdSilentUpdate                 : break; 
     case cmdSetTemperatureOffset         : setTemperatureOffset(messageToController.temperatureOffset); break;
     case cmdSensorOffsetUp               : increaseSensorOffset(); break;
     case cmdSensorOffsetDown             : decreaseSensorOffset(); break;
     case cmdSetpointLower                : setpointLower(); break;
-    case cmdSetpointAuto                 : setpointAuto(); break;
+    case cmdComeHome                     : setpointHigh(); break;
     case cmdSetpointHigher               : setpointHigher(); break;
     case cmdOverruleTodayWorkFromHome    : overruleTodayWorkFromHome(); break;
     case cmdOverruleTodayWorkAtOffice    : overruleTodayWorkFromOffice(); break;

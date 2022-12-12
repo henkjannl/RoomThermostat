@@ -96,7 +96,6 @@ const char EMOTICON_DOWN_ARROW[]          = {0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f,
 const char EMOTICON_FLAME[]               = {0xf0, 0x9f, 0x94, 0xa5, 0x0};
 const char EMOTICON_FOOTSTEPS[]           = {0xf0, 0x9f, 0x91, 0xa3, 0x0};
 const char EMOTICON_GEAR[]                = {0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x0};
-// const char EMOTICON_GEAR[]                = ":gear:";
 const char EMOTICON_GLASSES[]             = {0xf0, 0x9f, 0x91, 0x93, 0x0};
 const char EMOTICON_HAMMER_WRENCH[]       = {0xf0, 0x9f, 0x9b, 0xa0, 0x0};
 const char EMOTICON_HOURGLASS[]           = {0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x0};
@@ -106,7 +105,6 @@ const char EMOTICON_LAMP[]                = {0xf0, 0x9f, 0x92, 0xa1, 0x0};
 const char EMOTICON_MAGIC_STICK[]         = {0xf0, 0x9f, 0xaa, 0x84, 0x0};
 const char EMOTICON_OFFICE[]              = {0xf0, 0x9f, 0x8f, 0xa2, 0x0};
 const char EMOTICON_PIN[]                 = {0xf0, 0x9f, 0x93, 0x8d, 0x0};
-// const char EMOTICON_PIN[]                 = ":dart:";
 const char EMOTICON_POINTING_FINGER[]     = {0xf0, 0x9f, 0x91, 0x89, 0x0};
 const char EMOTICON_RED_QUESTION_MARK[]   = {0xe2, 0x9d, 0x93, 0x0};
 const char EMOTICON_RUNNER[]              = {0xf0, 0x9f, 0x8f, 0x83, 0x0};
@@ -169,10 +167,12 @@ std::map<screen_t, string> screenTitle = {
 
 enum command_t { 
   // Commands that affect the controller
-  cmdControl, cmdSetpointHigher, cmdSetpointLower, cmdSetpointAuto, cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, 
+  cmdControl, cmdSetpointHigher, cmdSetpointLower, cmdComeHome, cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, 
   cmdOverruleTodayAutomatic, cmdOverruleTomorrowWorkFromHome, cmdOverruleTomorrowWorkAtOffice, cmdOverruleTomorrowWeekend, cmdOverruleTomorrowAway, cmdOverruleTomorrowAutomatic, 
   cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdOverruleMultipleWorkFromHome, cmdOverruleMultipleWorkAtOffice, cmdOverruleMultipleWeekend, cmdOverruleMultipleAway, 
-  cmdOverruleMultipleAutomatic, cmdSetWeekSchedule, cmdHomeWakeUpEarlier, cmdHomeWakeUpLater, cmdHomeGoToSleepEarlier, cmdHomeGoToSleepLater, cmdOfficeWakeUpEarlier, 
+  cmdOverruleMultipleAutomatic, 
+  cmdSetWeekSchedule, cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdAllDayAway,
+  cmdHomeWakeUpEarlier, cmdHomeWakeUpLater, cmdHomeGoToSleepEarlier, cmdHomeGoToSleepLater, cmdOfficeWakeUpEarlier, 
   cmdOfficeWakeUpLater, cmdOfficeLeaveEarlier, cmdOfficeLeaveLater, cmdOfficeComeHomeEarlier, cmdOfficeComeHomeLater, cmdOfficeGoToSleepEarlier, cmdOfficeGoToSleepLater, 
   cmdWeekendWakeUpEarlier, cmdWeekendWakeUpLater, cmdWeekendGoToSleepEarlier, cmdWeekendGoToSleepLater, cmdHighTemperatureUp, cmdHighTemperatureDown, cmdLowTemperatureUp, 
   cmdLowTemperatureDown, cmdSensorOffsetUp, cmdSensorOffsetDown, cmdSetTemperatureOffset, cmdUpdateStatus, cmdUpdateScreen, cmdSilentUpdate,
@@ -183,7 +183,7 @@ enum command_t {
   // Commands that do not affect the controller
   cmdStartTelegram, cmdMenuMain, cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuHome, cmdMultipleDaySchedule, cmdMenuWeekSchedule, 
   cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuTemperature, cmdMenuSensorOffset, cmdReportBoiler, cmdReportTiming, cmdReportDebug, cmdReportLog, 
-  cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdAllDayAway, cmdCommandNotRecognized, 
+  cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdCommandNotRecognized, 
   cmdBoilerSending, cmdBacklightOn, cmdKeyUp, cmdKeySelect, cmdKeyDown, cmdKeyPressed, cmdDisableTelegram, cmdEnableTelegram, 
   cmdResetDeviceMenu, cmdResetDeviceYes, cmdResetDeviceNo};
 
@@ -191,7 +191,7 @@ std::map<command_t, string> commandLabels = {
   { cmdMenuMain                     , "Main menu"},
   { cmdSetpointHigher               , "Setpoint higher"},
   { cmdSetpointLower                , "Setpoint lower"},
-  { cmdSetpointAuto                 , "Setpoint automatic"},
+  { cmdComeHome                 , "Come home"},
   { cmdUpdateStatus                 , "Update"},
   { cmdMenuOverruleToday            , "Overrule today"},
   { cmdMenuOverruleTomorrow         , "Overrule tomorrow"},

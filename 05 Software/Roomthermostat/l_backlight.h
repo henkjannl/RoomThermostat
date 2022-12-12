@@ -1,11 +1,29 @@
 #pragma once
 
-static const uint8_t BACKLIGHT_BRIGHTNESS[] = { 0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 18, 22, 26, 31, 37, 45, 53, 63, 75, 90, 107, 127, 151, 180, 214, 255 }; 
-#define MAX_BACKLIGHT_BRIGHTNESS 27
- 
-void changeBacklight(uint8_t newIndex) {
-  static uint8_t backlightIndex=MAX_BACKLIGHT_BRIGHTNESS;
+//static const uint8_t BACKLIGHT_BRIGHTNESS[] = { 0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 18, 22, 26, 31, 37, 45, 53, 63, 75, 90, 107, 127, 151, 180, 214, 255 }; 
+const std::list<uint8_t> BACKLIGHT_BRIGHTNESS = { 0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 18, 22, 26, 31, 37, 45, 53, 63, 75, 90, 107, 127, 151, 180, 214, 255 }; 
 
+//#define MAX_BACKLIGHT_BRIGHTNESS 27
+//uint8_t backlightIndex=MAX_BACKLIGHT_BRIGHTNESS;
+ 
+void changeBacklight(bool on) {
+
+  if( on ) {
+    Serial.println("Really trying to switch the backlight on..");
+    for (auto brightness = BACKLIGHT_BRIGHTNESS.begin(); brightness != BACKLIGHT_BRIGHTNESS.end(); ++brightness) {
+      ledcWrite(BACKLIGHT_LED_CHANNEL, *brightness);
+      delay(10);
+    }
+  }
+  else {
+    Serial.println("Really trying to switch the backlight off..");
+    for (auto brightness=BACKLIGHT_BRIGHTNESS.rbegin(); brightness != BACKLIGHT_BRIGHTNESS.rend(); ++brightness) {
+      ledcWrite(BACKLIGHT_LED_CHANNEL, *brightness);
+      delay(40);
+    }
+  }
+
+  /*
   // Brighten the backlight if desired
   while( backlightIndex<newIndex ) {
     backlightIndex++;
@@ -19,6 +37,7 @@ void changeBacklight(uint8_t newIndex) {
     ledcWrite(BACKLIGHT_LED_CHANNEL, BACKLIGHT_BRIGHTNESS[backlightIndex]);
     delay(30);
   }
+  */
 }
 
 void checkBacklight() {
@@ -30,14 +49,15 @@ void checkBacklight() {
 
   // Switch backlight on for some time if someone has talked to us
   if( xQueueReceive( backlightQueue, &message, 0) == pdPASS ) {
-    Serial.printf("%s > Backlight [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed);
+    Serial.printf("%s > Backlight [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed );
 
     if( (message.command == cmdBacklightOn) ) {
         Serial.println("cmdBacklightOn: Backlight switching on");
         lastTimeBacklightOn = millis();               
         
         if( !controllerData.backLightOn ) { 
-          changeBacklight(MAX_BACKLIGHT_BRIGHTNESS);
+          //changeBacklight(MAX_BACKLIGHT_BRIGHTNESS);
+          changeBacklight(true);
           controllerData.backLightOn=true;          
         }
     } // if( message.command == cmdBacklightOn) 
@@ -46,8 +66,11 @@ void checkBacklight() {
   // Switch off backlight after some time 
   if ( (millis() - lastTimeBacklightOn > BACKLIGHT_TIMEOUT) and controllerData.backLightOn ) {
 
-      controllerData.backLightOn=false; 
-      changeBacklight(0);
+      if( controllerData.backLightOn ) {
+        controllerData.backLightOn=false; 
+        //changeBacklight(0);
+        changeBacklight(false);
+      };
       sendMessage(sndBacklight, cmdEnableTelegram, telegramQueue);  
   }
 
@@ -102,7 +125,8 @@ void startBacklight() {
   // attach the channel to the GPIO to be controlled
   ledcAttachPin(PIN_BACKLIGHT, BACKLIGHT_LED_CHANNEL);
 
-  ledcWrite(BACKLIGHT_LED_CHANNEL, 0);
+  // Start with a partially dimmed screen to display the welcome message
+  ledcWrite(BACKLIGHT_LED_CHANNEL, 64);
 
   message = userEventMessage_t(sndBacklight, cmdBacklightOn);
   xQueueSend( backlightQueue, &message, ( TickType_t ) 0 );
