@@ -35,17 +35,17 @@ There is flexibility on top of that:
 The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. A list of all Telegram users is kept and each user can be in a different menu without receiving updates from other users.
 
 
-## Simple use case in Telegram: going on a holiday
+## Simple use case in Telegram: going on a short holiday
 
-The scenario is that we are going on a holiday and we will return at the end of next week on a Saturday.
+The scenario is that we are going on a holiday and we will return this Saturday.
 
-To do this, we select ```Overrule multiple days``` in the main menu:
+To do this, select ```Overrule multiple days``` in the main menu:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="400"/> 
 </p>
 
-Then we select ```All day away``` in the next menu since we are going on a holiday:
+Then select ```All day away``` in the next menu since we are going on a holiday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="400"/> 
@@ -53,25 +53,25 @@ Then we select ```All day away``` in the next menu since we are going on a holid
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then we select ```More days``` button multiple times in the next menu until we have 9 days, ending on a Saturday:
+Then select ```More days``` button multiple times in the next menu until the message says there are 6 days, ending on Saturday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="400"/> 
 </p>
 
-Next we select ```back to the main menu```:
+Next select ```back to the main menu```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="400"/> 
 </p>
 
-Now, the current day is also selected as an ```All day away```, with a low temperature setting for the remaining part of the day. To resolve this we select ```Overrule today```:
+Now, the current day is also selected as an ```All day away```, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="400"/> 
 </p>
 
-Next we select ```Weekend day``` so we can pack our bags in good comfort:
+Next select ```Weekend day``` so we can pack our bags comfortably:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="400"/> 
@@ -79,13 +79,11 @@ Next we select ```Weekend day``` so we can pack our bags in good comfort:
 
 The remaining ```Multiple days``` will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  ```multiple days``` remain overruled.
 
-Finally, we select ```back to the main menu```:
+Finally, select ```back to the main menu```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="400"/> 
 </p>
-
-The hardware unit will display the select the scheme of the next seven days.
 
 Of course it is also possible to do these steps after we leave, without the need to overrule the current day. As we are returning home during the next Saturday, we can also overrule the current day to ensure the house is comfortable upon arrival.
 

@@ -35,7 +35,7 @@ const tgCommandList TELEGRAM_COMMANDS = {
 
   { cmdOverruleTodayWorkFromHome,    { String(EMOTICON_HOUSE)       + " Work from home",   "/cmdOverruleTodayWorkFromHome"    } },
   { cmdOverruleTodayWorkAtOffice,    { String(EMOTICON_OFFICE)      + " Work from office", "/cmdOverruleTodayWorkAtOffice"    } },
-  { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend dat",      "/cmdOverruleTodayWeekend"         } },
+  { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend day",      "/cmdOverruleTodayWeekend"         } },
   { cmdOverruleTodayAway,            { String(EMOTICON_ISLAND)      + " All day away",     "/cmdOverruleTodayAway"            } },
   { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Automatic",        "/cmdOverruleTodayAutomatic"       } },
   { cmdMenuMain,                     { "Back to main menu",                                "/cmdMenuMain"                     } },
@@ -500,7 +500,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
       break;
 
     case scnSettingsMain: 
-      response = "*Day settings starting today:*\n";
+      response = "Day settings starting today:\n";
   
       break;
       
@@ -580,13 +580,13 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
     case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;
     
-    case cmdSetpointLower:     response= "The setpoint temperature is lowered to "    + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
-    case cmdComeHome:      response= "The setpoint is set to the high temperature\n"; break;
+    case cmdSetpointLower:     response= "The setpoint temperature is lowered to "   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
+    case cmdComeHome:          response= "The setpoint is set to "                   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdSetpointHigher:    response= "The setpoint temperature is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdOverruleTodayAway: response= "Status changed to 'Away'\n"; break;
 
     case cmdUpdateStatus:      
-      response = "*Day settings starting today:*\n";
+      response = "Day settings starting today:\n";
     break; 
 
     case cmdReportBoiler: 
