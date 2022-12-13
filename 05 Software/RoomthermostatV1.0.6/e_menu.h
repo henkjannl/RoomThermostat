@@ -146,14 +146,12 @@ void sendWeekScheduleToController(uint8_t dayOfWeek, dayType_t typeOfDay) {
 
 void selectScreen(screen_t screen, command_t menuItem) {
   menu.selectScreen(screen, menuItem);
-  userEventMessage_t message(sndMenu, menuItem);
-  xQueueSend( controllerQueue, &message, ( TickType_t ) 10 );
+  sendMessage(sndMenu, menuItem, controllerQueue);
 };
 
 void selectScreen(screen_t screen) {
   menu.selectScreen(screen);
-  userEventMessage_t message = userEventMessage_t(sndMenu, cmdUpdateScreen);
-  xQueueSend( controllerQueue, &message, ( TickType_t ) 10 );
+  sendMessage(sndMenu, cmdUpdateScreen, controllerQueue);
 };
 
 void HandleSelectButton() {
@@ -371,11 +369,11 @@ void checkMenu() {
           // Ignore first key press, first wake up backlight
           if( controllerData.backLightOn ) {
             if (menu.selectedScreen() == scnHome) { 
-              sendMessageToController(cmdSetpointHigher);
+              sendMessage(sndMenu, cmdSetpointHigher, controllerQueue);
             }
             else {
               menu.prevMenuItem();
-              sendMessageToController(cmdUpdateScreen);
+              sendMessage(sndMenu, cmdUpdateScreen, controllerQueue);
             }
           } // controllerData.backLightOn 
 

@@ -111,7 +111,7 @@ void syncTimeIfNeeded(ControllerData_t & controllerData) {
       resyncTimeInterval = 24*60*1000; // If synched, increase resync interval
 
       // Notify to the display that the time was synched
-      sendMessage(sndWifi, cmdSilentUpdate, displayQueue);
+      sendMessage(sndWifi, cmdSilentUpdate, controllerQueue);
     };
   };
 

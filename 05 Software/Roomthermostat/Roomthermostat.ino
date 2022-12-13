@@ -29,26 +29,23 @@
         Telegram module simplified to be more in line with architectural graph
 
   TO DO:
-  cleanup Serial.print..
-  skip unicode from Telegram until it is working better
-  explore if unicode is the problem why Telegram is not working as well as expected
-  check is the menu still needs to send currentScreen and currentMenuItem
+  check use of const in function calls
+  cleanup the use of messages. Some fields may no longer be needed
+  cleanup Serial.print
+  check if the menu still needs to send currentScreen and currentMenuItem
   include over the air updates
   implement Off mode of the thermostat
-  implement database to record all data
+  implement database to record all data in the cloud
   icons in front of menus
   implement String dspDate in controller etc.
   display progress upon startup
-  
+  implement OpenTherm protocoll in either RMT (https://github.com/Weissnix4711/esphome-opentherm-custom/blob/master/components/opentherm/opentherm_protocol.h) or FreeRTOS
+ 
   Update all Telegram chats every 15 minutes or so
-  run TemperatureSensorConnect() as part of regular maintenance loop, if sensor is not connected
   Make central store of variables, that can also be saved to / retrieved from permanent memory
   Find replace action Leave > GoOut 
   Add save and load of persistent data
   Do autosave if persistent data is changed
-
-  Implement icons for setpoint and measured value in Telegram
-  Log data to database in the cloud
 
   Conflict between touchRead and SPIFFS is now resolved by disabling keyboard during use of screen. Perhaps sufficient to only disable during sprite.loadFont()
   Automatic updates to last message of known clients every 15 minutes
