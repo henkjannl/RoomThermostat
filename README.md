@@ -59,7 +59,7 @@ Then select ```More days``` button multiple times in the next menu until the mes
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="399"/> 
 </p>
 
-Next select ```back to the main menu```:
+Next select ```Back to the main menu```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="400"/> 
@@ -71,7 +71,7 @@ Now, the current day is also selected as an ```All day away```, with a low tempe
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="429"/> 
 </p>
 
-Next select ```Weekend day``` so we can pack our bags comfortably:
+Choose ```Weekend day``` so we can pack our bags comfortably:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="295"/> 
@@ -79,7 +79,7 @@ Next select ```Weekend day``` so we can pack our bags comfortably:
 
 The remaining ```Multiple days``` will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  ```multiple days``` remain overruled.
 
-Finally, select ```back to the main menu```:
+Finally, select ```Back to the main menu```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="294"/> 
