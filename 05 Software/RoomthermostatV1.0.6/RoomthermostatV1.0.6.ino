@@ -26,6 +26,7 @@
         create an additional debug screen (done in telegram)
   1.0.6 Simple logger added
         Low temperature of boiler control reduced to 0°C
+        Telegram module simplified to be more in line with architectural graph
 
   TO DO:
   cleanup Serial.print..
@@ -122,8 +123,14 @@ void setup() {
   Serial.println("Loading config data");
   controllerData.loadConfig(SPIFFS, CONFIG_FILE);
 
+  Serial.println("Initializing menu");
+  startMenu();
+
   Serial.println("Initializing temperature sensors and boiler");
   startTemperature();
+
+  Serial.println("Initializing controller");
+  startController();
 
   Serial.println("Initializing display");
   startDisplay();
@@ -131,23 +138,14 @@ void setup() {
   Serial.println("Initializing backlight");
   startBacklight();
 
-  Serial.println("Initializing controller");
-  //startController();
-
   Serial.println("Initializing WiFi");
   setupWifi(controllerData);
 
   Serial.println("Initializing Telegram handler");
-  beginTelegram(); 
-
-  Serial.println("Initializing menu");
-  startMenu();
+  startTelegram(); 
 
   Serial.println("Initializing keyboard");
   startKeyboard();
-
-  sendMessage(sndBacklight, cmdMenuHome,      menuQueue);       // Goto home screen
-  sendMessage(sndMenu,      cmdUpdateScreen,  controllerQueue); // Control setpoint and display screen
 
   // Enable watchdog
   Serial.println("Configuring watchdog");
@@ -239,6 +237,7 @@ void loop() {
     
     Serial.println( String("Software version: ") + VERSION );
     Serial.println( String("- Time since reboot: ") + secondsToDuration(t1/1e6) ); 
+    Serial.println( String("- Keyboard polling microseconds: ") + String(keyboardMicroSeconds) ); 
     Serial.println( String("- Temperature measurement successful: ") + String(controllerData.temperatureMeasurementOK ? "Y" : "N") ); 
     Serial.println( String("- Total free bytes in the heap: ") + String(heapInfo.total_free_bytes) ); 
     Serial.println( String("- Total bytes allocated to data in the heap: ") + String(heapInfo.total_allocated_bytes) ); 
@@ -247,7 +246,6 @@ void loop() {
     Serial.println( String("- Number of blocks allocated in the heap: ") + String(heapInfo.allocated_blocks) ); 
     Serial.println( String("- Number of free blocks in the heap: ") + String(heapInfo.free_blocks) ); 
     Serial.println( String("- Total number of blocks in the heap: ") + String(heapInfo.total_blocks) ); 
-    
   }
 
   // Reset watchdog timer

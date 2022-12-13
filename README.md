@@ -1,12 +1,11 @@
 # Roomthermostat
-I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi or internet are down.
-
-This is a fully (software & mechanics & electronics) open source room thermostat, based on an ESP32 microcontroller and the OpenTherm protocol.
+I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi or internet are down. This is also useful for visitors who don't want to bother about Telegram.
 
 <p align="center">
     <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
 </p>
 
+This is a fully (software & mechanics & electronics) open source project, based on an ESP32 microcontroller and the OpenTherm protocol.
 
 
 Every weekday can be programmed to be one of four kinds:
@@ -33,6 +32,20 @@ There is flexibility on top of that:
 
 
 The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. A list of all Telegram users is kept and each user can be in a different menu without receiving updates from other users.
+
+## Main menu in Telegram
+
+After selecting ```/start``` in Telegram, the following message and keyboard are returned:
+
+<p align="center">
+  <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
+</p>
+
+The settings menu has the following options:
+
+<p align="center">
+  <img src="02 User interface\Telegram settings menu.png" alt="telegram main menu" width="800"/> 
+</p>
 
 
 ## Simple use case in Telegram: going on a short holiday

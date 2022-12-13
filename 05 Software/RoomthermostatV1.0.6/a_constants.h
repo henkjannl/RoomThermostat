@@ -76,81 +76,47 @@ using namespace std;
   Font Noway_Regular24 height   23
  */
 
-#define REAL_ICONS 1
+#define SECS_PER_YEAR    (365.25 * 24 * 60 * 60)
+#define SECS_PER_WEEK    (     7 * 24 * 60 * 60)
+#define SECS_PER_DAY     (         24 * 60 * 60)
+#define SECS_PER_HOUR    (              60 * 60)
+#define SECS_PER_MINUTE  (                   60)
 
-#if REAL_ICONS 
-  const char EMOTICON_ALARM_CLOCK[]         = {0xe2, 0x8f, 0xb0, 0x0};
-  const char EMOTICON_BATH[]                = {0xf0, 0x9f, 0x9b, 0x81, 0x0};
-  const char EMOTICON_BED[]                 = {0xf0, 0x9f, 0x9b, 0x8f, 0x0};
-  const char EMOTICON_BULLSEYE[]            = {0xf0, 0x9f, 0x8e, 0xaf, 0x0};
-  const char EMOTICON_CALENDAR[]            = {0xf0, 0x9f, 0x93, 0x85, 0x0};
-  const char EMOTICON_CAMERA[]              = {0xf0, 0x9f, 0x93, 0xb7, 0x0};
-  const char EMOTICON_CHECKERED_FLAG[]      = {0xf0, 0x9f, 0x8f, 0x81, 0x0};
-  const char EMOTICON_CHECKMARK[]           = {0xe2, 0x9c, 0x85, 0x0};
-  const char EMOTICON_CLOCK[]               = {0xe2, 0x8f, 0xb0, 0x0};
-  const char EMOTICON_CROSSMARK[]           = {0xe2, 0x9d, 0x8c, 0x0};
-  const char EMOTICON_DOWN_ARROW[]          = {0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f, 0x0};
-  const char EMOTICON_FLAME[]               = {0xf0, 0x9f, 0x94, 0xa5, 0x0};
-  const char EMOTICON_FOOTSTEPS[]           = {0xf0, 0x9f, 0x91, 0xa3, 0x0};
-  const char EMOTICON_GEAR[]                = {0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x0};
-  const char EMOTICON_GLASSES[]             = {0xf0, 0x9f, 0x91, 0x93, 0x0};
-  const char EMOTICON_HAMMER_WRENCH[]       = {0xf0, 0x9f, 0x9b, 0xa0, 0x0};
-  const char EMOTICON_HOURGLASS[]           = {0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x0};
-  const char EMOTICON_HOUSE[]               = {0xf0, 0x9f, 0x8f, 0xa0, 0x0};
-  const char EMOTICON_ISLAND[]              = {0xf0, 0x9f, 0x8f, 0x96, 0x0};
-  const char EMOTICON_LAMP[]                = {0xf0, 0x9f, 0x92, 0xa1, 0x0};
-  const char EMOTICON_MAGIC_STICK[]         = {0xf0, 0x9f, 0xaa, 0x84, 0x0};
-  const char EMOTICON_OFFICE[]              = {0xf0, 0x9f, 0x8f, 0xa2, 0x0};
-  const char EMOTICON_PIN[]                 = {0xf0, 0x9f, 0x93, 0x8d, 0x0};
-  const char EMOTICON_POINTING_FINGER[]     = {0xf0, 0x9f, 0x91, 0x89, 0x0};
-  const char EMOTICON_RED_QUESTION_MARK[]   = {0xe2, 0x9d, 0x93, 0x0};
-  const char EMOTICON_RUNNER[]              = {0xf0, 0x9f, 0x8f, 0x83, 0x0};
-  const char EMOTICON_SHOWER[]              = {0xf0, 0x9f, 0x9a, 0xbf, 0x0};
-  const char EMOTICON_SMILEY[]              = {0xf0, 0x9f, 0x98, 0x80, 0x0};
-  const char EMOTICON_STHETOSCOPE[]         = {0xf0, 0x9f, 0xa9, 0xba, 0x0};
-  const char EMOTICON_STOPWATCH[]           = {0xe2, 0x8f, 0xb1, 0x0};
-  const char EMOTICON_THERMOMETER[]         = {0xf0, 0x9f, 0x8c, 0xa1, 0x0};
-  const char EMOTICON_TRIANGLE_DOWN[]       = {0xf0, 0x9f, 0x94, 0xbd, 0x0};
-  const char EMOTICON_TRIANGLE_UP[]         = {0xf0, 0x9f, 0x94, 0xbc, 0x0};
-  const char EMOTICON_UP_ARROW[]            = {0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f, 0x0};
-  const char EMOTICON_WARNING[]             = {0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x0};
-#else
-  const char EMOTICON_ALARM_CLOCK[]         = "";
-  const char EMOTICON_BATH[]                = "";
-  const char EMOTICON_BED[]                 = "";
-  const char EMOTICON_BULLSEYE[]            = "target";
-  const char EMOTICON_CALENDAR[]            = "";
-  const char EMOTICON_CAMERA[]              = "";
-  const char EMOTICON_CHECKERED_FLAG[]      = "";
-  const char EMOTICON_CHECKMARK[]           = "";
-  const char EMOTICON_CLOCK[]               = "";
-  const char EMOTICON_CROSSMARK[]           = "";
-  const char EMOTICON_DOWN_ARROW[]          = "";
-  const char EMOTICON_FLAME[]               = "";
-  const char EMOTICON_FOOTSTEPS[]           = "";
-  const char EMOTICON_GEAR[]                = "";
-  const char EMOTICON_GLASSES[]             = "";
-  const char EMOTICON_HAMMER_WRENCH[]       = "";
-  const char EMOTICON_HOURGLASS[]           = "";
-  const char EMOTICON_HOUSE[]               = "";
-  const char EMOTICON_ISLAND[]              = "";
-  const char EMOTICON_LAMP[]                = "";
-  const char EMOTICON_MAGIC_STICK[]         = "";
-  const char EMOTICON_OFFICE[]              = "";
-  const char EMOTICON_PIN[]                 = "";
-  const char EMOTICON_POINTING_FINGER[]     = "";
-  const char EMOTICON_RED_QUESTION_MARK[]   = "";
-  const char EMOTICON_RUNNER[]              = "";
-  const char EMOTICON_SHOWER[]              = "";
-  const char EMOTICON_SMILEY[]              = "";
-  const char EMOTICON_STHETOSCOPE[]         = "";
-  const char EMOTICON_STOPWATCH[]           = "";
-  const char EMOTICON_THERMOMETER[]         = "temp";
-  const char EMOTICON_TRIANGLE_DOWN[]       = "";
-  const char EMOTICON_TRIANGLE_UP[]         = "";
-  const char EMOTICON_UP_ARROW[]            = "";
-  const char EMOTICON_WARNING[]             = "";
-#endif
+const char EMOTICON_ALARM_CLOCK[]         = {0xe2, 0x8f, 0xb0, 0x0};
+const char EMOTICON_BATH[]                = {0xf0, 0x9f, 0x9b, 0x81, 0x0};
+const char EMOTICON_BED[]                 = {0xf0, 0x9f, 0x9b, 0x8f, 0x0};
+const char EMOTICON_BULLSEYE[]            = {0xf0, 0x9f, 0x8e, 0xaf, 0x0};
+const char EMOTICON_CALENDAR[]            = {0xf0, 0x9f, 0x93, 0x85, 0x0};
+const char EMOTICON_CAMERA[]              = {0xf0, 0x9f, 0x93, 0xb7, 0x0};
+const char EMOTICON_CHECKERED_FLAG[]      = {0xf0, 0x9f, 0x8f, 0x81, 0x0};
+const char EMOTICON_CHECKMARK[]           = {0xe2, 0x9c, 0x85, 0x0};
+const char EMOTICON_CLOCK[]               = {0xe2, 0x8f, 0xb0, 0x0};
+const char EMOTICON_CROSSMARK[]           = {0xe2, 0x9d, 0x8c, 0x0};
+const char EMOTICON_DOWN_ARROW[]          = {0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f, 0x0};
+const char EMOTICON_FLAME[]               = {0xf0, 0x9f, 0x94, 0xa5, 0x0};
+const char EMOTICON_FOOTSTEPS[]           = {0xf0, 0x9f, 0x91, 0xa3, 0x0};
+const char EMOTICON_GEAR[]                = {0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x0};
+const char EMOTICON_GLASSES[]             = {0xf0, 0x9f, 0x91, 0x93, 0x0};
+const char EMOTICON_HAMMER_WRENCH[]       = {0xf0, 0x9f, 0x9b, 0xa0, 0x0};
+const char EMOTICON_HOURGLASS[]           = {0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x0};
+const char EMOTICON_HOUSE[]               = {0xf0, 0x9f, 0x8f, 0xa0, 0x0};
+const char EMOTICON_ISLAND[]              = {0xf0, 0x9f, 0x8f, 0x96, 0x0};
+const char EMOTICON_LAMP[]                = {0xf0, 0x9f, 0x92, 0xa1, 0x0};
+const char EMOTICON_MAGIC_STICK[]         = {0xf0, 0x9f, 0xaa, 0x84, 0x0};
+const char EMOTICON_OFFICE[]              = {0xf0, 0x9f, 0x8f, 0xa2, 0x0};
+const char EMOTICON_PIN[]                 = {0xf0, 0x9f, 0x93, 0x8d, 0x0};
+const char EMOTICON_POINTING_FINGER[]     = {0xf0, 0x9f, 0x91, 0x89, 0x0};
+const char EMOTICON_RED_QUESTION_MARK[]   = {0xe2, 0x9d, 0x93, 0x0};
+const char EMOTICON_RUNNER[]              = {0xf0, 0x9f, 0x8f, 0x83, 0x0};
+const char EMOTICON_SHOWER[]              = {0xf0, 0x9f, 0x9a, 0xbf, 0x0};
+const char EMOTICON_SMILEY[]              = {0xf0, 0x9f, 0x98, 0x80, 0x0};
+const char EMOTICON_STHETOSCOPE[]         = {0xf0, 0x9f, 0xa9, 0xba, 0x0};
+const char EMOTICON_STOPWATCH[]           = {0xe2, 0x8f, 0xb1, 0x0};
+const char EMOTICON_THERMOMETER[]         = {0xf0, 0x9f, 0x8c, 0xa1, 0x0};
+const char EMOTICON_TRIANGLE_DOWN[]       = {0xf0, 0x9f, 0x94, 0xbd, 0x0};
+const char EMOTICON_TRIANGLE_UP[]         = {0xf0, 0x9f, 0x94, 0xbc, 0x0};
+const char EMOTICON_UP_ARROW[]            = {0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f, 0x0};
+const char EMOTICON_WARNING[]             = {0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x0};
 
 // Configuration file, containing WiFi access point data
 #define CONFIG_FILE "/config.jsn"
@@ -176,7 +142,7 @@ std::map<sender_t, string> senderLabels = {
 enum screen_t { scnHome, scnMain, scnOverruleToday, scnOverruleTomorrow, scnOverruleMultiple, 
   scnOverruleMultipleSchedule, scnSettingsMain, scnSettingsWeekSchedule, scnSettingsDaySchedule, 
   scnSettingsHomeTimes, scnSettingsOfficeTimes, scnSettingsWeekendTimes, scnSettingsTemperature, 
-  scnSettingsSensorOffset, scnInvalid };
+  scnSettingsSensorOffset, scnResetDevice, scnInvalid };
 
 std::map<screen_t, string> screenTitle = { 
   { scnHome,                     "Home"                         }, 
@@ -193,6 +159,7 @@ std::map<screen_t, string> screenTitle = {
   { scnSettingsHomeTimes,        "Set home times"               },
   { scnSettingsOfficeTimes,      "Set office times"             },
   { scnSettingsWeekendTimes,     "Set weekend times"            },
+  { scnResetDevice,              "Reset device"                 },
   { scnInvalid,                  "Invalid"                      }
 };
 
@@ -200,10 +167,12 @@ std::map<screen_t, string> screenTitle = {
 
 enum command_t { 
   // Commands that affect the controller
-  cmdControl, cmdSetpointHigher, cmdSetpointLower, cmdSetpointAuto, cmdGoAway, cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, 
+  cmdControl, cmdSetpointHigher, cmdSetpointLower, cmdComeHome, cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, 
   cmdOverruleTodayAutomatic, cmdOverruleTomorrowWorkFromHome, cmdOverruleTomorrowWorkAtOffice, cmdOverruleTomorrowWeekend, cmdOverruleTomorrowAway, cmdOverruleTomorrowAutomatic, 
   cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdOverruleMultipleWorkFromHome, cmdOverruleMultipleWorkAtOffice, cmdOverruleMultipleWeekend, cmdOverruleMultipleAway, 
-  cmdOverruleMultipleAutomatic, cmdSetWeekSchedule, cmdHomeWakeUpEarlier, cmdHomeWakeUpLater, cmdHomeGoToSleepEarlier, cmdHomeGoToSleepLater, cmdOfficeWakeUpEarlier, 
+  cmdOverruleMultipleAutomatic, 
+  cmdSetWeekSchedule, cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdAllDayAway,
+  cmdHomeWakeUpEarlier, cmdHomeWakeUpLater, cmdHomeGoToSleepEarlier, cmdHomeGoToSleepLater, cmdOfficeWakeUpEarlier, 
   cmdOfficeWakeUpLater, cmdOfficeLeaveEarlier, cmdOfficeLeaveLater, cmdOfficeComeHomeEarlier, cmdOfficeComeHomeLater, cmdOfficeGoToSleepEarlier, cmdOfficeGoToSleepLater, 
   cmdWeekendWakeUpEarlier, cmdWeekendWakeUpLater, cmdWeekendGoToSleepEarlier, cmdWeekendGoToSleepLater, cmdHighTemperatureUp, cmdHighTemperatureDown, cmdLowTemperatureUp, 
   cmdLowTemperatureDown, cmdSensorOffsetUp, cmdSensorOffsetDown, cmdSetTemperatureOffset, cmdUpdateStatus, cmdUpdateScreen, cmdSilentUpdate,
@@ -212,18 +181,17 @@ enum command_t {
   cmdLastControllerCommand, 
 
   // Commands that do not affect the controller
-  cmdMenuMain, cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuHome, cmdMultipleDaySchedule, 
-  cmdMenuWeekSchedule, cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuTemperature, cmdMenuSensorOffset, cmdReportBoiler, cmdReportTiming, cmdReportDebug,
-  cmdReportLog, 
-  cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdAllDayAway, cmdCommandNotRecognized, 
-  cmdBoilerSending, cmdBacklightOn, cmdKeyUp, cmdKeySelect, cmdKeyDown, cmdKeyPressed, cmdDisableTelegram, cmdEnableTelegram };
+  cmdStartTelegram, cmdMenuMain, cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuHome, cmdMultipleDaySchedule, cmdMenuWeekSchedule, 
+  cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuTemperature, cmdMenuSensorOffset, cmdReportBoiler, cmdReportTiming, cmdReportDebug, cmdReportLog, 
+  cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdCommandNotRecognized, 
+  cmdBoilerSending, cmdBacklightOn, cmdKeyUp, cmdKeySelect, cmdKeyDown, cmdKeyPressed, cmdDisableTelegram, cmdEnableTelegram, 
+  cmdResetDeviceMenu, cmdResetDeviceYes, cmdResetDeviceNo};
 
 std::map<command_t, string> commandLabels = {
   { cmdMenuMain                     , "Main menu"},
   { cmdSetpointHigher               , "Setpoint higher"},
   { cmdSetpointLower                , "Setpoint lower"},
-  { cmdSetpointAuto                 , "Setpoint automatic"},
-  { cmdGoAway                       , "Go out"},
+  { cmdComeHome                 , "Come home"},
   { cmdUpdateStatus                 , "Update"},
   { cmdMenuOverruleToday            , "Overrule today"},
   { cmdMenuOverruleTomorrow         , "Overrule tomorrow"},
@@ -299,12 +267,16 @@ std::map<command_t, string> commandLabels = {
   { cmdBacklightOn                  , "Turn backlight on"},
   { cmdKeyUp                        , "Key up"},
   { cmdKeySelect                    , "Key select"},
-  { cmdKeyDown                      , "Key down"},
-  { cmdUpdateScreen                 , "Update screen"},
-  { cmdSilentUpdate                 , "Silent update"},
-  { cmdKeyPressed                   , "Key pressed"},
-  { cmdDisableTelegram              , "Disable Telegram"},
-  { cmdEnableTelegram               , "Enable Telegram"}
+  { cmdKeyDown                      , "Key down" },
+  { cmdUpdateScreen                 , "Update screen" },
+  { cmdSilentUpdate                 , "Silent update" },
+  { cmdKeyPressed                   , "Key pressed" },
+  { cmdStartTelegram                , "Start Telegram" },
+  { cmdDisableTelegram              , "Disable Telegram" },
+  { cmdEnableTelegram               , "Enable Telegram" },
+  { cmdResetDeviceMenu              , "Restart menu" },
+  { cmdResetDeviceYes               , "Restart device" },
+  { cmdResetDeviceNo                , "Return without restart" }
 };
 
 // Structure of screens to initialize the menu
@@ -403,10 +375,10 @@ std::map<icon_t, string > ICONS = {
 
 enum dayType_t {dtWorkFromHome, dtWorkAtOffice, dtWeekend, dtAway, dtAuto};
 String DAY_TYPES[] = { "Work from home", "Work from office", "Weekend day", "All day away", "Automatic" };
-
+  
 const icon_t DAYTYPE_TO_ICON[]           = { iconHome,          iconWork,          iconWeekend,          iconAway,          iconAutomatic };
 const icon_t DAYTYPE_OVERRULED_TO_ICON[] = { iconHomeOverruled, iconWorkOverruled, iconWeekendOverruled, iconAwayOverruled, iconAutomatic };
-const char DAYTYPE__TO_EMOTICON[][5]     = { {0xf0, 0x9f, 0x8f, 0xa0, 0x0},   // House
+const char DAYTYPE_TO_EMOTICON[][5]      = { {0xf0, 0x9f, 0x8f, 0xa0, 0x0},   // House
                                              {0xf0, 0x9f, 0x8f, 0xa2, 0x0},   // Office
                                              {0xf0, 0x9f, 0x93, 0x85, 0x0},   // Calendar
                                              {0xf0, 0x9f, 0x8f, 0x96, 0x0},   // Island
@@ -458,6 +430,22 @@ timeValue_t timeNow() {
   localTime = localtime(&now);
   return timeValue_t(localTime->tm_hour, localTime->tm_min);
 }
+
+String secondsToDuration(float timeInSecs) {
+  String result = "";
+  uint32_t n;
+
+  if(timeInSecs<1) return "0 sec";
+    
+  if( timeInSecs > SECS_PER_YEAR )   { n = int( timeInSecs / SECS_PER_YEAR );   result += String(n)+" yr ";   timeInSecs-= n*SECS_PER_YEAR;   }
+  if( timeInSecs > SECS_PER_WEEK )   { n = int( timeInSecs / SECS_PER_WEEK );   result += String(n)+" wk ";   timeInSecs-= n*SECS_PER_WEEK;   }
+  if( timeInSecs > SECS_PER_DAY )    { n = int( timeInSecs / SECS_PER_DAY );    result += String(n)+" day ";  timeInSecs-= n*SECS_PER_DAY;    }
+  if( timeInSecs > SECS_PER_HOUR )   { n = int( timeInSecs / SECS_PER_HOUR );   result += String(n)+" hr ";   timeInSecs-= n*SECS_PER_HOUR;   }
+  if( timeInSecs > SECS_PER_MINUTE ) { n = int( timeInSecs / SECS_PER_MINUTE ); result += String(n)+" min ";  timeInSecs-= n*SECS_PER_MINUTE; }
+  if( timeInSecs > 1 )               { n = int( timeInSecs );                   result += String(n)+" sec";                                   }
+
+  return result;
+};
 
 /**************************
  * Datatypes for WiFi     *

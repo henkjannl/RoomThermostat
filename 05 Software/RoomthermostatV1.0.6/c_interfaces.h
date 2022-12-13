@@ -22,12 +22,12 @@ class ControllerData_t {
     timeValue_t workFromHomeWakeUp = {  7, 00 };
     timeValue_t workFromHomeSleep  = { 21, 30 };
 
-    timeValue_t workAtOfficeWakeUp = {  7, 00 };
-    timeValue_t workAtOfficeGoOut  = {  7, 45 };
-    timeValue_t workAtOfficeComeIn = { 17, 00 };
+    timeValue_t workAtOfficeWakeUp = {  6, 30 };
+    timeValue_t workAtOfficeGoOut  = {  7, 15 };
+    timeValue_t workAtOfficeComeIn = { 17, 15 };
     timeValue_t workAtOfficeSleep  = { 21, 30 };
 
-    timeValue_t weekendWakeUp      = {  9, 30 };
+    timeValue_t weekendWakeUp      = {  9, 00 };
     timeValue_t weekendSleep       = { 22, 00 };
 
     // Program to switch temperature setpoint if not overruled
@@ -63,6 +63,8 @@ class ControllerData_t {
     float overrideSetpoint = 20.0;    // Value for temperatureSetpoint if overrideTempNow == true
     bool overrideTempNow = false;
     setpointReason_t reasonForSetpoint;
+    dayType_t dayTypes[7] = {dtAuto, dtAuto, dtAuto, dtAuto, dtAuto, dtAuto, dtAuto};
+    bool dayTypeOverruled[7] = {false, false, false, false, false, false, false};
 
     float temperatureSetpoint = 20.0; // Temperature actually sent to the PID controller
     float P;
@@ -76,7 +78,6 @@ class ControllerData_t {
     icon_t dspShowerIcon  = iconShowerOff;
     icon_t dspWifiIcon    = iconWifiLost;
     icon_t dspBoilerIcon  = iconBoilerLost;
-    icon_t dayIcons[7]    = { iconHome, iconHome, iconHome, iconHome, iconHome, iconHome, iconHome };
 
     // BOILER STATUS
     // Boiler request

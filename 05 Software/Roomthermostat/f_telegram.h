@@ -636,10 +636,12 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                    String( controllerData->hotWaterActive ? EMOTICON_SHOWER : "") +
              "*";
 
-  if( lastMessageWithKeyboard>0 ) {
-    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(), lastMessageWithKeyboard);
-  } else {
+  if( ( lastMessageWithKeyboard < 1 ) or ( message.command == cmdStartTelegram ) ) {
+    // When sending the first message, the chatID containing the keyboard is not yet known
     bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard() );
+  } else {
+    // Update the last message containing a keyboard
+    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(), lastMessageWithKeyboard);
   }
 };
 
