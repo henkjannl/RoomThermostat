@@ -183,8 +183,6 @@ void BoilerCommunicate() {
   
   unsigned long response;
   
-  Serial.println("BoilerCommunicate()");
-
   pidController.setpoint=controllerData.temperatureSetpoint;
 
   // Ask PID controller for new value
@@ -237,7 +235,9 @@ void BoilerCommunicate() {
   */
   if(true) {
 
-    response = opentherm.setBoilerStatus(controllerData.enableCentralHeating, controllerData.enableHotWater, controllerData.enableCooling);
+    Serial.printf("BoilerCommunicate()\nEnable boiler\n");
+    //response = opentherm.setBoilerStatus(controllerData.enableCentralHeating, controllerData.enableHotWater, controllerData.enableCooling);
+    response = opentherm.setBoilerStatus(true, true, false);
     
     switch (opentherm.getLastResponseStatus() ) {
 
@@ -278,6 +278,7 @@ void BoilerCommunicate() {
 
   if(true) {
 
+    Serial.printf("requestedBoilerTemperature %.1f°C\n", controllerData.requestedBoilerTemperature);
     opentherm.setBoilerTemperature(controllerData.requestedBoilerTemperature);
 
     switch( opentherm.getLastResponseStatus() ) {
@@ -315,8 +316,10 @@ void BoilerCommunicate() {
 
   if(true) {
 
+    Serial.printf("requestedDomesticHotWaterSetpoint %.1f°C\n", controllerData.requestedDomesticHotWaterSetpoint);
     opentherm.setDHWSetpoint(controllerData.requestedDomesticHotWaterSetpoint);  
     if (opentherm.getLastResponseStatus() == OpenThermResponseStatus::SUCCESS) {
+      Serial.println("Communication success");
       lastDomesticHotWaterSetpoint = controllerData.requestedDomesticHotWaterSetpoint;
     }
   }
@@ -324,8 +327,10 @@ void BoilerCommunicate() {
   if ( controllerData.boilerOnline ) {
     controllerData.lastBoilerUpdate                  = currTime;
     controllerData.actualBoilerTemperature           = opentherm.getBoilerTemperature();
+    Serial.printf("boiler water temperature %.1f°C\n", controllerData.actualBoilerTemperature);
     controllerData.actualDomesticHotWaterTemperature = opentherm.getDHWTemperature();
-    controllerData.boilerPressure                    = opentherm.getPressure();
+    //controllerData.boilerPressure                    = opentherm.getPressure();
+    controllerData.boilerPressure                    = 0;
   }
 
   // Switch keyboard on
