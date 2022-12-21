@@ -27,8 +27,10 @@
   1.0.6 Simple logger added
         Low temperature of boiler control reduced to 0°C
         Telegram module simplified to be more in line with architectural graph
+        Boiler communication interval reduced to 5 sec since otherwise the boiler swtches to non-Opentherm mode and stops boiling
 
   TO DO:
+  remove 7-day icons from main menu, except after commands that change the 7-day scheme
   check use of const in function calls
   cleanup the use of messages. Some fields may no longer be needed
   cleanup Serial.print

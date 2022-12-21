@@ -6,7 +6,7 @@
 
 #define RECONNECT_INTERVAL   5*60*1000
 #define TEMP_MEAS_INTERVAL     10*1000 
-#define BOILER_INTERVAL        20*1000 // Was 3 minutes, but potential difference between proto and this version
+#define BOILER_INTERVAL         5*1000 
 
 /* ======================================
    PID CONTROLLER CLASS DEFINITION
