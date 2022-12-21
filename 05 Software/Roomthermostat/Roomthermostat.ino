@@ -4,7 +4,7 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.0.6"
+#define VERSION "1.0.7"
 
 /* 
   VERSION INFO:
@@ -27,7 +27,7 @@
   1.0.6 Simple logger added
         Low temperature of boiler control reduced to 0°C
         Telegram module simplified to be more in line with architectural graph
-        Boiler communication interval reduced to 5 sec since otherwise the boiler swtches to non-Opentherm mode and stops boiling
+  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler swtches to non-Opentherm mode and stops boiling
 
   TO DO:
   remove 7-day icons from main menu, except after commands that change the 7-day scheme
