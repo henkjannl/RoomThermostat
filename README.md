@@ -1,15 +1,15 @@
 # Roomthermostat
 
-I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi or internet are down. This is also useful for visitors who don't want to bother about Telegram.
+I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful for visitors who don't want to bother with Telegram.
 
 <p align="center">
-    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
+  <img src="02 User interface\photo.png" alt="photo" width="500"/> 
 </p>
 
 This is a fully (software & mechanics & electronics) open source project, based on an ESP32 microcontroller and the OpenTherm protocol.
 
 <p align="center">
-  <img src="02 User interface\photo.png" alt="photo" width="500"/> 
+    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
 </p>
 
 ## Features
@@ -20,11 +20,11 @@ Every weekday can be programmed to be one of four kinds:
 * **Weekend day**: same as home, but wake up and go to sleep at a different times
 * **All day away**: low temperature throughout the day (e.g. when on holiday)
 
+The temperature can be manually overruled to any temperature. The thermostat automatically will switch back to the programmed temperature as the following switch moment occurs.
 
 Only two temperatures are defined common to all day kinds:
 * a high temperature for when awake and present
 * a low temperature for when away or asleep
-
 
 All times for each day type (8 times in total) can be modified.
 
@@ -218,9 +218,10 @@ The flow of events and messages is as follows:
 
 
 ### User presses key
-* the ISR is running at about 30 Hz and is kept a small as possible. Most actions are carried out by the Menu. The ISR of the keyboard only sends a message to the menu, containing the key that was pressed 
+* the ISR is running at about 30 Hz and is kept a small as possible. The capacitive sensors sometimes give a spike which only lasts one clock tick. Therefor, a key press is only considered valid if the key remains pressed for 2 subsequent samples. The ISR of the keyboard only sends a message to the menu, containing the key that was pressed. Subsequent actions are then carried out by the menu and other modules
+* The capacitive sensor does not work well together with the SPI bus of the display, resulting in a crash of the microcontroller. Also, the keyboard ISR can interfere with the timing of the OpenThrem protocol. Therefore, polling the capacitive sensors is disabled during display or OpenTherm communication 
 * the Backlight is controlled by the Display. In some cases, a button press does not result in a command to the controller (e.g., pressing the 'up'-button while the top menu item was already selected). In these cases, the backlight should also switch on. Therefore, the menu always sends a `cmdBacklightOn` command directly to the Backlight
-* Telegram can take a few seconds to return. To improve responsivity of the keyboard, Telegram is temporarily disabled while the user is interacting with the keyboard. Telegram will be re-enabled as soon as the blacklight switches off
+* Telegram can take a few seconds to return. To improve responsivity of the keyboard, Telegram is temporarily disabled while the user is interacting with the keyboard. Telegram will be re-enabled as soon as the blacklight switches off.
 * the first key press is only used to switch on the backlight. If the backlight is off while a key is pressed, the key is ignored and the backlight is woken up
 
 
