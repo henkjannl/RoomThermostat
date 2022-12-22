@@ -20,7 +20,7 @@ Every weekday can be programmed to be one of four kinds:
 * **Weekend day**: same as home, but wake up and go to sleep at a different times
 * **All day away**: low temperature throughout the day (e.g. when on holiday)
 
-The temperature can be manually overruled to any temperature. The thermostat automatically will switch back to the programmed temperature as the following switch moment occurs.
+The temperature can be manually overruled to any temperature. The thermostat will automatically switch back to the programmed temperature as the next switch moment occurs.
 
 Only two temperatures are defined common to all day kinds:
 * a high temperature for when awake and present
@@ -152,7 +152,7 @@ The hardware consists of:
 * 16 magnets (ø10 x 2.75 mm)
 * a PCB designed in KiCad. This is optional, components can also be connected with wires, although it is less reliable
 
-I think the total bill of materials is about €35
+Except for the housing and the OpenTherm interface, everything was ordered at AliExpress. The total bill of materials was about €35. The bill of materials can be found here ```\04 Electrical\Bill of materials.ods```.
 
 
 ## Mechanical hardware
