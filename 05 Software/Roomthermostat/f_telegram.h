@@ -624,7 +624,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   } // switch (message.command) end of STEP 3
 
   // For some of the screens, include the current day schedule starting today
-  if( screen < scnSettingsWeekSchedule ) {
+  if( ( screen > scnMain ) and (screen < scnSettingsMain) ) {
     for(int i=0; i<7; i++) response += String( DAYTYPE_TO_EMOTICON[ controllerData->dayTypes[ i ] ] ) + " ";
     response+="\n";
   }
