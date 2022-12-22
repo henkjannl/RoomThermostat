@@ -66,7 +66,7 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdReportTiming,                 { String(EMOTICON_STOPWATCH)   + " Timing report",    "/cmdReportTiming"                 } },
   { cmdReportDebug,                  { String(EMOTICON_POINTING_FINGER) + " Debug report", "/cmdReportDebug"                  } },
   
-  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING) + " Restart the thermostat menu", "/cmdResetDeviceMenu"       } },
+  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING) + " Restart the thermostat..", "/cmdResetDeviceMenu"       } },
   { cmdResetDeviceYes,               { String(EMOTICON_WARNING) + " Continue restart",     "/cmdResetDeviceYes"               } },
   { cmdResetDeviceNo,                { "Return without restart",                           "/cmdResetDeviceNo"                } },
     
@@ -361,6 +361,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   uint8_t dayOfWeek;
   const int BUFLEN = 80;
   char buffer[BUFLEN];
+  bool showWeekSchedule = false;
   //char buffer1[BUFLEN];
   //char buffer2[BUFLEN];
 
@@ -380,17 +381,25 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
   // STEP 1: Change the screen based on the command
   switch (message.command)  {
-    case cmdOverruleTodayWorkFromHome:    screen = scnMain;                 break;
-    case cmdOverruleTodayWorkAtOffice:    screen = scnMain;                 break;
-    case cmdOverruleTodayWeekend:         screen = scnMain;                 break;
-    case cmdOverruleTodayAway:            screen = scnMain;                 break;
-    case cmdOverruleTodayAutomatic:       screen = scnMain;                 break;
-    case cmdMenuMain:                     screen = scnMain;                 break;
-    case cmdOverruleTomorrowWorkFromHome: screen = scnMain;                 break;
-    case cmdOverruleTomorrowWorkAtOffice: screen = scnMain;                 break;
-    case cmdOverruleTomorrowWeekend:      screen = scnMain;                 break;
-    case cmdOverruleTomorrowAway:         screen = scnMain;                 break;
-    case cmdOverruleTomorrowAutomatic:    screen = scnMain;                 break;
+    case cmdOverruleTodayWorkFromHome:    screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayWorkAtOffice:    screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayWeekend:         screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayAway:            screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayAutomatic:       screen = scnMain; showWeekSchedule=true; break;
+    case cmdMenuMain:                     screen = scnMain;                        break;
+    case cmdOverruleTomorrowWorkFromHome: screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowWorkAtOffice: screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowWeekend:      screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowAway:         screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowAutomatic:    screen = scnMain; showWeekSchedule=true; break;
+
+    case cmdOverruleMultipleWorkFromHome: showWeekSchedule = true; break;
+    case cmdOverruleMultipleWorkAtOffice: showWeekSchedule = true; break;
+    case cmdOverruleMultipleWeekend:      showWeekSchedule = true; break;
+    case cmdOverruleMultipleAway:         showWeekSchedule = true; break;
+    case cmdOverruleMultipleAutomatic:    showWeekSchedule = true; break;
+    case cmdOverruleMultipleFewerDays:    showWeekSchedule = true; break;
+    case cmdOverruleMultipleMoreDays:     showWeekSchedule = true; break;
 
     case cmdMenuOverruleToday:            screen = scnOverruleToday;        break;
     case cmdMenuOverruleTomorrow:         screen = scnOverruleTomorrow;     break;
@@ -460,8 +469,6 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         break;
       } // switch(controllerData->reasonForSetpoint)
 
-      response += "*Day settings starting today:*\n";
-
       break; // screen==scnMain
     
     case scnOverruleToday: 
@@ -471,6 +478,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
       else
         response= String("Today is overruled to be '") + String(DAY_TYPES[controllerData->overrideToday].c_str()) + "'.\n";
 
+      showWeekSchedule=true; 
+
       break;
     
     case scnOverruleTomorrow: 
@@ -478,6 +487,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         response= String("Tomorrow is not overruled\n");
       else
         response= String("Tomorrow is overruled to be '") + String(DAY_TYPES[controllerData->overrideTomorrow].c_str()) + "'.\n";
+
+      showWeekSchedule=true; 
 
       break;
 
@@ -496,11 +507,11 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                     String("Last day is ") + buffer + "\n";
       };
 
+      showWeekSchedule=true; 
       
       break;
 
     case scnSettingsMain: 
-      response = "Day settings starting today:\n";
   
       break;
       
@@ -578,15 +589,14 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   // STEP 3: OVERRIDE DEFAULT RESPONSE FOR CERTAIN COMMANDS
   switch (message.command)  {
 
-    case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;
-    
+    case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;    
     case cmdSetpointLower:     response= "The setpoint temperature is lowered to "   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdComeHome:          response= "The setpoint is set to "                   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdSetpointHigher:    response= "The setpoint temperature is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdOverruleTodayAway: response= "Status changed to 'Away'\n"; break;
 
     case cmdUpdateStatus:      
-      response = "Day settings starting today:\n";
+
     break; 
 
     case cmdReportBoiler: 
@@ -624,9 +634,10 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   } // switch (message.command) end of STEP 3
 
   // For some of the screens, include the current day schedule starting today
-  if( ( screen > scnMain ) and (screen < scnSettingsMain) ) {
+  if( showWeekSchedule ) {
+    response += "Day settings starting today:\n";
     for(int i=0; i<7; i++) response += String( DAYTYPE_TO_EMOTICON[ controllerData->dayTypes[ i ] ] ) + " ";
-    response+="\n";
+    response += "\n";
   }
   
   response+= "*" + currentTime() + " " +
