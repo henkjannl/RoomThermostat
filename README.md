@@ -1,6 +1,6 @@
 # Roomthermostat
 
-I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful for visitors who don't want to bother with Telegram.
+I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful since visitors may not want to use Telegram.
 
 <p align="center">
   <img src="02 User interface\photo.png" alt="photo" width="500"/> 
@@ -37,7 +37,7 @@ There is flexibility on top of that:
 * At all times, a **higher or lower temperature** can be manually selected. When the next programmed timeslot arrives, the temperature switches back to the program.
 
 
-The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. A list of all Telegram users is kept and each user can be in a different menu without receiving updates from other users.
+The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
 ## Main menu in Telegram
 
@@ -46,6 +46,8 @@ After selecting ```/start``` in Telegram, the following message and keyboard are
 <p align="center">
   <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
 </p>
+
+The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```Status``` button cn be used to update the status.
 
 The settings menu has the following options:
 
@@ -64,7 +66,9 @@ To do this, select ```Overrule multiple days``` in the main menu:
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="372"/> 
 </p>
 
-Then select ```All day away``` in the next menu since we are going on a holiday:
+The icons in the next windows show that today and tomorrow are currently programmed as 'Work from office'-days, followed by two weekend days, and then some more 'work from office days'.
+
+Select ```All day away``` since we will be going on a holiday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="401"/> 
@@ -72,7 +76,7 @@ Then select ```All day away``` in the next menu since we are going on a holiday:
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```More days``` button multiple times in the next menu until the message says there are 5 days, ending on Monday:
+Then select ```More days``` button multiple times in the next menu until the message says there are 5 'All day away'-days, ending on Monday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="401"/> 
@@ -108,6 +112,10 @@ Of course it is also possible to do these steps after we leave, without the need
 
 
 ## First use
+It is required to make a specific Telegram bot account for the thermostat. There are many sources explaining how a new Telegram bot can be created, such as in this [Random Nerd Tutorials Telegram example](https://randomnerdtutorials.com/telegram-control-esp32-esp8266-nodemcu-outputs/).
+
+One ChatID can be provided to which the roomthermostat sends a message upon startup. This is useful to be aware that the thermostat was reset, due to a software bug or power outage.
+
 In order to use the software, the user must first:
 * make a copy of `template.jsn` (located in the `..\RoomThermoStat\05 Software\Roomthermostat\data` folder)
 * rename the copy `config.jsn` 
