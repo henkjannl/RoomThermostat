@@ -19,6 +19,23 @@ typedef void (*keyboardFunction)(); // To create pointers to enableKeyboard and 
 
 class ControllerData_t {
   public:
+    // SETTINGS STORED IN CONFIG.JSN
+    // WiFi
+    list<tAccessPoint> AccessPoints;
+  
+    bool locationKnown=false;            
+    char timezone[64]="Europe/Amsterdam";
+    int  timeZoneOffset=3600;
+    int  timeDSToffset=0;
+  
+    // TELEGRAM
+    // Telegram bot settings
+    String botName;
+    String botUserName;
+    String botToken;
+    String botChatID="";
+
+    // SETTINGS STORED IN SETTINGS_FILE.JSN
     timeValue_t workFromHomeWakeUp = {  7, 00 };
     timeValue_t workFromHomeSleep  = { 21, 30 };
 
@@ -43,6 +60,12 @@ class ControllerData_t {
     dayType_t overrideTomorrow  = dtAuto;
     dayType_t overrideMultiple  = dtAuto;
     int overrideMultipleCount   = 3;
+
+    float sensorOffset=-3.5;        // The offset added to the temperature sensor
+
+    // SETTINGS NOT STORED
+    // Settings have been changed and need to be stored to SPIFFS
+    bool settingsChanged = false;
     
     // Backlight
     bool backLightOn  = true; 
@@ -50,12 +73,11 @@ class ControllerData_t {
     // Time status
     bool timeSynched  = false;
 
-    // TEMPERATRE MEASUREMENTS
+    // TEMPERATURE MEASUREMENTS
     uint8_t numSensors;
     DeviceAddress sensorAddress[MAX_NUM_SENSORS];
     bool temperatureMeasurementOK;
     float rawTemperature=20;        // The temperature without offset measured periodically
-    float sensorOffset=-3.5;        // The offset added
     float measuredTemperature() { return rawTemperature+sensorOffset; };
     timeValue_t lastTemperatureMeasurement = timeValue_t(0,0);
     
@@ -99,36 +121,19 @@ class ControllerData_t {
     float actualDomesticHotWaterTemperature;
     float boilerPressure;
 
-    // WiFi
-    list<tAccessPoint> AccessPoints;
-  
-    bool locationKnown=false;            
-    char timezone[64]="Europe/Amsterdam";
-    int  timeZoneOffset=3600;
-    int  timeDSToffset=0;
-  
-    // TELEGRAM
-    // Telegram bot settings
-    String botName;
-    String botUserName;
-    String botToken;
-    String botChatID="";
-
     // Log timing of subprocesses
     LogBusyTime logBusyTime;
     DataLogger_t datalogger;
 
     void loadConfig(fs::FS &fs, const char * configFile);
-    void saveSettings(fs::FS &fs, const char * tempFile, const char * configFile);
-    void loadSettings(fs::FS &fs, const char * configFile);
+    void saveSettings(fs::FS &fs, const char * tempFile, const char * settingsFile);
+    void loadSettings(fs::FS &fs, const char * settingsFile);
 };
 
 void ControllerData_t::loadConfig(fs::FS &fs, const char * configFile) {    
   // Retrieve configuration data from the configuration file stored in SPIFFS 
   StaticJsonDocument<1024> doc;
 
-  //disableKeyboard();
-
   File input = fs.open(configFile);
   DeserializationError error = deserializeJson(doc, input);
   
@@ -152,67 +157,104 @@ void ControllerData_t::loadConfig(fs::FS &fs, const char * configFile) {
   botChatID=  doc["ChatID"     ].as<String>();
 
   Serial.println("Config loaded");  
-
-  //enableKeyboard();
 };
 
 // Loads the settings from a file
-void ControllerData_t::loadSettings(fs::FS &fs, const char * configFile) {    
+void ControllerData_t::loadSettings(fs::FS &fs, const char * settingsFile) {    
   // Retrieve configuration data from the configuration file stored in SPIFFS 
   StaticJsonDocument<1024> doc;
 
-  //disableKeyboard();
+  File input = fs.open(settingsFile);
 
-  File input = fs.open(configFile);
+  if(!input || input.isDirectory()){
+      Serial.println("- failed to open file for reading");
+      return;
+  }
+  
   DeserializationError error = deserializeJson(doc, input);
   
   if (error) {
-    Serial.print(F("deserializeJson() of configfile failed: "));
+    Serial.print(F("deserializeJson() of settingsfile failed: "));
     Serial.println(error.f_str());
     return;
   }
-      
-  for (JsonObject elem : doc["AccessPoints"].as<JsonArray>()) {
-    tAccessPoint AccessPoint;
-    strlcpy(AccessPoint.ssid     ,elem["SSID"],    sizeof(AccessPoint.ssid    ));
-    strlcpy(AccessPoint.password ,elem["password"],sizeof(AccessPoint.password));
-    strlcpy(AccessPoint.timezone ,elem["timezone"],sizeof(AccessPoint.timezone));          
-    AccessPoints.push_back(AccessPoint);  
-  }
+
+  int minutesSinceMidnight;
+  minutesSinceMidnight = doc[ "workFromHomeWakeUp" ]; workFromHomeWakeUp = timeValue_t( minutesSinceMidnight );
+  minutesSinceMidnight = doc[ "workFromHomeSleep"  ]; workFromHomeSleep  = timeValue_t( minutesSinceMidnight );
+
+  minutesSinceMidnight = doc[ "workAtOfficeWakeUp" ]; workAtOfficeWakeUp = timeValue_t( minutesSinceMidnight );
+  minutesSinceMidnight = doc[ "workAtOfficeGoOut"  ]; workAtOfficeGoOut  = timeValue_t( minutesSinceMidnight );
+  minutesSinceMidnight = doc[ "workAtOfficeComeIn" ]; workAtOfficeComeIn = timeValue_t( minutesSinceMidnight );
+  minutesSinceMidnight = doc[ "workAtOfficeSleep"  ]; workAtOfficeSleep  = timeValue_t( minutesSinceMidnight );
+
+  minutesSinceMidnight = doc[ "weekendWakeUp"      ]; weekendWakeUp      = timeValue_t( minutesSinceMidnight );
+  minutesSinceMidnight = doc[ "weekendSleep"       ]; weekendSleep       = timeValue_t( minutesSinceMidnight );
+
+  int dayType;
+  int i = 0;
+  for (JsonObject elem : doc["regularWeek"].as<JsonArray>()) {
+    dayType = elem[ "DayType" ];     
+    regularWeek[i++] = (dayType_t) dayType;
+  };
+
+  highTemp = doc["highTemp"];
+  lowTemp  = doc["lowTemp" ];
+    
+  dayType = doc[ "overrideToday"    ]; overrideToday    = (dayType_t) dayType;
+  dayType = doc[ "overrideTomorrow" ]; overrideTomorrow = (dayType_t) dayType;
+  dayType = doc[ "overrideMultiple" ]; overrideMultiple = (dayType_t) dayType;
+  overrideMultipleCount = doc[ "overrideMultipleCount" ];
+
+  sensorOffset = doc["sensorOffset" ];
   
-  botName=    doc["BotName"    ].as<String>();
-  botUserName=doc["BotUsername"].as<String>();
-  botToken=   doc["BotToken"   ].as<String>();
-  botChatID=  doc["ChatID"     ].as<String>();
-
-  Serial.println("Config loaded");  
-
-  //enableKeyboard();
+  Serial.println("Settings loaded");  
 };
 
-// Saves the settings to a file
-void ControllerData_t::saveSettings(fs::FS &fs, const char * tempFile, const char * configFile) {    
+void ControllerData_t::saveSettings(fs::FS &fs, const char * tempFile, const char * settingsFile) {    
 
+  // Saves the settings to a file
   StaticJsonDocument<1024> doc;
 
-  File output = fs.open(tempFile);
+  File output = fs.open(tempFile, FILE_WRITE);
 
-  JsonArray jsnAPs = doc.createNestedArray("AccessPoints");
-  for(auto & accesspoint : AccessPoints) {
-    
-    JsonObject jsnAP = jsnAPs.createNestedObject();
-    jsnAP["SSID"] = accesspoint.ssid;
-    jsnAP["password"] = accesspoint.password;
-    jsnAP["timezone"] = accesspoint.timezone;
+  doc[ "workFromHomeWakeUp" ] = (int) workFromHomeWakeUp.minutesSinceMidnight;
+  doc[ "workFromHomeSleep"  ] = (int) workFromHomeSleep.minutesSinceMidnight;
+
+  doc[ "workAtOfficeWakeUp" ] = (int) workAtOfficeWakeUp.minutesSinceMidnight;
+  doc[ "workAtOfficeGoOut"  ] = (int) workAtOfficeGoOut.minutesSinceMidnight;
+  doc[ "workAtOfficeComeIn" ] = (int) workAtOfficeComeIn.minutesSinceMidnight;
+  doc[ "workAtOfficeSleep"  ] = (int) workAtOfficeSleep.minutesSinceMidnight;
+
+  doc[ "weekendWakeUp"      ] = (int) weekendWakeUp.minutesSinceMidnight;
+  doc[ "weekendSleep"       ] = (int) weekendSleep.minutesSinceMidnight;
+
+  int i = 0;
+  for (JsonObject elem : doc["regularWeek"].as<JsonArray>()) {
+    elem[ "DayType" ] = (int) regularWeek[i++];
   }
+
+  doc["highTemp"] = highTemp;
+  doc["lowTemp" ] = lowTemp;
+
+  doc[ "overrideToday"    ] = (int) overrideToday;
+  doc[ "overrideTomorrow" ] = (int) overrideTomorrow;
+  doc[ "overrideMultiple" ] = (int) overrideMultiple;
+  doc[ "overrideMultipleCount" ] = overrideMultipleCount;
+
+  doc["sensorOffset" ] = sensorOffset;
     
-  doc["BotName"]     = botName;
-  doc["BotUsername"] = botUserName;
-  doc["BotToken"]    = botToken;
-  doc["ChatID"]      = botChatID;
-    
-  serializeJson(doc, output);
-}
+  if( serializeJson(doc, output) > 0) {
+    // Assume success if at least one byte was written
+
+    // Remove settings file to temp file and replace settings file
+    fs.remove(settingsFile);
+    fs.rename(tempFile, settingsFile);
+    Serial.printf("Saved settings to '%s'\n", settingsFile);
+  }
+
+  settingsChanged = false;
+} 
 
 class userEventMessage_t {
   public:

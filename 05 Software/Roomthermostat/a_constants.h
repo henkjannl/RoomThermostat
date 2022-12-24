@@ -119,8 +119,14 @@ const char EMOTICON_UP_ARROW[]            = {0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f,
 const char EMOTICON_WARNING[]             = {0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x0};
 
 // Configuration file, containing WiFi access point data
-#define CONFIG_FILE "/config.jsn"
-#define TEMP_CONFIG "/config.tmp"
+#ifdef USE_TESTBOT
+  #define CONFIG_FILE   "/config_test.jsn"
+#else
+  #define CONFIG_FILE   "/config.jsn"
+#endif  
+
+#define SETTINGS_FILE "/settings.jsn"
+#define SETTINGS_TEMP "/settings.tmp"
 
 
 enum boilerResponse_t { boilerNone, boilerSuccess, boilerInvalid, boilerTimeout };
@@ -391,6 +397,7 @@ class timeValue_t {
   public:
     // Constructors
     timeValue_t() { minutesSinceMidnight = 0; };
+    timeValue_t(int minutesSinceMidnight) { this->minutesSinceMidnight=minutesSinceMidnight; };
     timeValue_t(int hour, int minute) { minutesSinceMidnight=60*hour+minute; };
     timeValue_t(const time_t& source) {
       struct tm * otherTime;

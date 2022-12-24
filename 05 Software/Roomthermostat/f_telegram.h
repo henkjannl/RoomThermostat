@@ -796,7 +796,7 @@ UniversalTelegramBot bot("", securedClient);                                    
 TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
 
 void startTelegram() {
-  bot.maxMessageLength = 3000;
+  bot.maxMessageLength = 6000;
   telegramHandler.begin( );
 
   Serial.printf("Startup: Pointer to bot: %p\n", &bot);

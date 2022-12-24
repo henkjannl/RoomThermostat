@@ -4,7 +4,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.0.7"
+#define VERSION "1.0.8"
+//#define USE_TESTBOT
 
 /* 
   VERSION INFO:
@@ -25,12 +26,12 @@
         implement cmdBoilerSending and cmdBoilerNormal in display
         create an additional debug screen (done in telegram)
   1.0.6 Simple logger added
-        Low temperature of boiler control reduced to 0°C
         Telegram module simplified to be more in line with architectural graph
-  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler swtches to non-Opentherm mode and stops boiling
+  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler switches to non-Opentherm mode and stops boiling
+  1.0.8 Autosave of settings to SPIFFS
+        increased value of Telegram maxMessageLength to 6000 to prevent lockup at cmdReportLog
 
   TO DO:
-  remove 7-day icons from main menu, except after commands that change the 7-day scheme
   check use of const in function calls
   cleanup the use of messages. Some fields may no longer be needed
   cleanup Serial.print
@@ -44,10 +45,7 @@
   implement OpenTherm protocoll in either RMT (https://github.com/Weissnix4711/esphome-opentherm-custom/blob/master/components/opentherm/opentherm_protocol.h) or FreeRTOS
  
   Update all Telegram chats every 15 minutes or so
-  Make central store of variables, that can also be saved to / retrieved from permanent memory
   Find replace action Leave > GoOut 
-  Add save and load of persistent data
-  Do autosave if persistent data is changed
 
   Conflict between touchRead and SPIFFS is now resolved by disabling keyboard during use of screen. Perhaps sufficient to only disable during sprite.loadFont()
   Automatic updates to last message of known clients every 15 minutes
@@ -119,8 +117,12 @@ void setup() {
   delay(300);
   //listDir(SPIFFS, "/", 0);
 
-  Serial.println("Loading config data");
+  Serial.printf("Loading config data from '%s'\n", CONFIG_FILE);
   controllerData.loadConfig(SPIFFS, CONFIG_FILE);
+
+  Serial.println("Loading controller settings");
+  controllerData.loadSettings(SPIFFS, SETTINGS_FILE);   
+  controllerData.settingsChanged = false; 
 
   Serial.println("Initializing menu");
   startMenu();
@@ -156,59 +158,20 @@ void setup() {
 
 void loop() {
   static unsigned long lastTimeDetailedReport=0;      // last time temperature measurement was done
-  static unsigned long lastEvent = millis();  
+  static unsigned long lastSettingsSave = millis();  
   static int eventCounter = 0;
   static int counter =0;
   userEventMessage_t message; 
-/*
-  // This is for debug purposes
-  if(millis() - lastEvent > 2000){
-    lastEvent=millis();
-    
-    switch(eventCounter++) {
-      case 0:
-        Serial.println("\nEvent 0: Select screen scnMain, cmdMenuOverruleToday");
-        selectScreen(scnMain, cmdMenuOverruleToday);
-        break;
-      
-      case 1:
-        Serial.println("\nEvent 1: Press select key");
-        message = userEventMessage_t(sndKeyboard, cmdKeySelect); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 2:
-        Serial.println("\nEvent 2: Press down key");
-        message = userEventMessage_t(sndKeyboard, cmdKeyDown); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 3:
-        Serial.println("\nEvent 3: Press select key");
-        message = userEventMessage_t(sndKeyboard, cmdKeySelect); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 4:
-        Serial.println("\nEvent 4: Next item");
-        menu.nextMenuItem();
-        menu.dump();    
-        break;
-      
-      case 5:
-        Serial.println("\nEvent 5: First item");
-        menu.firstMenuItem();
-        menu.dump();    
-        break;
-      
-      case 6:
-        Serial.println("\nEvent 6: Previous item");
-        menu.prevMenuItem();
-        menu.dump();    
-        break;      
+
+  // If controller settings were changed, autosave the settings every minute
+  if(millis() - lastSettingsSave > 60*1000 ){
+    lastSettingsSave = millis();
+    if( controllerData.settingsChanged ) {
+      disableKeyboard(); // Really necessary!
+      controllerData.saveSettings(SPIFFS, SETTINGS_TEMP, SETTINGS_FILE);    
+      enableKeyboard();
     }
   }
-*/
 
   controllerData.logBusyTime.start(btTotal);
   controllerData.logBusyTime.start(btTemperature);    checkTemperatureIfNeeded();              controllerData.logBusyTime.finish(btTemperature);    
