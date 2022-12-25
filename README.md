@@ -39,7 +39,8 @@ There is flexibility on top of that:
 
 The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
-## Main menu in Telegram
+## Controlling the thermostat through Telegram
+### Main menu in Telegram
 
 After selecting ```/start``` in Telegram, the following message and keyboard are returned:
 
@@ -56,7 +57,7 @@ The settings menu has the following options:
 </p>
 
 
-## Simple use case in Telegram: going on a short holiday
+### Simple use case in Telegram: going on a short holiday
 
 The scenario is that we are going on a holiday for a few days and we will return on Monday.
 
@@ -109,6 +110,16 @@ Finally, select ```Back to the main menu```:
 </p>
 
 Of course it is also possible to do these steps after we leave, without the need to overrule the current day. As we are returning home during the next Saturday, we can also overrule the current day to ensure the house is comfortable upon arrival.
+
+### Switch off the thermostat for a longer period of time
+
+To switch off the thermostat for a longer period of time, for instance during the summer or during a long holiday, proceed as follows:
+* Select ```Overrule multiple days``` in the main menu
+* Select ```All day away```
+* Select ```Forever```
+* Select ```Back to the main menu```
+
+The thermostat is now switched off until ```Overrule multiple days``` is switched to ```Automatic```
 
 
 ## First use
@@ -268,13 +279,23 @@ The flow of events and messages is as follows:
 * Arduino programs to test individual pieces of hardware are located in `..\RoomThermoStat\05 Software\Tests`
 * Current version of the Arduino software is located in `..\RoomThermoStat\05 Software\Roomthermostat`
 
+## Over the air software updates
+
+After uploading the code over the COM port the first time, over the air updates are possible. However, during normal operation, the keyboard handler will interfere with the update process.
+Therefore, first use Telegram to select ```Settings``` > ```Receive over the air update...```. The keyboard handler, the boiler and Telegram will 
+be disabled for five minutes during which time boiler will switch off. 
+During these five minutes, th blue LED on the ESP32 will light up. During this time, choose the over the air port in Arduino (instead of the COM port) and upload the software over WiFi.
+
 # To do
 
 Potential improvements:
-* include over the air software updates
+* improvement of responsiveness (keys and Telegram)
+* switch off multiple days forever fro the main menu
+* while waiting for over the air software update, display message on screen
+* introduce permanent 'off' mode, for instance during the summer
+* improve responsiveness
 * send logfile as attachment to Telegram
 * include icons in the menu
-* introduce permanent 'off' mode, for instance during the summer
 * allow user to modify water temperature of heater and shower
 * save logdata through WiFi connection (Deta Base?)
 * much code can be simplified to remove structures that were used in previous attempts to get the code working

@@ -460,12 +460,18 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         break;
     
         case spMultipleDays:
-          localTime = localtime(&now);
-          localTime->tm_mday += controllerData->overrideMultipleCount;
-          mktime(localTime);
-          strftime(buffer, BUFLEN, "%A %e %B", localTime);
-          response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
-                      String(controllerData->overrideMultipleCount) + " days ending " + buffer + "\n";
+
+          if( controllerData->multipleForever) {
+            response=  "Multiple days are permanently set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "'\n";
+          }
+          else {
+            localTime = localtime(&now);
+            localTime->tm_mday += controllerData->overrideMultipleCount;
+            mktime(localTime);
+            strftime(buffer, BUFLEN, "%A %e %B", localTime);
+            response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
+                        String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+          }
         break;
     
         case spOverrideToday:
@@ -507,13 +513,17 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         response = "Override multiple not set\n";
       }
       else {
-        localTime = localtime(&now);
-        localTime->tm_mday += controllerData->overrideMultipleCount-1; // controllerData->overrideMultipleCount = 1 means today
-        mktime(localTime);
-        strftime(buffer, BUFLEN, "%A %e %B", localTime);
-        response  = String("Multiple days are set to '") + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " +
-                    String(controllerData->overrideMultipleCount) + "' days.\n" + 
-                    String("Last day is ") + buffer + "\n";
+        if( controllerData->multipleForever) {
+          response=  "Multiple days are permanently set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "'\n";
+        }
+        else {
+          localTime = localtime(&now);
+          localTime->tm_mday += controllerData->overrideMultipleCount;
+          mktime(localTime);
+          strftime(buffer, BUFLEN, "%A %e %B", localTime);
+          response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
+                      String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+        }
       };
 
       showWeekSchedule=true; 

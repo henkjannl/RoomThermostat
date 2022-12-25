@@ -35,7 +35,8 @@
 
   TO DO:
     Potential improvements:
-    * change main menu to switch off multipleForever
+    * switch off multiple days forever fro the main menu
+    * while waiting for over the air software update, display message on screen
     * introduce permanent 'off' mode, for instance during the summer
     * improve responsiveness
     * send logfile as attachment to Telegram
@@ -119,8 +120,9 @@ void setup() {
   // Initilize serial port
   Serial.begin(115200);
 
-  // Prepare onboard LED for output
+  // Prepare onboard LED for output and switch LED off (used for over the air update)
   pinMode(PIN_ESP32_LED, OUTPUT);
+  digitalWrite(PIN_ESP32_LED, false);
 
   // Initialize SPIFFS
   delay(300);
