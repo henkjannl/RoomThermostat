@@ -5,7 +5,7 @@
 #include "SPIFFS.h"
 
 #define VERSION "1.1.0"
-//#define USE_TESTBOT
+#define USE_TESTBOT true
 
 /* 
   VERSION INFO:
@@ -27,17 +27,19 @@
         create an additional debug screen (done in telegram)
   1.0.6 Simple logger added
         Telegram module simplified to be more in line with architectural graph
-  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler switches to non-Opentherm mode and stops boiling
+  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler 
+        switches to non-Opentherm mode and stops boiling since the connection is open
   1.0.8 Autosave of settings to SPIFFS
         increased value of Telegram maxMessageLength to 6000 to prevent lockup at cmdReportLog
-  1.1.0 Over the air software updates implemented, but not working: probably ESP32 to busy to handle request
+  1.1.0 Over the air software updates implemented
 
   TO DO:
     Potential improvements:
-    * send logfile as attachment to Telegram
-    * fix over the air software updates (block keyboard & Opentherm & Telegram if OTA becomes active?)
-    * include icons in the menu
+    * change main menu to switch off multipleForever
     * introduce permanent 'off' mode, for instance during the summer
+    * improve responsiveness
+    * send logfile as attachment to Telegram
+    * include icons in the menu
     * allow user to modify water temperature of heater and shower
     * save logdata through WiFi connection (Deta Base?)
     * much code can be simplified to remove structures that were used in previous attempts to get the code working
@@ -117,6 +119,9 @@ void setup() {
   // Initilize serial port
   Serial.begin(115200);
 
+  // Prepare onboard LED for output
+  pinMode(PIN_ESP32_LED, OUTPUT);
+
   // Initialize SPIFFS
   delay(300);
   if( !SPIFFS.begin() ) Serial.println("SPIFFS Mount Failed");
@@ -168,8 +173,6 @@ void loop() {
   static int eventCounter = 0;
   static int counter =0;
   userEventMessage_t message; 
-
-  ArduinoOTA.handle();
 
   // If controller settings were changed, autosave the settings every minute
   if(millis() - lastSettingsSave > 60*1000 ){

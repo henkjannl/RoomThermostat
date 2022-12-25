@@ -38,10 +38,11 @@ class Controller {
     void overruleMultipleWorkFromOffice();
     void overruleMultipleWeekend();
     void overruleMultipleAway();
+    void overruleMultipleForever();
 
-    void overruleMultipleAutomatic()   { controllerData->overrideMultiple=dtAuto; controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
-    void overruleMultipleLessDays()    { if(controllerData->overrideMultipleCount > 1) controllerData->overrideMultipleCount--; controllerData->settingsChanged = true; };
-    void overruleMultipleMoreDays()    { controllerData->overrideMultipleCount++; controllerData->settingsChanged = true; };
+    void overruleMultipleAutomatic()   { controllerData->multipleForever=false; controllerData->overrideMultiple=dtAuto; controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleMultipleLessDays()    { controllerData->multipleForever=false; if(controllerData->overrideMultipleCount > 1) controllerData->overrideMultipleCount--; controllerData->settingsChanged = true; };
+    void overruleMultipleMoreDays()    { controllerData->multipleForever=false; controllerData->overrideMultipleCount++; controllerData->settingsChanged = true; };
     void setWeekSchedule(uint8_t dayOfWeek, dayType_t typeOfDay) {  controllerData->regularWeek[dayOfWeek]=typeOfDay; controllerData->settingsChanged = true; };
     
     void workFromHomeWakeUpEarlier()   { if( controllerData->workFromHomeWakeUp >= timeValue_t( 0,15) ) { controllerData->workFromHomeWakeUp-=timeValue_t(0,15); controllerData->settingsChanged = true; } };
@@ -82,16 +83,19 @@ void Controller::processCommand(userEventMessage_t messageToController) {
     case cmdSetpointLower                : setpointLower(); break;
     case cmdComeHome                     : setpointHigh(); break;
     case cmdSetpointHigher               : setpointHigher(); break;
+    
     case cmdOverruleTodayWorkFromHome    : overruleTodayWorkFromHome(); break;
     case cmdOverruleTodayWorkAtOffice    : overruleTodayWorkFromOffice(); break;
     case cmdOverruleTodayWeekend         : overruleTodayWeekend(); break;
     case cmdOverruleTodayAway            : overruleTodayAway(); break;
     case cmdOverruleTodayAutomatic       : overruleTodayAutomatic(); break;
+
     case cmdOverruleTomorrowWorkFromHome : overruleTomorrowWorkFromHome(); break;
     case cmdOverruleTomorrowWorkAtOffice : overruleTomorrowWorkFromOffice(); break;
     case cmdOverruleTomorrowWeekend      : overruleTomorrowWeekend(); break;
     case cmdOverruleTomorrowAway         : overruleTomorrowAway(); break;
     case cmdOverruleTomorrowAutomatic    : overruleTomorrowAutomatic(); break;
+    
     case cmdOverruleMultipleWorkFromHome : overruleMultipleWorkFromHome(); break;
     case cmdOverruleMultipleWorkAtOffice : overruleMultipleWorkFromOffice(); break;
     case cmdOverruleMultipleWeekend      : overruleMultipleWeekend(); break;
@@ -99,6 +103,8 @@ void Controller::processCommand(userEventMessage_t messageToController) {
     case cmdOverruleMultipleAutomatic    : overruleMultipleAutomatic(); break;
     case cmdOverruleMultipleFewerDays    : overruleMultipleLessDays(); break;
     case cmdOverruleMultipleMoreDays     : overruleMultipleMoreDays(); break;
+    case cmdOverruleMultipleForever      : overruleMultipleForever(); break;
+
     case cmdSetWeekSchedule              : setWeekSchedule(messageToController.dayOfWeek, messageToController.typeOfDay); break;
     case cmdHomeWakeUpEarlier            : workFromHomeWakeUpEarlier(); break;
     case cmdHomeWakeUpLater              : workFromHomeWakeUpLater(); break;
@@ -162,7 +168,7 @@ void Controller::control() {
   currDayType=controllerData->regularWeek[dayOfWeek];
   controllerData->reasonForSetpoint = spWeekSchedule;
 
-  if ( (controllerData->overrideMultiple!=dtAuto) and (controllerData->overrideMultipleCount>0) ) {
+  if ( (controllerData->overrideMultiple!=dtAuto) and ( (controllerData->overrideMultipleCount>0) or (controllerData->multipleForever) ) ) {
     currDayType=controllerData->overrideMultiple;
     controllerData->reasonForSetpoint = spMultipleDays;
   }
@@ -235,12 +241,20 @@ void Controller::control() {
 
   // Override multiple days if needed
   if(controllerData->overrideMultiple!=dtAuto) {
-    for(int i=0; i < controllerData->overrideMultipleCount; i++) {
-      if(i<7) {
+    if( controllerData->multipleForever ) {
+      for(int i=0; i < 7; i++) {
         controllerData->dayTypes        [i] = controllerData->overrideMultiple;
         controllerData->dayTypeOverruled[i] = true;
-      }
-    };  
+      };  
+    }
+    else {
+      for(int i=0; i < controllerData->overrideMultipleCount; i++) {
+        if(i<7) {
+          controllerData->dayTypes        [i] = controllerData->overrideMultiple;
+          controllerData->dayTypeOverruled[i] = true;
+        }
+      };  
+    }
   };
 
   // Override today if needed
@@ -363,6 +377,14 @@ void Controller::overruleMultipleAway() {
   controllerData->overrideTempNow=false;
   controllerData->settingsChanged = true; 
 };
+
+void Controller::overruleMultipleForever() {
+  controllerData->multipleForever=true;
+  controllerData->overrideTomorrow=dtAuto;
+  controllerData->overrideToday=dtAuto;
+  controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
+}
 
 
 /******************************************

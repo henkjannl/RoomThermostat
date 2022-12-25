@@ -9,7 +9,8 @@ using namespace std;
 /*************************
  * PINOUT OF PERIPHERALS *
  *************************/
- 
+
+#define PIN_ESP32_LED             2
 // OpenTherm Shield pins configuration
 #define PIN_OPENTHERM_IN         22   // beware: in and out were flipped due to mistake creating a symbol in KiCad
 #define PIN_OPENTHERM_OUT        21
@@ -119,10 +120,10 @@ const char EMOTICON_UP_ARROW[]            = {0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f,
 const char EMOTICON_WARNING[]             = {0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x0};
 
 // Configuration file, containing WiFi access point data
-#ifdef USE_TESTBOT
-  #define CONFIG_FILE   "/config_test.jsn"
+#if USE_TESTBOT
+  #define CONFIG_FILE "/config_test.jsn"
 #else
-  #define CONFIG_FILE   "/config.jsn"
+  #define CONFIG_FILE "/config.jsn"
 #endif  
 
 #define SETTINGS_FILE "/settings.jsn"
@@ -175,7 +176,7 @@ enum command_t {
   // Commands that affect the controller
   cmdControl, cmdSetpointHigher, cmdSetpointLower, cmdComeHome, cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, 
   cmdOverruleTodayAutomatic, cmdOverruleTomorrowWorkFromHome, cmdOverruleTomorrowWorkAtOffice, cmdOverruleTomorrowWeekend, cmdOverruleTomorrowAway, cmdOverruleTomorrowAutomatic, 
-  cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdOverruleMultipleWorkFromHome, cmdOverruleMultipleWorkAtOffice, cmdOverruleMultipleWeekend, cmdOverruleMultipleAway, 
+  cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdOverruleMultipleForever, cmdOverruleMultipleWorkFromHome, cmdOverruleMultipleWorkAtOffice, cmdOverruleMultipleWeekend, cmdOverruleMultipleAway, 
   cmdOverruleMultipleAutomatic, 
   cmdSetWeekSchedule, cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdAllDayAway,
   cmdHomeWakeUpEarlier, cmdHomeWakeUpLater, cmdHomeGoToSleepEarlier, cmdHomeGoToSleepLater, cmdOfficeWakeUpEarlier, 
@@ -191,13 +192,13 @@ enum command_t {
   cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuTemperature, cmdMenuSensorOffset, cmdReportBoiler, cmdReportTiming, cmdReportDebug, cmdReportLog, 
   cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdCommandNotRecognized, 
   cmdBoilerSending, cmdBacklightOn, cmdKeyUp, cmdKeySelect, cmdKeyDown, cmdKeyPressed, cmdDisableTelegram, cmdEnableTelegram, 
-  cmdResetDeviceMenu, cmdResetDeviceYes, cmdResetDeviceNo};
+  cmdResetDeviceMenu, cmdResetDeviceYes, cmdUpdateSoftware, cmdResetDeviceNo};
 
 std::map<command_t, string> commandLabels = {
   { cmdMenuMain                     , "Main menu"},
   { cmdSetpointHigher               , "Setpoint higher"},
   { cmdSetpointLower                , "Setpoint lower"},
-  { cmdComeHome                 , "Come home"},
+  { cmdComeHome                     , "Come home"},
   { cmdUpdateStatus                 , "Update"},
   { cmdMenuOverruleToday            , "Overrule today"},
   { cmdMenuOverruleTomorrow         , "Overrule tomorrow"},
@@ -216,6 +217,7 @@ std::map<command_t, string> commandLabels = {
   { cmdOverruleTomorrowAutomatic    , "Automatic"},
   { cmdOverruleMultipleMoreDays     , "More days"},
   { cmdOverruleMultipleFewerDays    , "Fewer days"},
+  { cmdOverruleMultipleForever      , "Forever"},
   { cmdMultipleDaySchedule          , "Set day schedule"},
   { cmdOverruleMultipleAutomatic    , "Automatic"},
   { cmdOverruleMultipleWorkFromHome , "Work from home"},
@@ -282,6 +284,7 @@ std::map<command_t, string> commandLabels = {
   { cmdEnableTelegram               , "Enable Telegram" },
   { cmdResetDeviceMenu              , "Restart menu" },
   { cmdResetDeviceYes               , "Restart device" },
+  { cmdUpdateSoftware               , "Over the air update" },
   { cmdResetDeviceNo                , "Return without restart" }
 };
 
@@ -293,7 +296,7 @@ screenInitializer_t SCREENS = {
   { scnMain,                     { cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuHome} },
   { scnOverruleToday,            { cmdOverruleTodayWorkFromHome, cmdOverruleTodayWorkAtOffice, cmdOverruleTodayWeekend, cmdOverruleTodayAway, cmdOverruleTodayAutomatic, cmdMenuMain } },
   { scnOverruleTomorrow,         { cmdOverruleTomorrowWorkFromHome, cmdOverruleTomorrowWorkAtOffice, cmdOverruleTomorrowWeekend, cmdOverruleTomorrowAway, cmdOverruleTomorrowAutomatic, cmdMenuMain } },
-  { scnOverruleMultiple,         { cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdMultipleDaySchedule, cmdOverruleMultipleAutomatic, cmdMenuMain } },
+  { scnOverruleMultiple,         { cmdOverruleMultipleMoreDays, cmdOverruleMultipleFewerDays, cmdOverruleMultipleForever, cmdMultipleDaySchedule, cmdOverruleMultipleAutomatic, cmdMenuMain } },
   { scnOverruleMultipleSchedule, { cmdWorkFromHome, cmdWorkAtOffice, cmdWeekend, cmdOverruleTodayAway, cmdOverruleTodayAutomatic, cmdMenuOverruleMultipleDays } },
   { scnSettingsMain,             { cmdMenuTemperature, cmdMenuSensorOffset, cmdMenuWeekSchedule, cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuMain } },
   { scnSettingsTemperature,      { cmdHighTemperatureUp, cmdHighTemperatureDown, cmdLowTemperatureUp, cmdLowTemperatureDown, cmdMenuSettings } },

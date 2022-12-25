@@ -18,8 +18,8 @@ class PID {
     float KD = 0;
 
     // Upper and lower bounds on requested boiler temperature
-    float outputHigh = 80;
-    float outputLow  = 10;
+    float outputHigh = 60;
+    float outputLow  =  5;
       
     float setpoint=4.0;
     

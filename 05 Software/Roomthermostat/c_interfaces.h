@@ -60,6 +60,7 @@ class ControllerData_t {
     dayType_t overrideTomorrow  = dtAuto;
     dayType_t overrideMultiple  = dtAuto;
     int overrideMultipleCount   = 3;
+    bool multipleForever;
 
     float sensorOffset=-3.5;        // The offset added to the temperature sensor
 
@@ -205,6 +206,7 @@ void ControllerData_t::loadSettings(fs::FS &fs, const char * settingsFile) {
   dayType = doc[ "overrideTomorrow" ]; overrideTomorrow = (dayType_t) dayType;
   dayType = doc[ "overrideMultiple" ]; overrideMultiple = (dayType_t) dayType;
   overrideMultipleCount = doc[ "overrideMultipleCount" ];
+  multipleForever = doc[ "multipleForever" ];
 
   sensorOffset = doc["sensorOffset" ];
   
@@ -241,6 +243,7 @@ void ControllerData_t::saveSettings(fs::FS &fs, const char * tempFile, const cha
   doc[ "overrideTomorrow" ] = (int) overrideTomorrow;
   doc[ "overrideMultiple" ] = (int) overrideMultiple;
   doc[ "overrideMultipleCount" ] = overrideMultipleCount;
+  doc[ "multipleForever" ] = multipleForever;
 
   doc["sensorOffset" ] = sensorOffset;
     

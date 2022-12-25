@@ -175,15 +175,22 @@ void Display::displayMenuScreen() {
   switch( selectedScreen() ) {
     
     case scnOverruleMultiple: 
-      showSubMenuLines = 2; 
-      snprintf(subMenuLine1, MAX_LENGTH_SUBMENU, "%s for %d days", DAY_TYPES[controllerData->overrideMultiple].c_str(), controllerData->overrideMultipleCount);
-
-      time(&now);                    // Get current UTC time
-      timeinfo = localtime(&now);    // Get local time
-      timeinfo->tm_mday += controllerData->overrideMultipleCount-1; // controllerData->overrideMultipleCount = 1 means today
-      mktime(timeinfo);            
-      strftime(buffer, 32, "%A %e %B", timeinfo);
-      snprintf( subMenuLine2, MAX_LENGTH_SUBMENU, "last day is %s", buffer);
+      if( controllerData->multipleForever) {
+        showSubMenuLines = 1;         
+        snprintf(subMenuLine1, MAX_LENGTH_SUBMENU, "%s forever", DAY_TYPES[controllerData->overrideMultiple].c_str() );
+      }
+      else {
+        showSubMenuLines = 2; 
+        
+        snprintf(subMenuLine1, MAX_LENGTH_SUBMENU, "%s for %d days", DAY_TYPES[controllerData->overrideMultiple].c_str(), controllerData->overrideMultipleCount);
+  
+        time(&now);                    // Get current UTC time
+        timeinfo = localtime(&now);    // Get local time
+        timeinfo->tm_mday += controllerData->overrideMultipleCount-1; // controllerData->overrideMultipleCount = 1 means today
+        mktime(timeinfo);            
+        strftime(buffer, 32, "%A %e %B", timeinfo);
+        snprintf( subMenuLine2, MAX_LENGTH_SUBMENU, "last day is %s", buffer);
+      }
       break;
 
     case scnSettingsTemperature: 

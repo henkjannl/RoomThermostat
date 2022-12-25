@@ -20,46 +20,6 @@ bool wifiConnected() {
   return (WiFi.status() == WL_CONNECTED);
 }
 
-void setupOTA() {
-  static bool OTAloaded = false;
-
-  // Do not setup twice
-  if( OTAloaded ) return;
-
-  // Do not attempt if we have no connection
-  if( !wifiConnected() ) return;
-  
-  ArduinoOTA
-    .onStart([]() {
-      String type;
-      if (ArduinoOTA.getCommand() == U_FLASH)
-        type = "sketch";
-      else // U_SPIFFS
-        type = "filesystem";
-
-      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-      Serial.println("Start updating " + type);
-    })
-    .onEnd([]() {
-      Serial.println("\nEnd");
-    })
-    .onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-    })
-    .onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-      else if (error == OTA_END_ERROR) Serial.println("End Failed");
-    });
-
-  ArduinoOTA.begin();  
-
-  OTAloaded = true;
-}
-
 void setupWifi(ControllerData_t & controllerData) {
 
   for(auto accessPoint : controllerData.AccessPoints) {
@@ -77,7 +37,6 @@ void setupWifi(ControllerData_t & controllerData) {
         Serial.printf("WiFi connected to %s\n", accessPoint.ssid);
       }
     }
-    setupOTA();
   }
 
 }
@@ -104,9 +63,6 @@ void reconnectWiFiIfNeeded(ControllerData_t & controllerData) {
 
   bool connected = wifiConnected();
   controllerData.dspWifiIcon = connected ? iconWifiConnected : iconWifiLost;
-
-  // Enable OTA updates if connection was not completed previously
-  if( connected ) setupOTA();
 
   if(connected != prevConnect) {
     prevConnect = connected;
