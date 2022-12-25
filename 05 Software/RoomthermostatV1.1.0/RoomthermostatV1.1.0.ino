@@ -4,7 +4,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.0.7"
+#define VERSION "1.1.0"
+#define USE_TESTBOT false
 
 /* 
   VERSION INFO:
@@ -25,37 +26,43 @@
         implement cmdBoilerSending and cmdBoilerNormal in display
         create an additional debug screen (done in telegram)
   1.0.6 Simple logger added
-        Low temperature of boiler control reduced to 0°C
         Telegram module simplified to be more in line with architectural graph
-  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler swtches to non-Opentherm mode and stops boiling
+  1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler 
+        switches to non-Opentherm mode and stops boiling since the connection is open
+  1.0.8 Autosave of settings to SPIFFS
+        increased value of Telegram maxMessageLength to 6000 to prevent lockup at cmdReportLog
+  1.1.0 Over the air software updates implemented
 
   TO DO:
-  remove 7-day icons from main menu, except after commands that change the 7-day scheme
-  check use of const in function calls
-  cleanup the use of messages. Some fields may no longer be needed
-  cleanup Serial.print
-  check if the menu still needs to send currentScreen and currentMenuItem
-  include over the air updates
-  implement Off mode of the thermostat
-  implement database to record all data in the cloud
-  icons in front of menus
-  implement String dspDate in controller etc.
-  display progress upon startup
-  implement OpenTherm protocoll in either RMT (https://github.com/Weissnix4711/esphome-opentherm-custom/blob/master/components/opentherm/opentherm_protocol.h) or FreeRTOS
- 
-  Update all Telegram chats every 15 minutes or so
-  Make central store of variables, that can also be saved to / retrieved from permanent memory
-  Find replace action Leave > GoOut 
-  Add save and load of persistent data
-  Do autosave if persistent data is changed
-
-  Conflict between touchRead and SPIFFS is now resolved by disabling keyboard during use of screen. Perhaps sufficient to only disable during sprite.loadFont()
-  Automatic updates to last message of known clients every 15 minutes
-  Allow user to modify water temperature of heater and shower
-  Indicate day icons for overruled days with different color
-  Replace setValue() and getValue() of DisplayParameter_t to property
-  Try if SPI frequency in TFT_eSPI can be higher
-  Check if D-action is implemented well in PID controller
+    Potential improvements:
+    * switch off 'multiple days forever' from the main menu
+    * while waiting for over the air software update, display message on screen
+    * introduce permanent 'off' mode, for instance during the summer
+    * improve responsiveness
+    * send logfile as attachment to Telegram
+    * include icons in the menu
+    * allow user to modify water temperature of heater and shower
+    * save logdata through WiFi connection (Deta Base?)
+    * much code can be simplified to remove structures that were used in previous attempts to get the code working
+    * try to get FreeRTOS working again to improve performance of buttons and Telegram
+    * automatic updates to last message of known clients every 15 minutes
+    * implement OpenTherm protocoll in hardware timer
+    * optimize actual heater control functionality
+        * check if D-action is implemented well in PID controller
+        * take into account the weather in the control strategy
+        * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier
+    * also enable setting the time and date through hardware buttons if WiFi is unavailable
+    * display progress upon startup
+    * try if SPI frequency in TFT_eSPI can be higher
+    
+    Code cleanup:
+    * find replace action GoOut > Leave
+    * cleanup Serial.print
+    * check use of const in function calls
+    * cleanup the use of messages. Some fields may no longer be needed
+    
+    Hardware:
+    * add a capacitor to prevent brownout of the ESP32 at startup
 */
 
 #include "a_constants.h"
@@ -113,14 +120,22 @@ void setup() {
   // Initilize serial port
   Serial.begin(115200);
 
+  // Prepare onboard LED for output and switch LED off (used for over the air update)
+  pinMode(PIN_ESP32_LED, OUTPUT);
+  digitalWrite(PIN_ESP32_LED, false);
+
   // Initialize SPIFFS
   delay(300);
   if( !SPIFFS.begin() ) Serial.println("SPIFFS Mount Failed");
   delay(300);
   //listDir(SPIFFS, "/", 0);
 
-  Serial.println("Loading config data");
+  Serial.printf("Loading config data from '%s'\n", CONFIG_FILE);
   controllerData.loadConfig(SPIFFS, CONFIG_FILE);
+
+  Serial.println("Loading controller settings");
+  controllerData.loadSettings(SPIFFS, SETTINGS_FILE);   
+  controllerData.settingsChanged = false; 
 
   Serial.println("Initializing menu");
   startMenu();
@@ -156,59 +171,20 @@ void setup() {
 
 void loop() {
   static unsigned long lastTimeDetailedReport=0;      // last time temperature measurement was done
-  static unsigned long lastEvent = millis();  
+  static unsigned long lastSettingsSave = millis();  
   static int eventCounter = 0;
   static int counter =0;
   userEventMessage_t message; 
-/*
-  // This is for debug purposes
-  if(millis() - lastEvent > 2000){
-    lastEvent=millis();
-    
-    switch(eventCounter++) {
-      case 0:
-        Serial.println("\nEvent 0: Select screen scnMain, cmdMenuOverruleToday");
-        selectScreen(scnMain, cmdMenuOverruleToday);
-        break;
-      
-      case 1:
-        Serial.println("\nEvent 1: Press select key");
-        message = userEventMessage_t(sndKeyboard, cmdKeySelect); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 2:
-        Serial.println("\nEvent 2: Press down key");
-        message = userEventMessage_t(sndKeyboard, cmdKeyDown); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 3:
-        Serial.println("\nEvent 3: Press select key");
-        message = userEventMessage_t(sndKeyboard, cmdKeySelect); 
-        xQueueSend( menuQueue, &message, ( TickType_t ) 10 );  
-        break;
-      
-      case 4:
-        Serial.println("\nEvent 4: Next item");
-        menu.nextMenuItem();
-        menu.dump();    
-        break;
-      
-      case 5:
-        Serial.println("\nEvent 5: First item");
-        menu.firstMenuItem();
-        menu.dump();    
-        break;
-      
-      case 6:
-        Serial.println("\nEvent 6: Previous item");
-        menu.prevMenuItem();
-        menu.dump();    
-        break;      
+
+  // If controller settings were changed, autosave the settings every minute
+  if(millis() - lastSettingsSave > 60*1000 ){
+    lastSettingsSave = millis();
+    if( controllerData.settingsChanged ) {
+      disableKeyboard(); // Really necessary!
+      controllerData.saveSettings(SPIFFS, SETTINGS_TEMP, SETTINGS_FILE);    
+      enableKeyboard();
     }
   }
-*/
 
   controllerData.logBusyTime.start(btTotal);
   controllerData.logBusyTime.start(btTemperature);    checkTemperatureIfNeeded();              controllerData.logBusyTime.finish(btTemperature);    

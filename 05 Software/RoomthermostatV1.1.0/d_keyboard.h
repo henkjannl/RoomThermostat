@@ -38,19 +38,19 @@ void IRAM_ATTR onKeyboardTimer(){
 
     keyboardMicroSeconds = micros() - startKeyboard;
   
-    if( keyUpCounter == 2 ) { 
+    if( keyUpCounter == 3 ) { 
       message.sender  = sndKeyboard;
       message.command = cmdKeyUp; 
       xQueueSendFromISR( menuQueue, &message, ( TickType_t ) 0 );  
     }
 
-    if(keySelectCounter == 2 ) { 
+    if(keySelectCounter == 3 ) { 
       message.sender  = sndKeyboard;
       message.command = cmdKeySelect; 
       xQueueSendFromISR( menuQueue, &message, ( TickType_t ) 0 );  
     }
 
-    if(keyDownCounter == 2 ) { 
+    if(keyDownCounter == 3 ) { 
       message.sender  = sndKeyboard;
       message.command = cmdKeyDown; 
       xQueueSendFromISR( menuQueue, &message, ( TickType_t ) 0 );  

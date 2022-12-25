@@ -6,6 +6,11 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
+#include <ESPmDNS.h>
+#include <WiFiUdp.h>
+#include <ArduinoOTA.h>
+#include <HTTPClient.h>
+
 const unsigned long WIFI_RECONNECT_INTERVAL_MILLIS   = 1*60*1000; // Re-attempt to connect
 const unsigned long WIFI_MAX_TIME_UNCONNECTED_MILLIS = 5*60*1000; // Restart ESP if unsuccessful
 
@@ -33,6 +38,7 @@ void setupWifi(ControllerData_t & controllerData) {
       }
     }
   }
+
 }
 
 void connectToWifi(ControllerData_t & controllerData) {
@@ -67,6 +73,7 @@ void reconnectWiFiIfNeeded(ControllerData_t & controllerData) {
   
   if (connected) {
     lastTimeConnected = millis();
+    previousReconnect = millis();
     return;
   }
 

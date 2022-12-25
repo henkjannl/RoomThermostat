@@ -3,6 +3,10 @@
 #include <map>
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
+#include <ArduinoOTA.h>
+#include <WiFiUdp.h>
+#include <ArduinoOTA.h>
+#include <HTTPClient.h>
 //#include <ESP32Ping.h>
 
 #define TELEGRAM_INTERVAL 1000
@@ -53,6 +57,7 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",        "/cmdOverruleMultipleAutomatic"    } },
   { cmdOverruleMultipleFewerDays,    { "..days",                                           "/cmdOverruleMultipleFewerDays"    } },
   { cmdOverruleMultipleMoreDays,     { "..days",                                           "/cmdOverruleMultipleMoreDays"     } },
+  { cmdOverruleMultipleForever,      { "Forever",                                          "/cmdOverruleMultipleForever"      } },
 
   { cmdMenuWeekSchedule,             { "Weekly schedule",                                  "/cmdMenuWeekSchedule"             } },
   { cmdMenuHomeTimes,                { String(EMOTICON_HOUSE)       + " Home times",       "/cmdMenuHomeTimes"                } },
@@ -66,9 +71,11 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdReportTiming,                 { String(EMOTICON_STOPWATCH)   + " Timing report",    "/cmdReportTiming"                 } },
   { cmdReportDebug,                  { String(EMOTICON_POINTING_FINGER) + " Debug report", "/cmdReportDebug"                  } },
   
-  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING) + " Restart the thermostat menu", "/cmdResetDeviceMenu"       } },
+  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING) + " Restart the thermostat..", "/cmdResetDeviceMenu"          } },
   { cmdResetDeviceYes,               { String(EMOTICON_WARNING) + " Continue restart",     "/cmdResetDeviceYes"               } },
   { cmdResetDeviceNo,                { "Return without restart",                           "/cmdResetDeviceNo"                } },
+  
+  { cmdUpdateSoftware,               { "Receive over the air update...",                   "/cmdUpdateSoftware"               } },
     
   { cmdMonday,                       { "Monday",                                           "/cmdMonday"                       } },
   { cmdTuesday,                      { "Tuesday",                                          "/cmdTuesday"                      } },
@@ -239,6 +246,7 @@ String TelegramChat::keyboard() {
               "["+ btnInline(cmdOverruleMultipleWeekend)      + "]," +
               "["+ btnInline(cmdOverruleMultipleAway)         + "]," +
               "["+ btnInline(cmdOverruleMultipleFewerDays)    + "," + btnInline(cmdOverruleMultipleAutomatic) + "," + btnInline(cmdOverruleMultipleMoreDays) + "]," +
+              "["+ btnInline(cmdOverruleMultipleForever)      + "]," +
               "["+ btnInline(cmdMenuMain)                     + "]]";
               
       break;
@@ -251,6 +259,7 @@ String TelegramChat::keyboard() {
               "[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
               "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
               "[" + btnInline(cmdResetDeviceMenu)                                         + "]," +
+              "[" + btnInline(cmdUpdateSoftware)                                          + "]," +
               "[" + btnInline(cmdMenuMain)                                                + "]]";
 
       break;
@@ -361,6 +370,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   uint8_t dayOfWeek;
   const int BUFLEN = 80;
   char buffer[BUFLEN];
+  bool showWeekSchedule = false;
   //char buffer1[BUFLEN];
   //char buffer2[BUFLEN];
 
@@ -380,17 +390,25 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
   // STEP 1: Change the screen based on the command
   switch (message.command)  {
-    case cmdOverruleTodayWorkFromHome:    screen = scnMain;                 break;
-    case cmdOverruleTodayWorkAtOffice:    screen = scnMain;                 break;
-    case cmdOverruleTodayWeekend:         screen = scnMain;                 break;
-    case cmdOverruleTodayAway:            screen = scnMain;                 break;
-    case cmdOverruleTodayAutomatic:       screen = scnMain;                 break;
-    case cmdMenuMain:                     screen = scnMain;                 break;
-    case cmdOverruleTomorrowWorkFromHome: screen = scnMain;                 break;
-    case cmdOverruleTomorrowWorkAtOffice: screen = scnMain;                 break;
-    case cmdOverruleTomorrowWeekend:      screen = scnMain;                 break;
-    case cmdOverruleTomorrowAway:         screen = scnMain;                 break;
-    case cmdOverruleTomorrowAutomatic:    screen = scnMain;                 break;
+    case cmdOverruleTodayWorkFromHome:    screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayWorkAtOffice:    screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayWeekend:         screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayAway:            screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTodayAutomatic:       screen = scnMain; showWeekSchedule=true; break;
+    case cmdMenuMain:                     screen = scnMain;                        break;
+    case cmdOverruleTomorrowWorkFromHome: screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowWorkAtOffice: screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowWeekend:      screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowAway:         screen = scnMain; showWeekSchedule=true; break;
+    case cmdOverruleTomorrowAutomatic:    screen = scnMain; showWeekSchedule=true; break;
+
+    case cmdOverruleMultipleWorkFromHome: showWeekSchedule = true; break;
+    case cmdOverruleMultipleWorkAtOffice: showWeekSchedule = true; break;
+    case cmdOverruleMultipleWeekend:      showWeekSchedule = true; break;
+    case cmdOverruleMultipleAway:         showWeekSchedule = true; break;
+    case cmdOverruleMultipleAutomatic:    showWeekSchedule = true; break;
+    case cmdOverruleMultipleFewerDays:    showWeekSchedule = true; break;
+    case cmdOverruleMultipleMoreDays:     showWeekSchedule = true; break;
 
     case cmdMenuOverruleToday:            screen = scnOverruleToday;        break;
     case cmdMenuOverruleTomorrow:         screen = scnOverruleTomorrow;     break;
@@ -442,12 +460,18 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         break;
     
         case spMultipleDays:
-          localTime = localtime(&now);
-          localTime->tm_mday += controllerData->overrideMultipleCount;
-          mktime(localTime);
-          strftime(buffer, BUFLEN, "%A %e %B", localTime);
-          response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
-                      String(controllerData->overrideMultipleCount) + " days ending " + buffer + "\n";
+
+          if( controllerData->multipleForever) {
+            response=  "Multiple days are permanently set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "'\n";
+          }
+          else {
+            localTime = localtime(&now);
+            localTime->tm_mday += controllerData->overrideMultipleCount;
+            mktime(localTime);
+            strftime(buffer, BUFLEN, "%A %e %B", localTime);
+            response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
+                        String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+          }
         break;
     
         case spOverrideToday:
@@ -460,8 +484,6 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         break;
       } // switch(controllerData->reasonForSetpoint)
 
-      response += "*Day settings starting today:*\n";
-
       break; // screen==scnMain
     
     case scnOverruleToday: 
@@ -471,6 +493,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
       else
         response= String("Today is overruled to be '") + String(DAY_TYPES[controllerData->overrideToday].c_str()) + "'.\n";
 
+      showWeekSchedule=true; 
+
       break;
     
     case scnOverruleTomorrow: 
@@ -478,6 +502,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         response= String("Tomorrow is not overruled\n");
       else
         response= String("Tomorrow is overruled to be '") + String(DAY_TYPES[controllerData->overrideTomorrow].c_str()) + "'.\n";
+
+      showWeekSchedule=true; 
 
       break;
 
@@ -487,20 +513,24 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         response = "Override multiple not set\n";
       }
       else {
-        localTime = localtime(&now);
-        localTime->tm_mday += controllerData->overrideMultipleCount-1; // controllerData->overrideMultipleCount = 1 means today
-        mktime(localTime);
-        strftime(buffer, BUFLEN, "%A %e %B", localTime);
-        response  = String("Multiple days are set to '") + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " +
-                    String(controllerData->overrideMultipleCount) + "' days.\n" + 
-                    String("Last day is ") + buffer + "\n";
+        if( controllerData->multipleForever) {
+          response=  "Multiple days are permanently set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "'\n";
+        }
+        else {
+          localTime = localtime(&now);
+          localTime->tm_mday += controllerData->overrideMultipleCount;
+          mktime(localTime);
+          strftime(buffer, BUFLEN, "%A %e %B", localTime);
+          response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
+                      String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+        }
       };
 
+      showWeekSchedule=true; 
       
       break;
 
     case scnSettingsMain: 
-      response = "Day settings starting today:\n";
   
       break;
       
@@ -578,15 +608,14 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   // STEP 3: OVERRIDE DEFAULT RESPONSE FOR CERTAIN COMMANDS
   switch (message.command)  {
 
-    case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;
-    
+    case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;    
     case cmdSetpointLower:     response= "The setpoint temperature is lowered to "   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdComeHome:          response= "The setpoint is set to "                   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdSetpointHigher:    response= "The setpoint temperature is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
     case cmdOverruleTodayAway: response= "Status changed to 'Away'\n"; break;
 
     case cmdUpdateStatus:      
-      response = "Day settings starting today:\n";
+
     break; 
 
     case cmdReportBoiler: 
@@ -608,6 +637,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     case cmdReportLog: response = controllerData->datalogger.str(); break;
         
     case cmdReportTiming: response = "*Timing report*\n" + controllerData->logBusyTime.report(); break;
+
+    case cmdUpdateSoftware: response = "Waiting 5 minutes to receive over the air update...\n"; break;
         
     case cmdReportDebug:
       int64_t t1 = esp_timer_get_time();
@@ -624,9 +655,10 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   } // switch (message.command) end of STEP 3
 
   // For some of the screens, include the current day schedule starting today
-  if( screen < scnSettingsWeekSchedule ) {
+  if( showWeekSchedule ) {
+    response += "Day settings starting today:\n";
     for(int i=0; i<7; i++) response += String( DAYTYPE_TO_EMOTICON[ controllerData->dayTypes[ i ] ] ) + " ";
-    response+="\n";
+    response += "\n";
   }
   
   response+= "*" + currentTime() + " " +
@@ -643,6 +675,30 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     // Update the last message containing a keyboard
     bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(), lastMessageWithKeyboard);
   }
+
+  if( message.command == cmdUpdateSoftware ) {
+    unsigned long updateTimeOut = millis();  
+    unsigned long blinkTimeOut;  
+    bool ledState;
+
+    disableKeyboard(); // Writing to SPIFFS must not be interrupted by the capacitive touch keys
+
+    // Wait 5 minutes for over the air software update
+    while ( millis() - updateTimeOut < 5*60*1000 ){
+      ArduinoOTA.handle();
+
+      if ( millis() - blinkTimeOut > 300 ) {
+        blinkTimeOut = millis();
+        ledState = !ledState;
+        digitalWrite(PIN_ESP32_LED, ledState);
+      }  
+    };
+    digitalWrite(PIN_ESP32_LED, false);
+
+    enableKeyboard();
+
+    bot.sendMessageWithInlineKeyboard(chatID, "Timeout for over the air software update", "Markdown", keyboard(), lastMessageWithKeyboard);
+  };
 };
 
 
@@ -784,12 +840,43 @@ WiFiClientSecure securedClient;                                                 
 UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram, bot token not yet retrieved by ControllerData since SPIFFS not yet up
 TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
 
+void setupOTA() {
+  
+  ArduinoOTA
+    .onStart([]() {
+      String type;
+      if (ArduinoOTA.getCommand() == U_FLASH)
+        type = "sketch";
+      else // U_SPIFFS
+        type = "filesystem";
+
+      // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
+      Serial.println("Start updating " + type);
+    })
+    .onEnd([]() {
+      Serial.println("\nEnd");
+    })
+    .onProgress([](unsigned int progress, unsigned int total) {
+      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    })
+    .onError([](ota_error_t error) {
+      Serial.printf("Error[%u]: ", error);
+      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
+      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
+      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
+      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
+      else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    });
+
+  ArduinoOTA.begin();    
+}
+
 void startTelegram() {
-  bot.maxMessageLength = 3000;
+  bot.maxMessageLength = 6000;
   telegramHandler.begin( );
 
-  Serial.printf("Startup: Pointer to bot: %p\n", &bot);
-  
+  Serial.println("Setting up over the air update");
+  setupOTA();
 }
 
 void checkTelegramIfNeeded() {

@@ -14,54 +14,58 @@ class Controller {
 
     // Various handlers for the user interface, both device and Telegram
     void control();
-    void setTemperatureOffset(float offset) { controllerData->sensorOffset=offset; };
-    void increaseSensorOffset() { controllerData->sensorOffset+=0.1; }
-    void decreaseSensorOffset() { controllerData->sensorOffset-=0.1; };
+    void setTemperatureOffset(float offset) { controllerData->sensorOffset=offset; controllerData->settingsChanged = true; };
+    void increaseSensorOffset() { controllerData->sensorOffset+=0.1; controllerData->settingsChanged = true; };
+    void decreaseSensorOffset() { controllerData->sensorOffset-=0.1; controllerData->settingsChanged = true; };
     void setpointLower();
-    void setpointHigh()         { controllerData->overrideTempNow=true; controllerData->overrideSetpoint = controllerData->highTemp; };
+    void setpointHigh()         { controllerData->overrideTempNow=true; controllerData->overrideSetpoint = controllerData->highTemp; controllerData->settingsChanged = true; };
     void setpointHigher();
     void goAway();
     
-    void overruleTodayWorkFromHome()      { controllerData->overrideToday=dtWorkFromHome; controllerData->overrideTempNow=false; };
-    void overruleTodayWorkFromOffice()    { controllerData->overrideToday=dtWorkAtOffice; controllerData->overrideTempNow=false; };
-    void overruleTodayWeekend()           { controllerData->overrideToday=dtWeekend;      controllerData->overrideTempNow=false; };
-    void overruleTodayAway()              { controllerData->overrideToday=dtAway;         controllerData->overrideTempNow=false; };
-    void overruleTodayAutomatic()         { controllerData->overrideToday=dtAuto;         controllerData->overrideTempNow=false; };
-    void overruleTomorrowWorkFromHome()   { controllerData->overrideTomorrow=dtWorkFromHome; };
-    void overruleTomorrowWorkFromOffice() { controllerData->overrideTomorrow=dtWorkAtOffice; };
-    void overruleTomorrowWeekend()        { controllerData->overrideTomorrow=dtWeekend; };
-    void overruleTomorrowAway()           { controllerData->overrideTomorrow=dtAway; };
-    void overruleTomorrowAutomatic()      { controllerData->overrideTomorrow=dtAuto; };
+    void overruleTodayWorkFromHome()      { controllerData->overrideToday=dtWorkFromHome; controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleTodayWorkFromOffice()    { controllerData->overrideToday=dtWorkAtOffice; controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleTodayWeekend()           { controllerData->overrideToday=dtWeekend;      controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleTodayAway()              { controllerData->overrideToday=dtAway;         controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleTodayAutomatic()         { controllerData->overrideToday=dtAuto;         controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    
+    void overruleTomorrowWorkFromHome()   { controllerData->overrideTomorrow=dtWorkFromHome; controllerData->settingsChanged = true; };
+    void overruleTomorrowWorkFromOffice() { controllerData->overrideTomorrow=dtWorkAtOffice; controllerData->settingsChanged = true; };
+    void overruleTomorrowWeekend()        { controllerData->overrideTomorrow=dtWeekend;      controllerData->settingsChanged = true; };
+    void overruleTomorrowAway()           { controllerData->overrideTomorrow=dtAway;         controllerData->settingsChanged = true; };
+    void overruleTomorrowAutomatic()      { controllerData->overrideTomorrow=dtAuto;         controllerData->settingsChanged = true; };
 
     void overruleMultipleWorkFromHome();
     void overruleMultipleWorkFromOffice();
     void overruleMultipleWeekend();
     void overruleMultipleAway();
+    void overruleMultipleForever();
 
-    void overruleMultipleAutomatic()   { controllerData->overrideMultiple=dtAuto; controllerData->overrideTempNow=false; };
-    void overruleMultipleLessDays()    { if(controllerData->overrideMultipleCount > 1) controllerData->overrideMultipleCount--; };
-    void overruleMultipleMoreDays()    { controllerData->overrideMultipleCount++; };
-    void setWeekSchedule(uint8_t dayOfWeek, dayType_t typeOfDay) {  controllerData->regularWeek[dayOfWeek]=typeOfDay; };
-    void workFromHomeWakeUpEarlier()   { if( controllerData->workFromHomeWakeUp >= timeValue_t( 0,15) ) controllerData->workFromHomeWakeUp-=timeValue_t(0,15); };
-    void workFromHomeWakeUpLater()     { if( controllerData->workFromHomeWakeUp <= timeValue_t(23,15) ) controllerData->workFromHomeWakeUp+=timeValue_t(0,15); };
-    void workFromHomeSleepEarlier()    { if( controllerData->workFromHomeSleep  >= timeValue_t( 0,15) ) controllerData->workFromHomeSleep -=timeValue_t(0,15); };
-    void workFromHomeSleepLater()      { if( controllerData->workFromHomeSleep  <= timeValue_t(23,15) ) controllerData->workFromHomeSleep +=timeValue_t(0,15); };
-    void workFromOfficeWakeUpEarlier() { if( controllerData->workAtOfficeWakeUp >= timeValue_t( 0,15) ) controllerData->workAtOfficeWakeUp-=timeValue_t(0,15); };
-    void workFromOfficeWakeUpLater()   { if( controllerData->workAtOfficeWakeUp <= timeValue_t(23,15) ) controllerData->workAtOfficeWakeUp+=timeValue_t(0,15); };
-    void workFromOfficeGoOutEarlier()  { if( controllerData->workAtOfficeGoOut  >= timeValue_t( 0,15) ) controllerData->workAtOfficeGoOut -=timeValue_t(0,15); };
-    void workFromOfficeGoOutLater()    { if( controllerData->workAtOfficeGoOut  <= timeValue_t(23,15) ) controllerData->workAtOfficeGoOut +=timeValue_t(0,15); };
-    void workFromOfficeComeInEarlier() { if( controllerData->workAtOfficeComeIn >= timeValue_t( 0,15) ) controllerData->workAtOfficeComeIn-=timeValue_t(0,15); };
-    void workFromOfficeComeInLater()   { if( controllerData->workAtOfficeComeIn <= timeValue_t(23,15) ) controllerData->workAtOfficeComeIn+=timeValue_t(0,15); };
-    void workFromOfficeSleepEarlier()  { if( controllerData->workAtOfficeSleep  >= timeValue_t( 0,15) ) controllerData->workAtOfficeSleep -=timeValue_t(0,15); };
-    void workFromOfficeSleepLater()    { if( controllerData->workAtOfficeSleep  <= timeValue_t(23,15) ) controllerData->workAtOfficeSleep +=timeValue_t(0,15); };
-    void weekendWakeUpEarlier()        { if( controllerData->weekendWakeUp      >= timeValue_t( 0,15) ) controllerData->weekendWakeUp     -=timeValue_t(0,15); };
-    void weekendWakeUpLater()          { if( controllerData->weekendWakeUp      <= timeValue_t(23,15) ) controllerData->weekendWakeUp     +=timeValue_t(0,15); };
-    void weekendSleepEarlier()         { if( controllerData->weekendSleep       >= timeValue_t( 0,15) ) controllerData->weekendSleep      -=timeValue_t(0,15); };
-    void weekendSleepLater()           { if( controllerData->weekendSleep       <= timeValue_t(23,15) ) controllerData->weekendSleep      +=timeValue_t(0,15); };
-    void highTempLower()               { if( controllerData->highTemp > controllerData->lowTemp+0.5  ) controllerData->highTemp-=0.5; };
-    void highTempHigher()              { if( controllerData->highTemp < 30)                            controllerData->highTemp+=0.5; };
-    void lowTempLower()                { if( controllerData->lowTemp  > 4.0)                           controllerData->lowTemp-= 0.5; };
-    void lowTempHigher()               { if( controllerData->lowTemp  < controllerData->highTemp-0.5 ) controllerData->lowTemp+= 0.5; };
+    void overruleMultipleAutomatic()   { controllerData->multipleForever=false; controllerData->overrideMultiple=dtAuto; controllerData->overrideTempNow=false; controllerData->settingsChanged = true; };
+    void overruleMultipleLessDays()    { controllerData->multipleForever=false; if(controllerData->overrideMultipleCount > 1) controllerData->overrideMultipleCount--; controllerData->settingsChanged = true; };
+    void overruleMultipleMoreDays()    { controllerData->multipleForever=false; controllerData->overrideMultipleCount++; controllerData->settingsChanged = true; };
+    void setWeekSchedule(uint8_t dayOfWeek, dayType_t typeOfDay) {  controllerData->regularWeek[dayOfWeek]=typeOfDay; controllerData->settingsChanged = true; };
+    
+    void workFromHomeWakeUpEarlier()   { if( controllerData->workFromHomeWakeUp >= timeValue_t( 0,15) ) { controllerData->workFromHomeWakeUp-=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromHomeWakeUpLater()     { if( controllerData->workFromHomeWakeUp <= timeValue_t(23,15) ) { controllerData->workFromHomeWakeUp+=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromHomeSleepEarlier()    { if( controllerData->workFromHomeSleep  >= timeValue_t( 0,15) ) { controllerData->workFromHomeSleep -=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromHomeSleepLater()      { if( controllerData->workFromHomeSleep  <= timeValue_t(23,15) ) { controllerData->workFromHomeSleep +=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeWakeUpEarlier() { if( controllerData->workAtOfficeWakeUp >= timeValue_t( 0,15) ) { controllerData->workAtOfficeWakeUp-=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeWakeUpLater()   { if( controllerData->workAtOfficeWakeUp <= timeValue_t(23,15) ) { controllerData->workAtOfficeWakeUp+=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeGoOutEarlier()  { if( controllerData->workAtOfficeGoOut  >= timeValue_t( 0,15) ) { controllerData->workAtOfficeGoOut -=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeGoOutLater()    { if( controllerData->workAtOfficeGoOut  <= timeValue_t(23,15) ) { controllerData->workAtOfficeGoOut +=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeComeInEarlier() { if( controllerData->workAtOfficeComeIn >= timeValue_t( 0,15) ) { controllerData->workAtOfficeComeIn-=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeComeInLater()   { if( controllerData->workAtOfficeComeIn <= timeValue_t(23,15) ) { controllerData->workAtOfficeComeIn+=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeSleepEarlier()  { if( controllerData->workAtOfficeSleep  >= timeValue_t( 0,15) ) { controllerData->workAtOfficeSleep -=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void workFromOfficeSleepLater()    { if( controllerData->workAtOfficeSleep  <= timeValue_t(23,15) ) { controllerData->workAtOfficeSleep +=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void weekendWakeUpEarlier()        { if( controllerData->weekendWakeUp      >= timeValue_t( 0,15) ) { controllerData->weekendWakeUp     -=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void weekendWakeUpLater()          { if( controllerData->weekendWakeUp      <= timeValue_t(23,15) ) { controllerData->weekendWakeUp     +=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void weekendSleepEarlier()         { if( controllerData->weekendSleep       >= timeValue_t( 0,15) ) { controllerData->weekendSleep      -=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    void weekendSleepLater()           { if( controllerData->weekendSleep       <= timeValue_t(23,15) ) { controllerData->weekendSleep      +=timeValue_t(0,15); controllerData->settingsChanged = true; } };
+    
+    void highTempLower()               { if( controllerData->highTemp > controllerData->lowTemp+0.5   ) { controllerData->highTemp-=0.5; controllerData->settingsChanged = true; }};
+    void highTempHigher()              { if( controllerData->highTemp < 30)                             { controllerData->highTemp+=0.5; controllerData->settingsChanged = true; }};
+    void lowTempLower()                { if( controllerData->lowTemp  > 4.0)                            { controllerData->lowTemp-= 0.5; controllerData->settingsChanged = true; }};
+    void lowTempHigher()               { if( controllerData->lowTemp  < controllerData->highTemp-0.5 )  { controllerData->lowTemp+= 0.5; controllerData->settingsChanged = true; }};
 };
 
 void Controller::processCommand(userEventMessage_t messageToController) {
@@ -79,16 +83,19 @@ void Controller::processCommand(userEventMessage_t messageToController) {
     case cmdSetpointLower                : setpointLower(); break;
     case cmdComeHome                     : setpointHigh(); break;
     case cmdSetpointHigher               : setpointHigher(); break;
+    
     case cmdOverruleTodayWorkFromHome    : overruleTodayWorkFromHome(); break;
     case cmdOverruleTodayWorkAtOffice    : overruleTodayWorkFromOffice(); break;
     case cmdOverruleTodayWeekend         : overruleTodayWeekend(); break;
     case cmdOverruleTodayAway            : overruleTodayAway(); break;
     case cmdOverruleTodayAutomatic       : overruleTodayAutomatic(); break;
+
     case cmdOverruleTomorrowWorkFromHome : overruleTomorrowWorkFromHome(); break;
     case cmdOverruleTomorrowWorkAtOffice : overruleTomorrowWorkFromOffice(); break;
     case cmdOverruleTomorrowWeekend      : overruleTomorrowWeekend(); break;
     case cmdOverruleTomorrowAway         : overruleTomorrowAway(); break;
     case cmdOverruleTomorrowAutomatic    : overruleTomorrowAutomatic(); break;
+    
     case cmdOverruleMultipleWorkFromHome : overruleMultipleWorkFromHome(); break;
     case cmdOverruleMultipleWorkAtOffice : overruleMultipleWorkFromOffice(); break;
     case cmdOverruleMultipleWeekend      : overruleMultipleWeekend(); break;
@@ -96,6 +103,8 @@ void Controller::processCommand(userEventMessage_t messageToController) {
     case cmdOverruleMultipleAutomatic    : overruleMultipleAutomatic(); break;
     case cmdOverruleMultipleFewerDays    : overruleMultipleLessDays(); break;
     case cmdOverruleMultipleMoreDays     : overruleMultipleMoreDays(); break;
+    case cmdOverruleMultipleForever      : overruleMultipleForever(); break;
+
     case cmdSetWeekSchedule              : setWeekSchedule(messageToController.dayOfWeek, messageToController.typeOfDay); break;
     case cmdHomeWakeUpEarlier            : workFromHomeWakeUpEarlier(); break;
     case cmdHomeWakeUpLater              : workFromHomeWakeUpLater(); break;
@@ -159,7 +168,7 @@ void Controller::control() {
   currDayType=controllerData->regularWeek[dayOfWeek];
   controllerData->reasonForSetpoint = spWeekSchedule;
 
-  if ( (controllerData->overrideMultiple!=dtAuto) and (controllerData->overrideMultipleCount>0) ) {
+  if ( (controllerData->overrideMultiple!=dtAuto) and ( (controllerData->overrideMultipleCount>0) or (controllerData->multipleForever) ) ) {
     currDayType=controllerData->overrideMultiple;
     controllerData->reasonForSetpoint = spMultipleDays;
   }
@@ -232,12 +241,20 @@ void Controller::control() {
 
   // Override multiple days if needed
   if(controllerData->overrideMultiple!=dtAuto) {
-    for(int i=0; i < controllerData->overrideMultipleCount; i++) {
-      if(i<7) {
+    if( controllerData->multipleForever ) {
+      for(int i=0; i < 7; i++) {
         controllerData->dayTypes        [i] = controllerData->overrideMultiple;
         controllerData->dayTypeOverruled[i] = true;
-      }
-    };  
+      };  
+    }
+    else {
+      for(int i=0; i < controllerData->overrideMultipleCount; i++) {
+        if(i<7) {
+          controllerData->dayTypes        [i] = controllerData->overrideMultiple;
+          controllerData->dayTypeOverruled[i] = true;
+        }
+      };  
+    }
   };
 
   // Override today if needed
@@ -277,11 +294,10 @@ void Controller::control() {
       
     } // switch(controllerData->reasonForSetpoint)
 
-    controllerData->datalogger.header( String("Time Troom tmeas BoilEnabl Tboil,req Tboil,act tboil Reason\n") +
-                                              "hh:mm °C hh:mm Y/N °C °C hh:mm");
+    controllerData->datalogger.header( String("Time Troom BoilEnabl Tboil,req Tboil,act tboil Reason\n") +
+                                              "hh:mm °C Y/N °C °C hh:mm");
     controllerData->datalogger.log( currTime.str()                                               + " " + 
                                     String(controllerData->measuredTemperature()             ,1) + " " + 
-                                    controllerData->lastTemperatureMeasurement.str()             + " " + 
                                     String(controllerData->enableCentralHeating ? "Y" : "N"    ) + " " + 
                                     String(controllerData->requestedBoilerTemperature        ,1) + " " + 
                                     String(controllerData->actualBoilerTemperature           ,1) + " " +
@@ -305,6 +321,7 @@ void Controller::setpointLower() {
     if(controllerData->overrideSetpoint>0) controllerData->overrideSetpoint-=0.5;
   }
   controllerData->overrideTempNow=true;
+  controllerData->settingsChanged = true; 
 };
 
 void Controller::setpointHigher() {
@@ -315,11 +332,13 @@ void Controller::setpointHigher() {
     if(controllerData->overrideSetpoint<30) controllerData->overrideSetpoint+=0.5;
   }
   controllerData->overrideTempNow=true;
+  controllerData->settingsChanged = true; 
 };
 
 void Controller::goAway() { 
   controllerData->overrideToday=dtAway;
   controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
 };
 
 
@@ -329,6 +348,7 @@ void Controller::overruleMultipleWorkFromHome() {
   controllerData->overrideToday=dtAuto;
   controllerData->overrideTomorrow=dtAuto;
   controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
 };
 
 void Controller::overruleMultipleWorkFromOffice() { 
@@ -337,6 +357,7 @@ void Controller::overruleMultipleWorkFromOffice() {
   controllerData->overrideTomorrow=dtAuto;
   controllerData->overrideToday=dtAuto;
   controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
 };
 
 void Controller::overruleMultipleWeekend() { 
@@ -345,6 +366,7 @@ void Controller::overruleMultipleWeekend() {
   controllerData->overrideTomorrow=dtAuto;
   controllerData->overrideToday=dtAuto;
   controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
 };
 
 void Controller::overruleMultipleAway() { 
@@ -353,7 +375,16 @@ void Controller::overruleMultipleAway() {
   controllerData->overrideTomorrow=dtAuto;
   controllerData->overrideToday=dtAuto;
   controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
 };
+
+void Controller::overruleMultipleForever() {
+  controllerData->multipleForever=true;
+  controllerData->overrideTomorrow=dtAuto;
+  controllerData->overrideToday=dtAuto;
+  controllerData->overrideTempNow=false;
+  controllerData->settingsChanged = true; 
+}
 
 
 /******************************************

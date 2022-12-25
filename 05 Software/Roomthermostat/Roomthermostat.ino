@@ -5,7 +5,7 @@
 #include "SPIFFS.h"
 
 #define VERSION "1.1.0"
-#define USE_TESTBOT true
+#define USE_TESTBOT false
 
 /* 
   VERSION INFO:
@@ -35,25 +35,24 @@
 
   TO DO:
     Potential improvements:
-    * switch off multiple days forever fro the main menu
+    * switch off 'multiple days forever' from the main menu
     * while waiting for over the air software update, display message on screen
-    * introduce permanent 'off' mode, for instance during the summer
-    * improve responsiveness
+    * improve responsiveness (keys and Telegram)
     * send logfile as attachment to Telegram
     * include icons in the menu
-    * allow user to modify water temperature of heater and shower
     * save logdata through WiFi connection (Deta Base?)
     * much code can be simplified to remove structures that were used in previous attempts to get the code working
     * try to get FreeRTOS working again to improve performance of buttons and Telegram
-    * automatic updates to last message of known clients every 15 minutes
-    * implement OpenTherm protocoll in hardware timer
-    * optimize actual heater control functionality
+    * send automatic updates to last message of known clients every 15 minutes
+    * implement OpenTherm protocoll in hardware timer in non-blocking way
+    * optimize heater control functionality
+        * allow user to modify water temperature of heater and shower
         * check if D-action is implemented well in PID controller
         * take into account the weather in the control strategy
-        * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier
+        * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier or start with higher temperature
     * also enable setting the time and date through hardware buttons if WiFi is unavailable
     * display progress upon startup
-    * try if SPI frequency in TFT_eSPI can be higher
+    * try if SPI frequency in TFT_eSPI can be set to higher value
     
     Code cleanup:
     * find replace action GoOut > Leave

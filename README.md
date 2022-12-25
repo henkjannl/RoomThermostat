@@ -284,7 +284,7 @@ The flow of events and messages is as follows:
 After uploading the code over the COM port the first time, over the air updates are possible. However, during normal operation, the keyboard handler will interfere with the update process.
 Therefore, first use Telegram to select ```Settings``` > ```Receive over the air update...```. The keyboard handler, the boiler and Telegram will 
 be disabled for five minutes during which time boiler will switch off. 
-During these five minutes, th blue LED on the ESP32 will light up. During this time, choose the over the air port in Arduino (instead of the COM port) and upload the software over WiFi.
+During these five minutes, th blue LED on the back of the ESP32 will blink. During this time, choose the over the air port in Arduino (instead of the COM port) and upload the software over WiFi.
 
 # To do
 
@@ -292,8 +292,6 @@ Potential improvements:
 * improvement of responsiveness (keys and Telegram)
 * switch off multiple days forever fro the main menu
 * while waiting for over the air software update, display message on screen
-* introduce permanent 'off' mode, for instance during the summer
-* improve responsiveness
 * send logfile as attachment to Telegram
 * include icons in the menu
 * allow user to modify water temperature of heater and shower
