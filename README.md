@@ -271,15 +271,29 @@ The flow of events and messages is as follows:
 # To do
 
 Potential improvements:
+* include over the air software updates
+* send logfile as attachment to Telegram
+* include icons in the menu
+* introduce permanent 'off' mode, for instance during the summer
+* allow user to modify water temperature of heater and shower
+* save logdata through WiFi connection (Deta Base?)
 * much code can be simplified to remove structures that were used in previous attempts to get the code working
 * try to get FreeRTOS working again to improve performance of buttons and Telegram
-* introduce permanent 'off' mode, for instance during the summer
-* hardware: add a capacitor to prevent brownout of the ESP32 at startup
-* save logdata through WiFi connection (Deta?)
-* implement OTA software updates
+* automatic updates to last message of known clients every 15 minutes
+* implement OpenTherm protocoll in hardware timer
 * optimize actual heater control functionality
+    * check if D-action is implemented well in PID controller
     * take into account the weather in the control strategy
     * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier
-* periodically save settings to SPIFFS
 * also enable setting the time and date through hardware buttons if WiFi is unavailable
-* include icons in the menu
+* display progress upon startup
+* try if SPI frequency in TFT_eSPI can be higher
+
+Code cleanup:
+* find replace action GoOut > Leave
+* cleanup Serial.print
+* check use of const in function calls
+* cleanup the use of messages. Some fields may no longer be needed
+
+Hardware:
+* add a capacitor to prevent brownout of the ESP32 at startup

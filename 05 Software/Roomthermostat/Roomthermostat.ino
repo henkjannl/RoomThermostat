@@ -4,7 +4,7 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.0.8"
+#define VERSION "1.1.0"
 //#define USE_TESTBOT
 
 /* 
@@ -30,30 +30,36 @@
   1.0.7 Boiler communication interval reduced to 5 sec since otherwise the boiler switches to non-Opentherm mode and stops boiling
   1.0.8 Autosave of settings to SPIFFS
         increased value of Telegram maxMessageLength to 6000 to prevent lockup at cmdReportLog
+  1.1.0 Over the air software updates implemented, but not working: probably ESP32 to busy to handle request
 
   TO DO:
-  check use of const in function calls
-  cleanup the use of messages. Some fields may no longer be needed
-  cleanup Serial.print
-  check if the menu still needs to send currentScreen and currentMenuItem
-  include over the air updates
-  implement Off mode of the thermostat
-  implement database to record all data in the cloud
-  icons in front of menus
-  implement String dspDate in controller etc.
-  display progress upon startup
-  implement OpenTherm protocoll in either RMT (https://github.com/Weissnix4711/esphome-opentherm-custom/blob/master/components/opentherm/opentherm_protocol.h) or FreeRTOS
- 
-  Update all Telegram chats every 15 minutes or so
-  Find replace action Leave > GoOut 
-
-  Conflict between touchRead and SPIFFS is now resolved by disabling keyboard during use of screen. Perhaps sufficient to only disable during sprite.loadFont()
-  Automatic updates to last message of known clients every 15 minutes
-  Allow user to modify water temperature of heater and shower
-  Indicate day icons for overruled days with different color
-  Replace setValue() and getValue() of DisplayParameter_t to property
-  Try if SPI frequency in TFT_eSPI can be higher
-  Check if D-action is implemented well in PID controller
+    Potential improvements:
+    * send logfile as attachment to Telegram
+    * fix over the air software updates (block keyboard & Opentherm & Telegram if OTA becomes active?)
+    * include icons in the menu
+    * introduce permanent 'off' mode, for instance during the summer
+    * allow user to modify water temperature of heater and shower
+    * save logdata through WiFi connection (Deta Base?)
+    * much code can be simplified to remove structures that were used in previous attempts to get the code working
+    * try to get FreeRTOS working again to improve performance of buttons and Telegram
+    * automatic updates to last message of known clients every 15 minutes
+    * implement OpenTherm protocoll in hardware timer
+    * optimize actual heater control functionality
+        * check if D-action is implemented well in PID controller
+        * take into account the weather in the control strategy
+        * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier
+    * also enable setting the time and date through hardware buttons if WiFi is unavailable
+    * display progress upon startup
+    * try if SPI frequency in TFT_eSPI can be higher
+    
+    Code cleanup:
+    * find replace action GoOut > Leave
+    * cleanup Serial.print
+    * check use of const in function calls
+    * cleanup the use of messages. Some fields may no longer be needed
+    
+    Hardware:
+    * add a capacitor to prevent brownout of the ESP32 at startup
 */
 
 #include "a_constants.h"
@@ -162,6 +168,8 @@ void loop() {
   static int eventCounter = 0;
   static int counter =0;
   userEventMessage_t message; 
+
+  ArduinoOTA.handle();
 
   // If controller settings were changed, autosave the settings every minute
   if(millis() - lastSettingsSave > 60*1000 ){
