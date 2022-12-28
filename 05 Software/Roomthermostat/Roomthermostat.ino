@@ -5,7 +5,7 @@
 #include "SPIFFS.h"
 
 #define VERSION "1.1.0"
-#define USE_TESTBOT false
+#define USE_TESTBOT true
 
 /* 
   VERSION INFO:

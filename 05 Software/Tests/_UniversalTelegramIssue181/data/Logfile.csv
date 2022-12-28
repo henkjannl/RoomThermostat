@@ -1,0 +1,23 @@
+Time;Room temperature;Boiler temperature;Boiler on;Status
+14:30;18.5;60;Y;Overrule multiple
+14:35;18.6;60;Y;Overrule multiple
+14:40;18.7;60;Y;Overrule multiple
+14:45;18.8;60;Y;Overrule multiple
+14:50;18.9;60;Y;Overrule multiple
+14:55;19;60;Y;Overrule multiple
+15:00;19.1;60;Y;Overrule multiple
+15:05;19.2;60;Y;Overrule multiple
+15:10;19.3;60;Y;Overrule multiple
+15:15;19.4;60;Y;Overrule multiple
+15:20;19.5;60;N;Overrule multiple
+15:25;19.6;60;N;Overrule multiple
+15:30;19.7;60;N;Overrule multiple
+15:35;19.8;60;N;Overrule multiple
+15:40;19.9;60;N;Overrule multiple
+15:45;20;60;N;Overrule multiple
+15:50;20.1;60;N;Overrule multiple
+15:55;20.2;60;N;Overrule multiple
+16:00;20.3;60;N;Overrule multiple
+16:05;20.4;60;N;Overrule multiple
+16:10;20.5;60;N;Overrule multiple
+16:15;20.6;60;N;Overrule multiple
