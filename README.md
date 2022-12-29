@@ -28,14 +28,17 @@ Only two temperatures are defined common to all day kinds:
 
 All times for each day type (8 times in total) can be modified.
 
+### Priorities for the setpoint
+There is flexibility on top of that, with increasing priority over the normal week schedule:
 
-There is flexibility on top of that:
-* **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule
-* It is also possible to **overrule multiple days**, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away)
-* After **overruling multiple days** ahead, **today** and **tomorrow** can be overruled again to choose a different kind of day for today or tomorrow. For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
-* Icons of days according to the normal week schedule are displayed in black, overruled days are displayed in blue
-* At all times, a **higher or lower temperature** can be manually selected. When the next programmed timeslot arrives, the temperature switches back to the program.
+<p align="center">
+  <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
+</p>
 
+* It is possible to **overrule multiple days**, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away). The thermostat will be overruled until the number of days is expired, or if the **overrule multiple days** function is reset to **automatic**. It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and reset it back to **automatic** in autumn.
+* **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule. Each can be set back to **automatic** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
+* At all times, a **higher or lower temperature** can be manually selected. When the next programmed timeslot of the lower priority arrives, the temperature switches back to the program.
+Icons of days according to the normal week schedule are displayed in black on the unit. Overruled days are displayed in blue
 
 The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
