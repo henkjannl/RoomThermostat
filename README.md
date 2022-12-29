@@ -31,6 +31,10 @@ All times for each day type (8 times in total) can be modified.
 ### Priorities for the setpoint
 There is flexibility on top of that, with increasing priority over the normal week schedule:
 
+![setpoint priorities](02 User interface\SetpointPriorities.png)
+
+
+
 <p align="center">
   <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
 </p>
