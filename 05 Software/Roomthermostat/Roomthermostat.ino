@@ -4,8 +4,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.1.0"
-#define USE_TESTBOT true
+#define VERSION "1.1.1"
+#define USE_TESTBOT false
 
 /* 
   VERSION INFO:
@@ -32,10 +32,12 @@
   1.0.8 Autosave of settings to SPIFFS
         increased value of Telegram maxMessageLength to 6000 to prevent lockup at cmdReportLog
   1.1.0 Over the air software updates implemented
+  1.1.1 Menu improvements, emoticons added
+        'Forever' mode added to multiple days
+        Controller module simplified
 
   TO DO:
     Potential improvements:
-    * switch off 'multiple days forever' from the main menu
     * while waiting for over the air software update, display message on screen
     * improve responsiveness (keys and Telegram)
     * send logfile as attachment to Telegram

@@ -83,41 +83,51 @@ using namespace std;
 #define SECS_PER_HOUR    (              60 * 60)
 #define SECS_PER_MINUTE  (                   60)
 
-const char EMOTICON_ALARM_CLOCK[]         = {0xe2, 0x8f, 0xb0, 0x0};
-const char EMOTICON_BATH[]                = {0xf0, 0x9f, 0x9b, 0x81, 0x0};
-const char EMOTICON_BED[]                 = {0xf0, 0x9f, 0x9b, 0x8f, 0x0};
-const char EMOTICON_BULLSEYE[]            = {0xf0, 0x9f, 0x8e, 0xaf, 0x0};
-const char EMOTICON_CALENDAR[]            = {0xf0, 0x9f, 0x93, 0x85, 0x0};
-const char EMOTICON_CAMERA[]              = {0xf0, 0x9f, 0x93, 0xb7, 0x0};
-const char EMOTICON_CHECKERED_FLAG[]      = {0xf0, 0x9f, 0x8f, 0x81, 0x0};
-const char EMOTICON_CHECKMARK[]           = {0xe2, 0x9c, 0x85, 0x0};
-const char EMOTICON_CLOCK[]               = {0xe2, 0x8f, 0xb0, 0x0};
-const char EMOTICON_CROSSMARK[]           = {0xe2, 0x9d, 0x8c, 0x0};
-const char EMOTICON_DOWN_ARROW[]          = {0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f, 0x0};
-const char EMOTICON_FLAME[]               = {0xf0, 0x9f, 0x94, 0xa5, 0x0};
-const char EMOTICON_FOOTSTEPS[]           = {0xf0, 0x9f, 0x91, 0xa3, 0x0};
-const char EMOTICON_GEAR[]                = {0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x0};
-const char EMOTICON_GLASSES[]             = {0xf0, 0x9f, 0x91, 0x93, 0x0};
-const char EMOTICON_HAMMER_WRENCH[]       = {0xf0, 0x9f, 0x9b, 0xa0, 0x0};
-const char EMOTICON_HOURGLASS[]           = {0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x0};
-const char EMOTICON_HOUSE[]               = {0xf0, 0x9f, 0x8f, 0xa0, 0x0};
-const char EMOTICON_ISLAND[]              = {0xf0, 0x9f, 0x8f, 0x96, 0x0};
-const char EMOTICON_LAMP[]                = {0xf0, 0x9f, 0x92, 0xa1, 0x0};
-const char EMOTICON_MAGIC_STICK[]         = {0xf0, 0x9f, 0xaa, 0x84, 0x0};
-const char EMOTICON_OFFICE[]              = {0xf0, 0x9f, 0x8f, 0xa2, 0x0};
-const char EMOTICON_PIN[]                 = {0xf0, 0x9f, 0x93, 0x8d, 0x0};
-const char EMOTICON_POINTING_FINGER[]     = {0xf0, 0x9f, 0x91, 0x89, 0x0};
-const char EMOTICON_RED_QUESTION_MARK[]   = {0xe2, 0x9d, 0x93, 0x0};
-const char EMOTICON_RUNNER[]              = {0xf0, 0x9f, 0x8f, 0x83, 0x0};
-const char EMOTICON_SHOWER[]              = {0xf0, 0x9f, 0x9a, 0xbf, 0x0};
-const char EMOTICON_SMILEY[]              = {0xf0, 0x9f, 0x98, 0x80, 0x0};
-const char EMOTICON_STHETOSCOPE[]         = {0xf0, 0x9f, 0xa9, 0xba, 0x0};
-const char EMOTICON_STOPWATCH[]           = {0xe2, 0x8f, 0xb1, 0x0};
-const char EMOTICON_THERMOMETER[]         = {0xf0, 0x9f, 0x8c, 0xa1, 0x0};
-const char EMOTICON_TRIANGLE_DOWN[]       = {0xf0, 0x9f, 0x94, 0xbd, 0x0};
-const char EMOTICON_TRIANGLE_UP[]         = {0xf0, 0x9f, 0x94, 0xbc, 0x0};
-const char EMOTICON_UP_ARROW[]            = {0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f, 0x0};
-const char EMOTICON_WARNING[]             = {0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x0};
+const char EMOTICON_ALARM_CLOCK[]         = { 0xe2, 0x8f, 0xb0, 0x00 };
+const char EMOTICON_BACK[]                = { 0xf0, 0x9f, 0x94, 0x99, 0x00 };
+const char EMOTICON_BATH[]                = { 0xf0, 0x9f, 0x9b, 0x81, 0x00 };
+const char EMOTICON_BED[]                 = { 0xf0, 0x9f, 0x9b, 0x8f, 0x00 };
+const char EMOTICON_BEETLE[]              = { 0xf0, 0x9f, 0x90, 0x9e, 0x00 };
+const char EMOTICON_BULLSEYE[]            = { 0xf0, 0x9f, 0x8e, 0xaf, 0x00 };
+const char EMOTICON_CALENDAR[]            = { 0xf0, 0x9f, 0x93, 0x85, 0x00 };
+const char EMOTICON_CAMERA[]              = { 0xf0, 0x9f, 0x93, 0xb7, 0x00 };
+const char EMOTICON_CHECKERED_FLAG[]      = { 0xf0, 0x9f, 0x8f, 0x81, 0x00 };
+const char EMOTICON_CHECKMARK[]           = { 0xe2, 0x9c, 0x85, 0x00 };
+const char EMOTICON_CLIPBOARD[]           = { 0xf0, 0x9f, 0x93, 0x8b, 0x00 };
+const char EMOTICON_CLOCK[]               = { 0xe2, 0x8f, 0xb0, 0x00 };
+const char EMOTICON_CROSSMARK[]           = { 0xe2, 0x9d, 0x8c, 0x00 };
+const char EMOTICON_DOWN_ARROW[]          = { 0xe2, 0xac, 0x87, 0xef, 0xb8, 0x8f, 0x00 };
+const char EMOTICON_EARTH[]               = { 0xf0, 0x9f, 0x8c, 0x8d, 0x00 };
+const char EMOTICON_FLAME[]               = { 0xf0, 0x9f, 0x94, 0xa5, 0x00 };
+const char EMOTICON_FOOTSTEPS[]           = { 0xf0, 0x9f, 0x91, 0xa3, 0x00 };
+const char EMOTICON_GEAR[]                = { 0xe2, 0x9a, 0x99, 0xef, 0xb8, 0x8f, 0x00 };
+const char EMOTICON_GLASSES[]             = { 0xf0, 0x9f, 0x91, 0x93, 0x00 };
+const char EMOTICON_HAMMER_WRENCH[]       = { 0xf0, 0x9f, 0x9b, 0xa0, 0x00 };
+const char EMOTICON_HOURGLASS[]           = { 0xe2, 0x8c, 0x9b, 0xef, 0xb8, 0x8f, 0x00 };
+const char EMOTICON_HOUSE[]               = { 0xf0, 0x9f, 0x8f, 0xa0, 0x00 };
+const char EMOTICON_ISLAND[]              = { 0xf0, 0x9f, 0x8f, 0x96, 0x00 };
+const char EMOTICON_LAMP[]                = { 0xf0, 0x9f, 0x92, 0xa1, 0x00 };
+const char EMOTICON_LIFEBUOY[]            = { 0xf0, 0x9f, 0x9b, 0x9f, 0x00 };
+const char EMOTICON_MAGIC_STICK[]         = { 0xf0, 0x9f, 0xaa, 0x84, 0x00 };
+const char EMOTICON_OFFICE[]              = { 0xf0, 0x9f, 0x8f, 0xa2, 0x00 };
+const char EMOTICON_PIN[]                 = { 0xf0, 0x9f, 0x93, 0x8d, 0x00 };
+const char EMOTICON_POINTING_FINGER[]     = { 0xf0, 0x9f, 0x91, 0x89, 0x00 };
+const char EMOTICON_RED_QUESTION_MARK[]   = { 0xe2, 0x9d, 0x93, 0x00 };
+const char EMOTICON_RUNNER[]              = { 0xf0, 0x9f, 0x8f, 0x83, 0x00 };
+const char EMOTICON_SATTELITE_DISH[]      = { 0xf0, 0x9f, 0x93, 0xa1, 0x00 };
+const char EMOTICON_SHOWER[]              = { 0xf0, 0x9f, 0x9a, 0xbf, 0x00 };
+const char EMOTICON_SMILEY[]              = { 0xf0, 0x9f, 0x98, 0x80, 0x00 };
+const char EMOTICON_SNOWFLAKE[]           = { 0xe2, 0x9d, 0x84, 0xef, 0xb8, 0x8f, 0x00 };
+const char EMOTICON_SPIDERWEB[]           = { 0xf0, 0x9f, 0x95, 0xb8, 0x00 };
+const char EMOTICON_SPEECH_BALLOON[]      = { 0xf0, 0x9f, 0x92, 0xac, 0x00 };
+const char EMOTICON_STHETOSCOPE[]         = { 0xf0, 0x9f, 0xa9, 0xba, 0x00 };
+const char EMOTICON_STOPWATCH[]           = { 0xe2, 0x8f, 0xb1, 0x00 };
+const char EMOTICON_SUN[]                 = { 0xf0, 0x9f, 0x8c, 0x9e, 0x00 };
+const char EMOTICON_THERMOMETER[]         = { 0xf0, 0x9f, 0x8c, 0xa1, 0x00 };
+const char EMOTICON_TRIANGLE_DOWN[]       = { 0xf0, 0x9f, 0x94, 0xbb, 0x00 };
+const char EMOTICON_TRIANGLE_UP[]         = { 0xf0, 0x9f, 0x94, 0xba, 0x00 };
+const char EMOTICON_UP_ARROW[]            = { 0xe2, 0xac, 0x86, 0xef, 0xb8, 0x8f, 0x00 };
+const char EMOTICON_WARNING[]             = { 0xe2, 0x9a, 0xa0, 0xef, 0xb8, 0x8f, 0x00 };
 
 // Configuration file, containing WiFi access point data
 #if USE_TESTBOT
@@ -149,7 +159,7 @@ std::map<sender_t, string> senderLabels = {
 enum screen_t { scnHome, scnMain, scnOverruleToday, scnOverruleTomorrow, scnOverruleMultiple, 
   scnOverruleMultipleSchedule, scnSettingsMain, scnSettingsWeekSchedule, scnSettingsDaySchedule, 
   scnSettingsHomeTimes, scnSettingsOfficeTimes, scnSettingsWeekendTimes, scnSettingsTemperature, 
-  scnSettingsSensorOffset, scnResetDevice, scnInvalid };
+  scnSettingsSensorOffset, scnDebug, scnResetDevice, scnInvalid };
 
 std::map<screen_t, string> screenTitle = { 
   { scnHome,                     "Home"                         }, 
@@ -166,6 +176,7 @@ std::map<screen_t, string> screenTitle = {
   { scnSettingsHomeTimes,        "Set home times"               },
   { scnSettingsOfficeTimes,      "Set office times"             },
   { scnSettingsWeekendTimes,     "Set weekend times"            },
+  { scnDebug,                    "Debugging"                    },
   { scnResetDevice,              "Reset device"                 },
   { scnInvalid,                  "Invalid"                      }
 };
@@ -188,7 +199,7 @@ enum command_t {
   cmdLastControllerCommand, 
 
   // Commands that do not affect the controller
-  cmdStartTelegram, cmdMenuMain, cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuHome, cmdMultipleDaySchedule, cmdMenuWeekSchedule, 
+  cmdStartTelegram, cmdMenuMain, cmdMenuOverruleToday, cmdMenuOverruleTomorrow, cmdMenuOverruleMultipleDays, cmdMenuSettings, cmdMenuDebug, cmdMenuHome, cmdMultipleDaySchedule, cmdMenuWeekSchedule, 
   cmdMenuHomeTimes, cmdMenuOfficeTimes, cmdMenuWeekendTimes, cmdMenuTemperature, cmdMenuSensorOffset, cmdReportBoiler, cmdReportTiming, cmdReportDebug, cmdReportLog, 
   cmdMonday, cmdTuesday, cmdWednesday, cmdThursday, cmdFriday, cmdSaturday, cmdSunday, cmdCommandNotRecognized, 
   cmdBoilerSending, cmdBacklightOn, cmdKeyUp, cmdKeySelect, cmdKeyDown, cmdKeyPressed, cmdDisableTelegram, cmdEnableTelegram, 
@@ -204,6 +215,7 @@ std::map<command_t, string> commandLabels = {
   { cmdMenuOverruleTomorrow         , "Overrule tomorrow"},
   { cmdMenuOverruleMultipleDays     , "Overrule multiple days"},
   { cmdMenuSettings                 , "Settings"},
+  { cmdMenuDebug                    , "Debug menu"},
   { cmdMenuHome                     , "Home menu"},
   { cmdOverruleTodayWorkFromHome    , "Work from home"},
   { cmdOverruleTodayWorkAtOffice    , "Work at office"},

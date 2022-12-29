@@ -217,7 +217,8 @@ void processControllerCommand(userEventMessage_t messageToController) {
     
     case cmdSetpointLower: 
       if(!controllerData.overrideTempNow) {
-        controllerData.overrideSetpoint= controllerData.highTemp;
+        controllerData.overrideSetpoint = controllerData.highTemp;
+        if ( abs( controllerData.overrideSetpoint - controllerData.temperatureSetpoint) < 0.4 ) controllerData.overrideSetpoint-=0.5;
         controllerData.overrideTempNow=true;
       }
       else {
@@ -230,6 +231,7 @@ void processControllerCommand(userEventMessage_t messageToController) {
     case cmdSetpointHigher:
       if(!controllerData.overrideTempNow) {
         controllerData.overrideSetpoint= controllerData.highTemp;
+        if ( abs( controllerData.overrideSetpoint - controllerData.temperatureSetpoint) < 0.4 ) controllerData.overrideSetpoint +=0.5;
         controllerData.overrideTempNow=true;
       }
       else {

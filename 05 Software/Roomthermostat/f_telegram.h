@@ -27,68 +27,69 @@ struct tgLabelCallback {
 typedef std::map<command_t, tgLabelCallback> tgCommandList;
 
 const tgCommandList TELEGRAM_COMMANDS = {
-  { cmdSetpointLower,                { String(EMOTICON_DOWN_ARROW)  + " Cooler",           "/cmdSetpointLower"                } },
-  { cmdComeHome,                     { String(EMOTICON_HOUSE)       + " Come home",        "/cmdComeHome"                     } },
-  { cmdSetpointHigher,               { String(EMOTICON_UP_ARROW)    + " Warmer",           "/cmdSetpointHigher"               } },
-  { cmdOverruleTodayAway,            { String(EMOTICON_FOOTSTEPS)   + " Go out",           "/cmdOverruleTodayAway"            } },
-  { cmdMenuOverruleToday,            { "Overrule today",                                   "/cmdMenuOverruleToday"            } },
-  { cmdMenuOverruleTomorrow,         { "Overrule tomorrow",                                "/cmdMenuOverruleTomorrow"         } },
-  { cmdMenuOverruleMultipleDays,     { "Overrule multiple days",                           "/cmdMenuOverruleMultipleDays"     } },
-  { cmdMenuSettings,                 { String(EMOTICON_GEAR)        + " Settings",         "/cmdMenuSettings"                 } },
-  { cmdUpdateStatus,                 { String(EMOTICON_STHETOSCOPE) + " Status",           "/cmdUpdateStatus"                 } },
+  { cmdSetpointLower,                { String(EMOTICON_DOWN_ARROW)  + " Cooler",                 "/cmdSetpointLower"                } },
+  { cmdComeHome,                     { String(EMOTICON_HOUSE)       + " Come home",              "/cmdComeHome"                     } },
+  { cmdSetpointHigher,               { String(EMOTICON_UP_ARROW)    + " Warmer",                 "/cmdSetpointHigher"               } },
+  { cmdOverruleTodayAway,            { String(EMOTICON_FOOTSTEPS)   + " Go out",                 "/cmdOverruleTodayAway"            } },
+  { cmdMenuOverruleToday,            { "Overrule today...",                                      "/cmdMenuOverruleToday"            } },
+  { cmdMenuOverruleTomorrow,         { "Overrule tomorrow...",                                   "/cmdMenuOverruleTomorrow"         } },
+  { cmdMenuOverruleMultipleDays,     { "Overrule multiple days...",                              "/cmdMenuOverruleMultipleDays"     } },
+  { cmdMenuSettings,                 { String(EMOTICON_GEAR)        + " Settings...",            "/cmdMenuSettings"                 } },
+  { cmdUpdateStatus,                 { String(EMOTICON_STHETOSCOPE) + " Status",                 "/cmdUpdateStatus"                 } },
 
-  { cmdOverruleTodayWorkFromHome,    { String(EMOTICON_HOUSE)       + " Work from home",   "/cmdOverruleTodayWorkFromHome"    } },
-  { cmdOverruleTodayWorkAtOffice,    { String(EMOTICON_OFFICE)      + " Work from office", "/cmdOverruleTodayWorkAtOffice"    } },
-  { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend day",      "/cmdOverruleTodayWeekend"         } },
-  { cmdOverruleTodayAway,            { String(EMOTICON_ISLAND)      + " All day away",     "/cmdOverruleTodayAway"            } },
-  { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Automatic",        "/cmdOverruleTodayAutomatic"       } },
-  { cmdMenuMain,                     { "Back to main menu",                                "/cmdMenuMain"                     } },
+  { cmdOverruleTodayWorkFromHome,    { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleTodayWorkFromHome"    } },
+  { cmdOverruleTodayWorkAtOffice,    { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTodayWorkAtOffice"    } },
+  { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTodayWeekend"         } },
+  { cmdOverruleTodayAway,            { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTodayAway"            } },
+  { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleTodayAutomatic"       } },
+  { cmdMenuMain,                     { String(EMOTICON_BACK)        + " Back to main menu...",   "/cmdMenuMain"                     } },
 
-  { cmdOverruleTomorrowWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",   "/cmdOverruleTomorrowWorkFromHome" } },
-  { cmdOverruleTomorrowWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office", "/cmdOverruleTomorrowWorkAtOffice" } },
-  { cmdOverruleTomorrowWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",      "/cmdOverruleTomorrowWeekend"      } },
-  { cmdOverruleTomorrowAway,         { String(EMOTICON_ISLAND)      + " All day away",     "/cmdOverruleTomorrowAway"         } },
-  { cmdOverruleTomorrowAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",        "/cmdOverruleTomorrowAutomatic"    } },
+  { cmdOverruleTomorrowWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleTomorrowWorkFromHome" } },
+  { cmdOverruleTomorrowWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTomorrowWorkAtOffice" } },
+  { cmdOverruleTomorrowWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTomorrowWeekend"      } },
+  { cmdOverruleTomorrowAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTomorrowAway"         } },
+  { cmdOverruleTomorrowAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleTomorrowAutomatic"    } },
 
-  { cmdOverruleMultipleWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",   "/cmdOverruleMultipleWorkFromHome" } },
-  { cmdOverruleMultipleWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office", "/cmdOverruleMultipleWorkAtOffice" } },
-  { cmdOverruleMultipleWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",      "/cmdOverruleMultipleWeekend"      } },
-  { cmdOverruleMultipleAway,         { String(EMOTICON_ISLAND)      + " All day away",     "/cmdOverruleMultipleAway"         } },
-  { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",        "/cmdOverruleMultipleAutomatic"    } },
-  { cmdOverruleMultipleFewerDays,    { "..days",                                           "/cmdOverruleMultipleFewerDays"    } },
-  { cmdOverruleMultipleMoreDays,     { "..days",                                           "/cmdOverruleMultipleMoreDays"     } },
-  { cmdOverruleMultipleForever,      { "Forever",                                          "/cmdOverruleMultipleForever"      } },
+  { cmdOverruleMultipleWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleMultipleWorkFromHome" } },
+  { cmdOverruleMultipleWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleMultipleWorkAtOffice" } },
+  { cmdOverruleMultipleWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleMultipleWeekend"      } },
+  { cmdOverruleMultipleAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleMultipleAway"         } },
+  { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleMultipleAutomatic"    } },
+  { cmdOverruleMultipleFewerDays,    { "..days",                                                 "/cmdOverruleMultipleFewerDays"    } },
+  { cmdOverruleMultipleMoreDays,     { "..days",                                                 "/cmdOverruleMultipleMoreDays"     } },
+  { cmdOverruleMultipleForever,      { String(EMOTICON_SPIDERWEB) + " Forever",                  "/cmdOverruleMultipleForever"      } },
 
-  { cmdMenuWeekSchedule,             { "Weekly schedule",                                  "/cmdMenuWeekSchedule"             } },
-  { cmdMenuHomeTimes,                { String(EMOTICON_HOUSE)       + " Home times",       "/cmdMenuHomeTimes"                } },
-  { cmdMenuOfficeTimes,              { String(EMOTICON_OFFICE)      + " Office times",     "/cmdMenuOfficeTimes"              } },
-  { cmdMenuWeekendTimes,             { String(EMOTICON_CALENDAR)    + " Weekend times",    "/cmdMenuWeekendTimes"             } },
-  { cmdMenuTemperature,              { String(EMOTICON_BULLSEYE)    + " Temperatures",     "/cmdMenuTemperature"              } },
-  { cmdMenuSensorOffset,             { String(EMOTICON_THERMOMETER) + " Sensor offset",    "/cmdMenuSensorOffset"             } },
+  { cmdMenuWeekSchedule,             { String(EMOTICON_CLIPBOARD) + " Weekly schedule...",       "/cmdMenuWeekSchedule"             } },
+  { cmdMenuHomeTimes,                { String(EMOTICON_HOUSE)       + " Home times...",          "/cmdMenuHomeTimes"                } },
+  { cmdMenuOfficeTimes,              { String(EMOTICON_OFFICE)      + " Office times...",        "/cmdMenuOfficeTimes"              } },
+  { cmdMenuWeekendTimes,             { String(EMOTICON_CALENDAR)    + " Weekend times...",       "/cmdMenuWeekendTimes"             } },
+  { cmdMenuTemperature,              { String(EMOTICON_BULLSEYE)    + " Temperatures...",        "/cmdMenuTemperature"              } },
+  { cmdMenuSensorOffset,             { String(EMOTICON_THERMOMETER) + " Sensor offset...",       "/cmdMenuSensorOffset"             } },
+  { cmdMenuDebug,                    { String(EMOTICON_LIFEBUOY)    + " Debugging...",           "/cmdMenuDebug"                    } },
   
-  { cmdReportBoiler,                 { String(EMOTICON_FLAME)       + " Boiler report",    "/cmdReportBoiler"                 } },
-  { cmdReportLog,                    { String(EMOTICON_GEAR)        + " Log",              "/cmdReportLog"                    } },
-  { cmdReportTiming,                 { String(EMOTICON_STOPWATCH)   + " Timing report",    "/cmdReportTiming"                 } },
-  { cmdReportDebug,                  { String(EMOTICON_POINTING_FINGER) + " Debug report", "/cmdReportDebug"                  } },
+  { cmdReportBoiler,                 { String(EMOTICON_FLAME)       + " Boiler report",          "/cmdReportBoiler"                 } },
+  { cmdReportLog,                    { String(EMOTICON_GEAR)        + " Log",                    "/cmdReportLog"                    } },
+  { cmdReportTiming,                 { String(EMOTICON_STOPWATCH)   + " Timing report",          "/cmdReportTiming"                 } },
+  { cmdReportDebug,                  { String(EMOTICON_BEETLE)      + " Debug report",           "/cmdReportDebug"                  } },
   
-  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING) + " Restart the thermostat..", "/cmdResetDeviceMenu"          } },
-  { cmdResetDeviceYes,               { String(EMOTICON_WARNING) + " Continue restart",     "/cmdResetDeviceYes"               } },
-  { cmdResetDeviceNo,                { "Return without restart",                           "/cmdResetDeviceNo"                } },
+  { cmdResetDeviceMenu,              { String(EMOTICON_WARNING)   + " Restart the thermostat..", "/cmdResetDeviceMenu"              } },
+  { cmdResetDeviceYes,               { String(EMOTICON_WARNING)   + " Continue restart",         "/cmdResetDeviceYes"               } },
+  { cmdResetDeviceNo,                { String(EMOTICON_BACK)      + " Return without restart",   "/cmdResetDeviceNo"                } },
   
-  { cmdUpdateSoftware,               { "Receive over the air update...",                   "/cmdUpdateSoftware"               } },
+  { cmdUpdateSoftware,               { String(EMOTICON_SATTELITE_DISH) + " Over the air update...", "/cmdUpdateSoftware"            } },
     
-  { cmdMonday,                       { "Monday",                                           "/cmdMonday"                       } },
-  { cmdTuesday,                      { "Tuesday",                                          "/cmdTuesday"                      } },
-  { cmdWednesday,                    { "Wednesday",                                        "/cmdWednesday"                    } },
-  { cmdThursday,                     { "Thursday",                                         "/cmdThursday"                     } },
-  { cmdFriday,                       { "Friday",                                           "/cmdFriday"                       } },
-  { cmdSaturday,                     { "Saturday",                                         "/cmdSaturday"                     } },
-  { cmdSunday,                       { "Sunday",                                           "/cmdSunday"                       } },
+  { cmdMonday,                       { "Monday",                                                 "/cmdMonday"                       } },
+  { cmdTuesday,                      { "Tuesday",                                                "/cmdTuesday"                      } },
+  { cmdWednesday,                    { "Wednesday",                                              "/cmdWednesday"                    } },
+  { cmdThursday,                     { "Thursday",                                               "/cmdThursday"                     } },
+  { cmdFriday,                       { "Friday",                                                 "/cmdFriday"                       } },
+  { cmdSaturday,                     { "Saturday",                                               "/cmdSaturday"                     } },
+  { cmdSunday,                       { "Sunday",                                                 "/cmdSunday"                       } },
 
-  { cmdWorkFromHome,                 { String(EMOTICON_HOUSE)       + " Work from home",   "/cmdWorkFromHome"                 } },
-  { cmdWorkAtOffice,                 { String(EMOTICON_OFFICE)      + " Work from office", "/cmdWorkAtOffice"                 } },
-  { cmdWeekend,                      { String(EMOTICON_CALENDAR)    + " Weekend day",      "/cmdWeekend"                      } },
-  { cmdAllDayAway,                   { String(EMOTICON_ISLAND)      + " All day away",     "/cmdAllDayAway"                   } },
+  { cmdWorkFromHome,                 { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdWorkFromHome"                 } },
+  { cmdWorkAtOffice,                 { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdWorkAtOffice"                 } },
+  { cmdWeekend,                      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdWeekend"                      } },
+  { cmdAllDayAway,                   { String(EMOTICON_ISLAND)      + " All day away",           "/cmdAllDayAway"                   } },
 
   { cmdHomeWakeUpEarlier,            { String(EMOTICON_ALARM_CLOCK) + " Wake up -",              "/cmdHomeWakeUpEarlier"            } },
   { cmdHomeWakeUpLater,              { String(EMOTICON_ALARM_CLOCK) + " Wake up +",              "/cmdHomeWakeUpLater"              } },
@@ -109,13 +110,13 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdWeekendGoToSleepEarlier,      { String(EMOTICON_BED)         + " Sleep -",                "/cmdWeekendGoToSleepEarlier"      } },
   { cmdWeekendGoToSleepLater,        { String(EMOTICON_BED)         + " Sleep +",                "/cmdWeekendGoToSleepLater"        } },
 
-  { cmdHighTemperatureDown,          { "High temp -",            "/cmdHighTemperatureDown"          } },
-  { cmdHighTemperatureUp,            { "High temp +",            "/cmdHighTemperatureUp"            } },
-  { cmdLowTemperatureDown,           { "Low temp -",             "/cmdLowTemperatureDown"           } },
-  { cmdLowTemperatureUp,             { "Low temp +",             "/cmdLowTemperatureUp"             } },
+  { cmdHighTemperatureDown,          { "High temp -",                                            "/cmdHighTemperatureDown"          } },
+  { cmdHighTemperatureUp,            { "High temp +",                                            "/cmdHighTemperatureUp"            } },
+  { cmdLowTemperatureDown,           { "Low temp -",                                             "/cmdLowTemperatureDown"           } },
+  { cmdLowTemperatureUp,             { "Low temp +",                                             "/cmdLowTemperatureUp"             } },
 
-  { cmdSensorOffsetDown,             { String(EMOTICON_DOWN_ARROW) + " decrease offset",  "/cmdSensorOffsetDown"             } },
-  { cmdSensorOffsetUp,               { String(EMOTICON_UP_ARROW)   + " increase offset",  "/cmdSensorOffsetUp"               } }
+  { cmdSensorOffsetDown,             { String(EMOTICON_DOWN_ARROW) + " decrease offset",         "/cmdSensorOffsetDown"             } },
+  { cmdSensorOffsetUp,               { String(EMOTICON_UP_ARROW)   + " increase offset",         "/cmdSensorOffsetUp"               } }
 };  
 
 // One TelegramChat object for each user known in the system
@@ -256,12 +257,19 @@ String TelegramChat::keyboard() {
       return "[[" + btnInline(cmdMenuWeekSchedule) + "," + btnInline(cmdMenuHomeTimes)    + "]," +
               "[" + btnInline(cmdMenuOfficeTimes)  + "," + btnInline(cmdMenuWeekendTimes) + "]," +
               "[" + btnInline(cmdMenuTemperature)  + "," + btnInline(cmdMenuSensorOffset) + "]," +
-              "[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
-              "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
-              "[" + btnInline(cmdResetDeviceMenu)                                         + "]," +
-              "[" + btnInline(cmdUpdateSoftware)                                          + "]," +
+              "[" + btnInline(cmdMenuDebug)                                               + "]," + 
               "[" + btnInline(cmdMenuMain)                                                + "]]";
 
+      break;
+
+    case scnDebug: 
+  
+      return "[[" + btnInline(cmdReportBoiler)     + "," + btnInline(cmdReportLog)        + "]," +
+              "[" + btnInline(cmdReportDebug)      + "," + btnInline(cmdReportTiming)     + "]," +
+              "[" + btnInline(cmdResetDeviceMenu)                                         + "]," + 
+              "[" + btnInline(cmdUpdateSoftware)                                          + "]," +
+              "[" + btnInline(cmdMenuSettings)                                            + "]]";
+              
       break;
       
     case scnSettingsWeekSchedule: 
@@ -353,12 +361,12 @@ String TelegramChat::keyboard() {
 
     default:
 
-      return "[[" + btnInline(cmdSetpointLower)        + "," + btnInline(cmdSetpointHigher) + "]," +
-              "[" + btnInline(cmdOverruleTodayAway)    + "," + btnInline(cmdComeHome)       + "]," +
-              "[" + btnInline(cmdMenuOverruleToday)                                         + "]," +
-              "[" + btnInline(cmdMenuOverruleTomorrow)                                      + "]," +
-              "[" + btnInline(cmdMenuOverruleMultipleDays)                                  + "]," +
-              "[" + btnInline(cmdMenuSettings)         + "," + btnInline(cmdUpdateStatus)   + "]]";
+      return "[[" + btnInline(cmdSetpointLower)        + "," + btnInline(cmdSetpointHigher)         + "]," +
+              "[" + btnInline(cmdOverruleTodayAway)    + "," + btnInline(cmdOverruleTodayAutomatic) + "," + btnInline(cmdComeHome)+ "]," +
+              "[" + btnInline(cmdMenuOverruleToday)                                                 + "]," +
+              "[" + btnInline(cmdMenuOverruleTomorrow)                                              + "]," +
+              "[" + btnInline(cmdMenuOverruleMultipleDays)                                          + "]," +
+              "[" + btnInline(cmdMenuSettings)         + "," + btnInline(cmdUpdateStatus)           + "]]";
 
   } // switch (screen)
 }
@@ -421,6 +429,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
     case cmdMenuWeekendTimes:             screen = scnSettingsWeekendTimes; break;
     case cmdMenuTemperature:              screen = scnSettingsTemperature;  break;
     case cmdMenuSensorOffset:             screen = scnSettingsSensorOffset; break;
+    case cmdMenuDebug:                    screen = scnDebug;                break; 
 
     case cmdSunday:                       screen = scnSettingsDaySchedule; dayForSubmenu=0; break;
     case cmdMonday:                       screen = scnSettingsDaySchedule; dayForSubmenu=1; break;
@@ -649,7 +658,8 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                  "- Reboot: "       + secondsToDuration(t1/1e6) + "\n"
                  "- Temperature: "  + String(controllerData->temperatureMeasurementOK      ? "connected" : "disconnected") + "\n"
                  "- Boiler: "       + String(controllerData->boilerResponse==boilerSuccess ? "connected" : "disconnected") + "\n"
-                 "- Minimum heap: " + String(heapInfo.minimum_free_bytes) + "\n"; 
+                 "- Current heap: " + String(heapInfo.total_free_bytes)+ "bytes\n"
+                 "- Minimum heap: " + String(heapInfo.minimum_free_bytes) + "bytes\n"; 
       break;        
 
   } // switch (message.command) end of STEP 3
