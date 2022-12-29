@@ -12,32 +12,26 @@ This fully (software & mechanics & electronics) open source project is based on 
     <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
 </p>
 
-## Features
-
-Every weekday can be programmed to be one of four kinds:
-* **Work from home**: switch from low to high temperature at wake time, and back to low at sleep time
-* **Work from office**: same, but also switch to low temperature when at the office
-* **Weekend day**: same as home, but wake up and go to sleep at a different times
-* **All day away**: low temperature throughout the day (e.g. when on holiday)
-
-The temperature can be manually overruled to any temperature. The thermostat will automatically switch back to the programmed temperature as the next switch moment occurs.
-
-Only two temperatures are defined common to all day kinds:
-* a high temperature for when awake and present
-* a low temperature for when away or asleep
-
-All times for each day type (8 times in total) can be modified.
-
-### Priorities for the setpoint
-There is flexibility on top of that, with increasing priority over the normal week schedule:
+### Priorities for the temperature setpoint
 
 <p align="center">
   <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
 </p>
 
-* It is possible to **overrule multiple days**, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away). The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is reset to **automatic**. It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and reset it back to **automatic** in autumn.
-* **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule. Each can be set back to **automatic** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
-* At all times, a **higher or lower temperature** can be manually selected. When the next programmed timeslot of the lower priority arrives, the temperature switches back to the program.
+The temperature setpoint can be chosen in four different ways, with increasing priority:
+1. The lowest priority is the **normal week schedule**, which says which day type it is depending on the day of the week. 
+    * The days of the week can be programmed in **settings**. 
+    * All times for each type of day type can be modified
+    * The low temperature and high temperature can be modified. These are the same temperatures for all day types
+2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away). 
+    * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is reset to **automatic** by the user
+    * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and reset it back to **automatic** in autumn.
+3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
+    * Each can be set back to **automatic** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. 
+    * At midnight, **tomorrow** will be set back to **automatic**
+    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
+4. At all times, a **higher or lower temperature** can be manually selected. 
+    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program.
 
 Icons of days according to the normal week schedule are displayed on the unit with a black icon. Overruled days are displayed in blue. If the setpoint is manually overruled, the setpoint temperature is displayed in red font.
 

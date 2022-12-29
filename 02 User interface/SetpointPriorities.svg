@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.1119369"
-     inkscape:cx="170.45964"
-     inkscape:cy="100.85529"
+     inkscape:zoom="2.1869654"
+     inkscape:cx="197.53399"
+     inkscape:cy="89.621903"
      inkscape:window-width="1920"
      inkscape:window-height="1000"
      inkscape:window-x="-11"
@@ -63,47 +63,47 @@
        sodipodi:nodetypes="cccc" />
     <text
        xml:space="preserve"
-       style="font-size:4.23333px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="78.497345"
+       style="font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="84.847343"
        y="84.389351"
        id="text406"><tspan
          sodipodi:role="line"
          id="tspan404"
-         style="font-size:4.23333px;fill:#000000;stroke:none;stroke-width:0.264583px"
-         x="78.497345"
+         style="font-size:3.52778px;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="84.847343"
          y="84.389351">Normal week schedule</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:4.23333px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="78.497345"
+       style="font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="84.847343"
        y="76.839912"
        id="text410"><tspan
          sodipodi:role="line"
          id="tspan408"
-         style="font-size:4.23333px;fill:#000000;stroke:none;stroke-width:0.264583px"
-         x="78.497345"
+         style="font-size:3.52778px;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="84.847343"
          y="76.839912">Overrule multiple days</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:4.23333px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="78.497345"
+       style="font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="84.847343"
        y="69.290474"
        id="text464"><tspan
          sodipodi:role="line"
          id="tspan462"
-         style="font-size:4.23333px;fill:#000000;stroke:none;stroke-width:0.264583px"
-         x="78.497345"
+         style="font-size:3.52778px;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="84.847343"
          y="69.290474">Overrule today / tomorrow</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:4.23333px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="78.497345"
+       style="font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="84.847343"
        y="61.741035"
        id="text468"><tspan
          sodipodi:role="line"
          id="tspan466"
-         style="font-size:4.23333px;fill:#000000;stroke:none;stroke-width:0.264583px"
-         x="78.497345"
+         style="font-size:3.52778px;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="84.847343"
          y="61.741035">Overrule setpoint</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -149,5 +149,73 @@
        cx="64.471519"
        cy="82.969353"
        r="0.62480617" />
+    <circle
+       style="color:#000000;overflow:visible;fill:#ffcdcd;stroke-width:1;stop-color:#000000"
+       id="circle479"
+       cx="79.613747"
+       cy="68.177132"
+       r="2.6086726" />
+    <circle
+       style="color:#000000;overflow:visible;fill:#ffcdcd;stroke-width:1;stop-color:#000000"
+       id="circle481"
+       cx="79.613747"
+       cy="75.727722"
+       r="2.6086726" />
+    <circle
+       style="color:#000000;overflow:visible;fill:#ffcdcd;stroke-width:1;stop-color:#000000"
+       id="circle483"
+       cx="79.613747"
+       cy="83.278305"
+       r="2.6086726" />
+    <circle
+       style="color:#000000;overflow:visible;fill:#ffcdcd;stroke-width:1;stop-color:#000000"
+       id="path423"
+       cx="79.613747"
+       cy="60.626545"
+       r="2.6086726" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="79.567238"
+       y="84.389351"
+       id="text357"><tspan
+         sodipodi:role="line"
+         id="tspan355"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="79.567238"
+         y="84.389351">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="79.608574"
+       y="76.854553"
+       id="text361"><tspan
+         sodipodi:role="line"
+         id="tspan359"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="79.608574"
+         y="76.854553">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="79.616325"
+       y="69.287888"
+       id="text365"><tspan
+         sodipodi:role="line"
+         id="tspan363"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="79.616325"
+         y="69.287888">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:100%;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="79.618912"
+       y="61.741035"
+       id="text369"><tspan
+         sodipodi:role="line"
+         id="tspan367"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="79.618912"
+         y="61.741035">4</tspan></text>
   </g>
 </svg>
