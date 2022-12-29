@@ -17,17 +17,20 @@ char* detaBaseName = "...";
 
 WiFiClientSecure client;
 DetaBaseObject detaObj(client, detaID, detaBaseName, apiKey, true);
-StaticJsonDocument<200> outer;
-
-String jsonString;
-
-int val = 1;
 
 void setup() {
   Serial.begin(115200);
+  delay(500);
 
-  Serial.println("Reached before WiFi init");
+  Serial.println("WiFi init");
   WiFi.begin(WifiAccessPoint, WifiPassword);
+
+  Serial.println("Waiting to connect to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
 
   Serial.println("Synching with time server");
   configTime(0, 0, "pool.ntp.org"); // get UTC time via NTP
@@ -39,69 +42,55 @@ void setup() {
     now = time(nullptr);
   }
   Serial.println(now);
-
-  Serial.println("Waiting to connect to WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
-  jsonString = "";
-
 }
 
 String timeNow() {
   time_t now;
-  time(&now);
   struct tm * local;
+  char buffer[40];
+
+  time(&now);
   local = localtime(&now);
-  char buffer[20];
-  snprintf(buffer, 20, "%02d:%02d:%02d", local->tm_hour, local->tm_min, local->tm_sec);
+  snprintf(buffer, 40, "%04d-%02d-%02d_%02d:%02d:%02d", local->tm_year, local->tm_mon+1, local->tm_mday, local->tm_hour, local->tm_min, local->tm_sec);
   return String(buffer);
 };
 
 void loop() {
+  time_t now;
   static bool initialized = false;
-  String tn;
-  float temperature;
-  StaticJsonDocument<50> internal;
+  static StaticJsonDocument<200> outer;
+  static StaticJsonDocument<100> internal;
+  StaticJsonDocument<120> receiving;
+  static String jsonString = "";
+
+  time(&now);
   
   if( !initialized ) {
-    Serial.println("Let's begin initialization");
+    // Build the json structure
     JsonArray items = outer.createNestedArray("items");
-    tn = timeNow();
-    internal["time"] = tn;
-    temperature = random( 15.0, 25.0 );
-    internal["temperature"] = temperature;
+    internal["time"] =        time(&now);
+    internal["temperature"] = (float) 0.01*random( 1500, 2500 );
+    internal["boiler"] =      (float) 0.01*random( 1500, 2500 );
+    internal["boilerOn"] =    (bool) true;
     items.add(internal);
-    serializeJson(outer, jsonString);
-    Serial.printf("jsonString: %s\n", jsonString);
     initialized=true;
   }
   
-  StaticJsonDocument<120> receiving;
-
-  temperature = random( 15.0, 25.0 );
-  tn = timeNow();
-  Serial.println(tn);
-  outer["items"][0]["time"] = tn;
-  outer["items"][0]["temperature"] = temperature;
+  outer["items"][0]["time"] = time(&now);
+  outer["items"][0]["temperature"] = (float) 0.01*random( 1500, 2500 );
+  outer["items"][0]["boiler"]      = (float) 0.01*random( 1500, 2500 );
+  outer["items"][0]["boilerOn"]    = (bool) ( random(10) > 5 );
+  outer["items"][0]["showerOn"]    = (bool) ( random(10) > 5 );
   serializeJson(outer, jsonString);
-  Serial.printf("jsonString: %s\n", jsonString);
+  Serial.printf("jsonString:\t%s\n", jsonString.c_str() );
 
   result myResult = detaObj.putObject(jsonString.c_str());
-  Serial.println();
-  Serial.println(myResult.statusCode);
-  Serial.println(myResult.reply);
   deserializeJson(receiving, myResult.reply);
-  const char* assignedKey = receiving["processed"]["items"][0]["key"];
-  val = receiving["processed"]["items"][0]["time"];
+  Serial.printf("statusCode:\t%d\tresult:\t%s\n", myResult.statusCode, myResult.reply.c_str() );
+  //const char* assignedKey = receiving["processed"]["items"][0]["key"];
+  //Serial.printf("Status code: %s Reply: %s Key: %s\n", myResult.statusCode, myResult.reply, assignedKey);
 
-  Serial.print("Key assigned by Deta:\t");
-  Serial.println(assignedKey);
-  Serial.print("Value received:\t");
-  Serial.println(val);
+  jsonString="";
 
-  jsonString = "";
-  delay(10000);
+  delay(5000);
 }
