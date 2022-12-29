@@ -31,7 +31,7 @@ All times for each day type (8 times in total) can be modified.
 ### Priorities for the setpoint
 There is flexibility on top of that, with increasing priority over the normal week schedule:
 
-[setpoint priorities](02 User interface\SetpointPriorities.png)
+[setpoint priorities]("02 User interface\SetpointPriorities.png")
 
 
 
@@ -53,7 +53,7 @@ The thermostat can be controlled by three touchbuttons on the device or via Tele
 After selecting ```/start``` in Telegram, the following message and keyboard are returned:
 
 <p align="center">
-  <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
+  <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="500"/> 
 </p>
 
 The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```Status``` button cn be used to update the status.
