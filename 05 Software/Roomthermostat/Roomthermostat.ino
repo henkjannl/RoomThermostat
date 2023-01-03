@@ -1,4 +1,3 @@
-
 #define ARDUINOJSON_DECODE_UNICODE 1
 #include <ArduinoJson.h>
 #include "FS.h"
@@ -38,15 +37,23 @@
 
   TO DO:
     Potential improvements:
-    * while waiting for over the air software update, display message on screen
+    * over the air update does not display network port in Arduino IDE (perhaps call ArduinoOTA.handle() more often?)
+      * while waiting for over the air software update, display message on screen
     * improve responsiveness (keys and Telegram)
-    * send logfile as attachment to Telegram
+      * try to get FreeRTOS working again to improve performance of buttons and Telegram
+        * perhaps Telegram can run on other core?
+      * implement OpenTherm protocol in hardware timer in non-blocking way
     * include icons in the menu
-    * save logdata through WiFi connection (Deta Base?)
+    * save logdata through WiFi connection 
+      * Deta Base?
+      * send logfile as attachment to Telegram
     * much code can be simplified to remove structures that were used in previous attempts to get the code working
-    * try to get FreeRTOS working again to improve performance of buttons and Telegram
+       * some userEventMessage_t constructs can be replaced with sendMessage() calls
+       * some userEventMessage_t constructors may no longer be used
+       * ...
     * send automatic updates to last message of known clients every 15 minutes
-    * implement OpenTherm protocoll in hardware timer in non-blocking way
+      * also store list of chatIDs in permanent storage?
+      * add functionality to whitelist or blacklist chatIDs?
     * optimize heater control functionality
         * allow user to modify water temperature of heater and shower
         * check if D-action is implemented well in PID controller

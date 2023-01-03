@@ -17,20 +17,17 @@ using namespace std;
  *  DATA STRUCTURES THAT MANAGE USERS, MENUS AND COMMANDS IN TELEGRAM  *
  * =================================================================== */
 
-// All available Telegram commands
-  
+// All available Telegram buttons that are associated with a command
 struct tgLabelCallback {
   String label;            // label can change depending on the context
   const String callback;   // callback strings must remain the same
 };
 
-typedef std::map<command_t, tgLabelCallback> tgCommandList;
-
-const tgCommandList TELEGRAM_COMMANDS = {
+std::map<command_t, tgLabelCallback> telegramButtons = {
   { cmdSetpointLower,                { String(EMOTICON_DOWN_ARROW)  + " Cooler",                 "/cmdSetpointLower"                } },
   { cmdComeHome,                     { String(EMOTICON_HOUSE)       + " Come home",              "/cmdComeHome"                     } },
   { cmdSetpointHigher,               { String(EMOTICON_UP_ARROW)    + " Warmer",                 "/cmdSetpointHigher"               } },
-  { cmdOverruleTodayAway,            { String(EMOTICON_FOOTSTEPS)   + " Go out",                 "/cmdOverruleTodayAway"            } },
+
   { cmdMenuOverruleToday,            { "Overrule today...",                                      "/cmdMenuOverruleToday"            } },
   { cmdMenuOverruleTomorrow,         { "Overrule tomorrow...",                                   "/cmdMenuOverruleTomorrow"         } },
   { cmdMenuOverruleMultipleDays,     { "Overrule multiple days...",                              "/cmdMenuOverruleMultipleDays"     } },
@@ -119,101 +116,13 @@ const tgCommandList TELEGRAM_COMMANDS = {
   { cmdSensorOffsetUp,               { String(EMOTICON_UP_ARROW)   + " increase offset",         "/cmdSensorOffsetUp"               } }
 };  
 
-// One TelegramChat object for each user known in the system
-class TelegramChat {
-  public:
-    TelegramChat() {}; // Required for the class to be used in a map
-    TelegramChat(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue );
-    String chatID = "";
-    int lastMessageID = 0;
-    int lastMessageWithKeyboard = 0;
-    String userName = "";
-
-    screen_t screen = scnMain;
-    uint8_t dayForSubmenu;
-    tgCommandList commands = TELEGRAM_COMMANDS;
-
-    void handleCallback(String & callback);
-    String keyboard();
-    void respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message);
-    
-  protected:
-    ControllerData_t *controllerData;
-    QueueHandle_t controllerQueue;
-    QueueHandle_t telegramQueue;
-    String btnInline(command_t command);
-    String currentTime();
-    void sendWeekScheduleToController(uint8_t dayOfWeek, dayType_t typeOfDay);
+// Helper function that generates JSON code for an inline button
+String btnInline(command_t command) {
+  return "{ \"text\" : \"" + telegramButtons[command].label + "\", \"callback_data\" : \"" + telegramButtons[command].callback+ "\" }";
 };
 
-TelegramChat::TelegramChat(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue ) { 
-  this->chatID          =   controllerData.botChatID;
-  this->userName        =   controllerData.botUserName;
-  this->controllerData  = & controllerData; 
-  this->controllerQueue =   controllerQueue; 
-  this->telegramQueue   =   telegramQueue;
-};
-
-String TelegramChat::currentTime() {
-  time_t now;
-  time(&now);
-  struct tm * local;
-  local = localtime(&now);
-  char buffer[20];
-  snprintf(buffer, 20, "%02d:%02d:%02d", local->tm_hour, local->tm_min, local->tm_sec);
-  return String(buffer);
-};
-
-void TelegramChat::sendWeekScheduleToController(uint8_t dayOfWeek, dayType_t typeOfDay) {
-  userEventMessage_t message(chatID, screen, cmdSetWeekSchedule);
-  message.dayOfWeek = dayOfWeek;
-  message.typeOfDay = typeOfDay;
-  xQueueSend( controllerQueue, &message, ( TickType_t ) 10 );
-};
-
-void TelegramChat::handleCallback(String & callback) {
-  // This is the first response as a message is received.
-  // If the command potentially changes controller settings, the command is sent to the controller
-  // The controller then modifies the setting and lights up the backlight to display the change to users in the room
-  // If the command is not changing any settings (i.e. it flips to a different screen), the command is directly forwarded to the Telegram queue
-
-  // Recognize the response from the inline keyboard
-  command_t command = cmdCommandNotRecognized ;
-  for (auto const& kv : commands) {
-    if(callback==kv.second.callback) {
-      command=kv.first;
-      break;
-    }
-  }
-
-  if( command < cmdLastControllerCommand ) {
-
-    // If the command changes the controller settings, it needs to be sent to the controller
-    switch(command) {
-
-      case cmdWorkFromHome: sendWeekScheduleToController(dayForSubmenu, dtWorkFromHome); break;
-      case cmdWorkAtOffice: sendWeekScheduleToController(dayForSubmenu, dtWorkAtOffice); break;
-      case cmdWeekend:      sendWeekScheduleToController(dayForSubmenu, dtWeekend);      break;
-      case cmdAllDayAway:   sendWeekScheduleToController(dayForSubmenu, dtAway);         break;
-
-      default: 
-        sendMessage(sndTelegram, command, controllerQueue, chatID); 
-    }
-    
-  } 
-  else {
-    // If controller settings do not need to be changed, send the command directly to the Telegram queue
-    Serial.printf("Sending Telegram > Telegram [%s]\n", commandLabels[command].c_str() );
-    sendMessage(sndTelegram, command, telegramQueue, chatID);
-  }
-    
-};
-
-String TelegramChat::btnInline(command_t command) {
-  return "{ \"text\" : \"" + commands[command].label + "\", \"callback_data\" : \"" + commands[command].callback+ "\" }";
-};
-
-String TelegramChat::keyboard() {
+// Helper function that updates button text for certain buttons and generates JSON code for the keyboard of a specific screen
+String keyboard(screen_t & screen, ControllerData_t & controllerData) {
   
   switch (screen) {
       
@@ -239,8 +148,8 @@ String TelegramChat::keyboard() {
 
     case scnOverruleMultiple: 
 
-      commands[cmdOverruleMultipleFewerDays].label = String(controllerData->overrideMultipleCount-1) + " days";
-      commands[cmdOverruleMultipleMoreDays ].label = String(controllerData->overrideMultipleCount+1) + " days";
+      telegramButtons[cmdOverruleMultipleFewerDays].label = String(controllerData.overrideMultipleCount-1) + " days";
+      telegramButtons[cmdOverruleMultipleMoreDays ].label = String(controllerData.overrideMultipleCount+1) + " days";
 
       return "[["+ btnInline(cmdOverruleMultipleWorkFromHome) + "]," +
               "["+ btnInline(cmdOverruleMultipleWorkAtOffice) + "]," +
@@ -293,10 +202,10 @@ String TelegramChat::keyboard() {
     
     case scnSettingsHomeTimes: 
       
-      commands[cmdHomeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workFromHomeWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeWakeUpLater      ].label = "wake "    +String( (controllerData->workFromHomeWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workFromHomeSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[cmdHomeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workFromHomeSleep  +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[cmdHomeWakeUpEarlier    ].label = "wake "    +String( (controllerData.workFromHomeWakeUp -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[cmdHomeWakeUpLater      ].label = "wake "    +String( (controllerData.workFromHomeWakeUp +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[cmdHomeGoToSleepEarlier ].label = "sleep "   +String( (controllerData.workFromHomeSleep  -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[cmdHomeGoToSleepLater   ].label = "sleep "   +String( (controllerData.workFromHomeSleep  +timeValue_t(0,15) ).str().c_str());
     
       return "[["+ btnInline(cmdHomeWakeUpEarlier)     + "," + btnInline(cmdHomeWakeUpLater)    + "]," +
               "["+ btnInline(cmdHomeGoToSleepEarlier)  + "," + btnInline(cmdHomeGoToSleepLater) + "]," +
@@ -305,14 +214,14 @@ String TelegramChat::keyboard() {
       
     case scnSettingsOfficeTimes: 
 
-      commands[ cmdOfficeWakeUpEarlier    ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeWakeUpLater      ].label = "wake "    +String( (controllerData->workAtOfficeWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeLeaveEarlier     ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeLeaveLater       ].label = "go out "  +String( (controllerData->workAtOfficeGoOut  +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeComeHomeEarlier  ].label = "come in " +String( (controllerData->workAtOfficeComeIn -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeComeHomeLater    ].label = "come in " +String( (controllerData->workAtOfficeComeIn +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeGoToSleepEarlier ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdOfficeGoToSleepLater   ].label = "sleep "   +String( (controllerData->workAtOfficeSleep  +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeWakeUpEarlier    ].label = "wake "    +String( (controllerData.workAtOfficeWakeUp -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeWakeUpLater      ].label = "wake "    +String( (controllerData.workAtOfficeWakeUp +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeLeaveEarlier     ].label = "go out "  +String( (controllerData.workAtOfficeGoOut  -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeLeaveLater       ].label = "go out "  +String( (controllerData.workAtOfficeGoOut  +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeComeHomeEarlier  ].label = "come in " +String( (controllerData.workAtOfficeComeIn -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeComeHomeLater    ].label = "come in " +String( (controllerData.workAtOfficeComeIn +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeGoToSleepEarlier ].label = "sleep "   +String( (controllerData.workAtOfficeSleep  -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdOfficeGoToSleepLater   ].label = "sleep "   +String( (controllerData.workAtOfficeSleep  +timeValue_t(0,15) ).str().c_str());
       
       return "[["+ btnInline(cmdOfficeWakeUpEarlier)     + "," + btnInline(cmdOfficeWakeUpLater)    + "]," +
               "["+ btnInline(cmdOfficeLeaveEarlier)      + "," + btnInline(cmdOfficeLeaveLater)     + "]," +
@@ -323,10 +232,10 @@ String TelegramChat::keyboard() {
       
     case scnSettingsWeekendTimes: 
 
-      commands[ cmdWeekendWakeUpEarlier    ].label = "wake "    +String( (controllerData->weekendWakeUp -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendWakeUpLater      ].label = "wake "    +String( (controllerData->weekendWakeUp +timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendGoToSleepEarlier ].label = "sleep "   +String( (controllerData->weekendSleep  -timeValue_t(0,15) ).str().c_str());
-      commands[ cmdWeekendGoToSleepLater   ].label = "sleep "   +String( (controllerData->weekendSleep  +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdWeekendWakeUpEarlier    ].label = "wake "    +String( (controllerData.weekendWakeUp -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdWeekendWakeUpLater      ].label = "wake "    +String( (controllerData.weekendWakeUp +timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdWeekendGoToSleepEarlier ].label = "sleep "   +String( (controllerData.weekendSleep  -timeValue_t(0,15) ).str().c_str());
+      telegramButtons[ cmdWeekendGoToSleepLater   ].label = "sleep "   +String( (controllerData.weekendSleep  +timeValue_t(0,15) ).str().c_str());
       
       return "[["+ btnInline(cmdWeekendWakeUpEarlier)     + "," + btnInline(cmdWeekendWakeUpLater)    + "]," +
               "["+ btnInline(cmdWeekendGoToSleepEarlier)  + "," + btnInline(cmdWeekendGoToSleepLater) + "]," +
@@ -336,10 +245,10 @@ String TelegramChat::keyboard() {
       
     case scnSettingsTemperature: 
 
-      commands[ cmdHighTemperatureDown ].label = "High " + String(controllerData->highTemp-0.5, 1) + "°C";
-      commands[ cmdHighTemperatureUp   ].label = "High " + String(controllerData->highTemp+0.5, 1) + "°C";
-      commands[ cmdLowTemperatureDown  ].label = "Low "  + String(controllerData->lowTemp -0.5, 1) + "°C";
-      commands[ cmdLowTemperatureUp    ].label = "Low "  + String(controllerData->lowTemp +0.5, 1) + "°C";
+      telegramButtons[ cmdHighTemperatureDown ].label = "High " + String(controllerData.highTemp-0.5, 1) + "°C";
+      telegramButtons[ cmdHighTemperatureUp   ].label = "High " + String(controllerData.highTemp+0.5, 1) + "°C";
+      telegramButtons[ cmdLowTemperatureDown  ].label = "Low "  + String(controllerData.lowTemp -0.5, 1) + "°C";
+      telegramButtons[ cmdLowTemperatureUp    ].label = "Low "  + String(controllerData.lowTemp +0.5, 1) + "°C";
 
       return "[["+ btnInline(cmdHighTemperatureDown) + "," + btnInline(cmdHighTemperatureUp) + "]," +
               "["+ btnInline(cmdLowTemperatureDown)  + "," + btnInline(cmdLowTemperatureUp)  + "]," +
@@ -370,6 +279,95 @@ String TelegramChat::keyboard() {
 
   } // switch (screen)
 }
+
+// Helper function that generates a string with the current time, used under a message sent to the user
+String currentTime() {
+  time_t now;
+  time(&now);
+  struct tm * local;
+  local = localtime(&now);
+  char buffer[20];
+  snprintf(buffer, 20, "%02d:%02d:%02d", local->tm_hour, local->tm_min, local->tm_sec);
+  return String(buffer);
+};
+
+// One TelegramChat object for each user known in the system
+class TelegramChat {
+  public:
+    TelegramChat() {}; // An empty contructor is required for the class to be used in a map
+    TelegramChat(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue );
+    String chatID = "";
+    bool lastMessageIDknown = false;
+    int lastMessageID = 0;
+
+    screen_t screen = scnMain;
+    uint8_t dayForSubmenu;
+
+    // This function recognizes a callback and sends a command to the controller or directly to the Telegram queue
+    void handleCallback(String & callback);
+
+    // This function fetches a message from the Telegram queue (from the controller of from handleCallback) and returns a message to the user
+    void respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message);
+    
+  protected:
+    ControllerData_t *controllerData;
+    QueueHandle_t controllerQueue;
+    QueueHandle_t telegramQueue;
+    void sendWeekScheduleToController(uint8_t dayOfWeek, dayType_t typeOfDay);
+};
+
+TelegramChat::TelegramChat(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue ) { 
+  this->chatID          =   controllerData.botChatID;
+  this->controllerData  = & controllerData; 
+  this->controllerQueue =   controllerQueue; 
+  this->telegramQueue   =   telegramQueue;
+};
+
+void TelegramChat::sendWeekScheduleToController(uint8_t dayOfWeek, dayType_t typeOfDay) {
+  userEventMessage_t message(chatID, screen, cmdSetWeekSchedule);
+  message.dayOfWeek = dayOfWeek;
+  message.typeOfDay = typeOfDay;
+  xQueueSend( controllerQueue, &message, ( TickType_t ) 10 );
+};
+
+void TelegramChat::handleCallback(String & callback) {
+  // This is the first response as a message is received.
+  // If the command potentially changes controller settings, the command is sent to the controller
+  // The controller then modifies the setting and lights up the backlight to display the change to users in the room
+  // If the command is not changing any settings (i.e. it flips to a different screen), the command is directly forwarded to the Telegram queue
+
+  // Recognize the response from the inline keyboard
+  command_t command = cmdCommandNotRecognized ;
+  for (auto const& kv : telegramButtons) {
+    if(callback==kv.second.callback) {
+      command=kv.first;
+      break;
+    }
+  }
+
+  if( command < cmdLastControllerCommand ) {
+
+    // If the command changes the controller settings, it needs to be sent to the controller
+    switch(command) {
+
+      case cmdWorkFromHome: sendWeekScheduleToController(dayForSubmenu, dtWorkFromHome); break;
+      case cmdWorkAtOffice: sendWeekScheduleToController(dayForSubmenu, dtWorkAtOffice); break;
+      case cmdWeekend:      sendWeekScheduleToController(dayForSubmenu, dtWeekend);      break;
+      case cmdAllDayAway:   sendWeekScheduleToController(dayForSubmenu, dtAway);         break;
+
+      default: 
+        sendMessage(sndTelegram, command, controllerQueue, chatID); 
+    }
+    
+  } 
+  else {
+    // If controller settings do not need to be changed, send the command directly to the Telegram queue
+    Serial.printf("Sending Telegram > Telegram [%s]\n", commandLabels[command].c_str() );
+    sendMessage(sndTelegram, command, telegramQueue, chatID);
+  }
+    
+};
+
 void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t & message) {
   time_t now;
   struct tm * localTime;
@@ -379,9 +377,6 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   const int BUFLEN = 80;
   char buffer[BUFLEN];
   bool showWeekSchedule = false;
-  //char buffer1[BUFLEN];
-  //char buffer2[BUFLEN];
-
   String response=""; // Mesage to the user
   
   Serial.printf("TelegramChat::respondToUser() cmd= %s\n", commandLabels[message.command].c_str() );
@@ -454,7 +449,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   } // switch (message.command) 
 
   
-  // STEP 2: Prepare response and keyboard based on screen
+  // STEP 2: Prepare response based on screen
   Serial.printf( "Requesting response for screen [%s]\n", screenTitle[screen].c_str() );
 
   switch (screen) {
@@ -475,12 +470,15 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
           }
           else {
             localTime = localtime(&now);
-            localTime->tm_mday += controllerData->overrideMultipleCount;
+            localTime->tm_mday += controllerData->overrideMultipleCount-1;
             mktime(localTime);
             strftime(buffer, BUFLEN, "%A %e %B", localTime);
             response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
-                        String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+                        String(controllerData->overrideMultipleCount) + " days, including " + buffer + "\n";
           }
+
+          showWeekSchedule = true;
+          
         break;
     
         case spOverrideToday:
@@ -527,11 +525,11 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
         }
         else {
           localTime = localtime(&now);
-          localTime->tm_mday += controllerData->overrideMultipleCount;
+          localTime->tm_mday += controllerData->overrideMultipleCount-1;
           mktime(localTime);
           strftime(buffer, BUFLEN, "%A %e %B", localTime);
           response=  "Multiple days are set to '" + String(DAY_TYPES[controllerData->overrideMultiple].c_str()) + "' for " + 
-                      String(controllerData->overrideMultipleCount) + " days\nending " + buffer + "\n";
+                      String(controllerData->overrideMultipleCount) + " days, including " + buffer + "\n";
         }
       };
 
@@ -664,7 +662,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
   } // switch (message.command) end of STEP 3
 
-  // For some of the screens, include the current day schedule starting today
+  // For some of the screens or commands, include the current day schedule starting today
   if( showWeekSchedule ) {
     response += "Day settings starting today:\n";
     for(int i=0; i<7; i++) response += String( DAYTYPE_TO_EMOTICON[ controllerData->dayTypes[ i ] ] ) + " ";
@@ -678,12 +676,12 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
                    String( controllerData->hotWaterActive ? EMOTICON_SHOWER : "") +
              "*";
 
-  if( ( lastMessageWithKeyboard < 1 ) or ( message.command == cmdStartTelegram ) ) {
+  if( !lastMessageIDknown ) {  
     // When sending the first message, the chatID containing the keyboard is not yet known
-    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard() );
+    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(screen, *controllerData) );
   } else {
     // Update the last message containing a keyboard
-    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(), lastMessageWithKeyboard);
+    bot.sendMessageWithInlineKeyboard(chatID, response, "Markdown", keyboard(screen, *controllerData), lastMessageID);
   }
 
   if( message.command == cmdUpdateSoftware ) {
@@ -707,148 +705,22 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
     enableKeyboard();
 
-    bot.sendMessageWithInlineKeyboard(chatID, "Timeout for over the air software update", "Markdown", keyboard(), lastMessageWithKeyboard);
+    bot.sendMessageWithInlineKeyboard(chatID, "Timeout for over the air software update", "Markdown", keyboard(screen, *controllerData), lastMessageID);
   };
 };
-
-
-/**********************************************************
- *  THE TELEGRAM HANDLER MANAGES ALL CHATS                *
- **********************************************************/
-class TelegramHandler {
-  public:
-    TelegramHandler(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue, WiFiClientSecure & securedClient, UniversalTelegramBot & bot);
-    void begin( );
-    void checkNewMessages();
-    void handleNewMessages(int numNewMessages);
-    void handleQueueCommand(userEventMessage_t & message);
-  
-    void handleCallback( String & chatID, String & callback) { userConversation[chatID].handleCallback(callback);            };
-    void respondToUser( String & chatID, userEventMessage_t & message);
-
-    void enableTelegram()  { enabled=true;   };
-    void disableTelegram() { enabled=false;  };
-    bool telegramEnabled() { return enabled; };
-
-
-  protected:  
-    ControllerData_t *controllerData;
-    QueueHandle_t controllerQueue;
-    QueueHandle_t telegramQueue;
-    UniversalTelegramBot *bot;
-    WiFiClientSecure *securedClient;
-
-    std::map<String, TelegramChat> userConversation;
-
-    bool enabled = true; 
-    
-    String botName;
-    String botUserName;
-    String botToken;
-    String botChatID;    
-};
-
-TelegramHandler::TelegramHandler(ControllerData_t & controllerData, QueueHandle_t controllerQueue, QueueHandle_t telegramQueue, WiFiClientSecure & securedClient, UniversalTelegramBot & bot) { 
-  this->controllerData  = & controllerData; 
-  this->controllerQueue =   controllerQueue; 
-  this->telegramQueue   =   telegramQueue;
-  this->securedClient   = & securedClient; 
-  this->bot             = & bot; 
-
-  this->botName         =   controllerData.botName;
-  this->botUserName     =   controllerData.botUserName;
-  this->botToken        =   controllerData.botToken;
-  this->botChatID       =   controllerData.botChatID;
-};
-
-void TelegramHandler::begin() {
-  // Setup secure connection for Telegram
-  securedClient->setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
-  bot->updateToken(controllerData->botToken);
-
-  const String commands = F("["
-                            "{\"command\":\"start\",   \"description\":\"Welcome message\"}" // no comma on last command                            
-                            "]");
-  bot->setMyCommands(commands);
-
-  // Add first chatID to list
-  TelegramChat newTelegramChat=TelegramChat( *controllerData, controllerQueue, telegramQueue);
-  userConversation[controllerData->botChatID]=newTelegramChat;
-
-  // Send first message to the user
-  bot->sendMessageWithInlineKeyboard( controllerData->botChatID, 
-                                      String(EMOTICON_THERMOMETER) + " Thermostat just started", 
-                                      "Markdown", 
-                                      userConversation[controllerData->botChatID].keyboard() 
-                                    );
-                                    
-};
-
-void TelegramHandler::handleNewMessages(int numNewMessages){
-  String response;
-  
-  for (int i = 0; i < numNewMessages; i++) {
-    String chatID = bot->messages[i].chat_id;
-    Serial.printf("Message from chatID: %s\n", chatID);
-
-    // If chat is not yet listed, create new item
-    if (userConversation.find(chatID) == userConversation.end()) {
-      TelegramChat newTelegramChat=TelegramChat(*controllerData, controllerQueue, telegramQueue);
-      userConversation[chatID]=newTelegramChat;
-      Serial.printf("Chat added to list of chats\n");
-      for (auto const& chat : userConversation) {
-        Serial.printf("ID: %s [ID: %s Name: %s]\n", chat.first.c_str(), chat.second.chatID.c_str(), chat.second.userName.c_str() );
-      }
-    }
-
-    // Update data in conversation
-    userConversation[chatID].chatID = chatID;
-    userConversation[chatID].lastMessageID = bot->messages[i].message_id;
-    Serial.printf("Set chat[%s].lastMessageID: %d\n", chatID, userConversation[chatID].lastMessageID );
-
-    userConversation[chatID].userName = bot->messages[i].from_name;
-    if (userConversation[chatID].userName == "") userConversation[chatID].userName = "Guest";
-
-    if(bot->messages[i].type=="message") {
-      String message = bot->messages[i].text;
-      Serial.printf("Handle message %s\n", message.c_str());
-
-      userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
-      respondToUser(chatID, command);
-
-      //userConversation[chatID].responseToMessage( *bot, message);
-    }    
-    else if (bot->messages[i].type=="callback_query") {
-      Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot->messages[i].text.c_str());
-      userConversation[chatID].lastMessageWithKeyboard = bot->messages[i].message_id;
-      handleCallback(chatID, bot->messages[i].text); // Sends commands to the controller or to the Telegram Queue
-    }
-  } // for i
-};
-
-void TelegramHandler::checkNewMessages() {
-  int numNewMessages = bot->getUpdates(bot->last_message_received + 1);
-
-  Serial.println("telegramHandler.checkNewMessages()");
-  while (numNewMessages) {
-    Serial.println("got response");
-    handleNewMessages(numNewMessages);
-    numNewMessages = bot->getUpdates(bot->last_message_received + 1);
-  }
-};
-
-void TelegramHandler::respondToUser( String & chatID, userEventMessage_t & message) { 
-  Serial.printf("respondToUser ChatID: %s [%s]\n", chatID, commandLabels[message.command].c_str() );
-  userConversation[chatID].respondToUser( *bot, message); 
-};
-
 
 /***********************************************************************
  *  GlOBAL DECLARATIONS                                                *
  ***********************************************************************/
 WiFiClientSecure securedClient;                                                                      // Secure wifi client
 UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram, bot token not yet retrieved by ControllerData since SPIFFS not yet up
-TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
+//TelegramHandler telegramHandler(controllerData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler 
+std::map<String, TelegramChat> userConversation; // The data for each user interacting with Telegram
+bool telegramEnabledCounter = true; // consider making it a counter, if multiple processes enable it and disable it simultaneously
+
+void enableTelegram()  { telegramEnabledCounter=true;   };
+void disableTelegram() { telegramEnabledCounter=false;  };
+bool telegramEnabled() { return telegramEnabledCounter; };
 
 void setupOTA() {
   
@@ -883,21 +755,90 @@ void setupOTA() {
 
 void startTelegram() {
   bot.maxMessageLength = 6000;
-  telegramHandler.begin( );
+  //telegramHandler.begin( );
 
-  Serial.println("Setting up over the air update");
+  Serial.println("Setting up over the air updates");
   setupOTA();
+
+  // Setup secure connection for Telegram
+  securedClient.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
+  bot.updateToken(controllerData.botToken);
+
+  const String commands = F("["
+                            "{\"command\":\"start\",   \"description\":\"Welcome message\"}" // no comma on last command                            
+                            "]");
+  bot.setMyCommands(commands);
+
+  // Add first chatID to list
+  TelegramChat newTelegramChat=TelegramChat( controllerData, controllerQueue, telegramQueue);
+  userConversation[controllerData.botChatID]=newTelegramChat;
+
+  // Send first message to the user
+  bot.sendMessageWithInlineKeyboard( controllerData.botChatID, 
+                                      String(EMOTICON_THERMOMETER) + " Thermostat just started", 
+                                      "Markdown", 
+                                      keyboard( userConversation[controllerData.botChatID].screen, controllerData ) 
+                                    );  
 }
+
+void handleNewMessages(int numNewMessages){
+  String response;
+  
+  for (int i = 0; i < numNewMessages; i++) {
+    String chatID = bot.messages[i].chat_id;
+    Serial.printf("Message from chatID: %s\n", chatID);
+
+    // If chat is not yet listed, create new item
+    if (userConversation.find(chatID) == userConversation.end()) {
+      TelegramChat newTelegramChat=TelegramChat(controllerData, controllerQueue, telegramQueue);
+      userConversation[chatID]=newTelegramChat;
+      Serial.printf("Chat added to list of chats\n");
+      for (auto const& chat : userConversation) {
+        Serial.printf("ID: %s [ID: %s]\n", chat.first.c_str(), chat.second.chatID.c_str() );
+      }
+    }
+
+    // Update data in conversation
+    userConversation[chatID].chatID = chatID;
+    userConversation[chatID].lastMessageID = bot.messages[i].message_id;
+    userConversation[chatID].lastMessageIDknown = true;
+    Serial.printf("Set chat[%s].lastMessageID: %d\n", chatID, userConversation[chatID].lastMessageID );
+
+    if(bot.messages[i].type=="message") {
+      String message = bot.messages[i].text;
+      Serial.printf("Handle message %s\n", message.c_str());
+      userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
+      userConversation[chatID].respondToUser( bot, command); 
+    }    
+    else if (bot.messages[i].type=="callback_query") {
+      Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot.messages[i].text.c_str());
+
+      // Recognize callback string and send command to the controller or to the Telegram Queue
+      userConversation[chatID].handleCallback(bot.messages[i].text);
+    }
+  } // for i
+};
+
+void checkNewMessages() {
+  int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+
+  Serial.println("checkNewMessages()");
+  while (numNewMessages) {
+    Serial.println("got response");
+    handleNewMessages(numNewMessages);
+    numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+  }
+};
 
 void checkTelegramIfNeeded() {
   static unsigned long lastTimeTelegramPolled = 0;
   userEventMessage_t message;
 
-  if( telegramHandler.telegramEnabled() ) {
+  if( telegramEnabled() ) {
       
     // Do not poll too often. Telegram would get bored with us
     if ( millis() - lastTimeTelegramPolled > TELEGRAM_INTERVAL ) {
-      telegramHandler.checkNewMessages();
+      checkNewMessages();
       lastTimeTelegramPolled=millis();
     }  
       
@@ -906,27 +847,23 @@ void checkTelegramIfNeeded() {
   // Check if there are messages in the telegramQueue
   // This must still go un if Telegram is disabled, otherwise it cannot be enabled again
   if ( xQueueReceive( telegramQueue, &message, 0) == pdPASS ) {
-    Serial.printf("%s > Telegram [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed, telegramHandler.telegramEnabled() ? "Y" : "N");
+    Serial.printf("%s > Telegram [%s] k=%d\n", senderLabels[message.sender].c_str(), commandLabels[message.command].c_str(), keyboardEnabed, telegramEnabled() ? "Y" : "N");
 
     switch( message.command ) {
       case cmdDisableTelegram:
-        telegramHandler.disableTelegram();
+        disableTelegram();
       break;
 
       case cmdEnableTelegram:
-        telegramHandler.enableTelegram();
+        enableTelegram();
       break;
 
       default:
         String chatID = message.chatID;
-            
         if( chatID.length()>1 ) {
           Serial.printf("Handle queue command for chatID: %s\n", chatID);
-          telegramHandler.respondToUser(chatID, message);
+          userConversation[chatID].respondToUser( bot, message );
         }
-        
       }; // switch( message.command )
-    
   }; // xQueueReceive
-
 };

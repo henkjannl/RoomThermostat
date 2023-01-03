@@ -29,13 +29,15 @@ void calculateNewSetpoint() {
   // Shift days at midnight
   if(currDay != prevDay) {
     controllerData.overrideToday = controllerData.overrideTomorrow;
-    controllerData.overrideTomorrow=dtAuto;
+    controllerData.overrideTomorrow = dtAuto;
     
-    if (controllerData.overrideMultiple!=dtAuto) {
-      if(controllerData.overrideMultipleCount>0)
+    if( controllerData.overrideMultiple != dtAuto and !controllerData.multipleForever ) {
+      if( controllerData.overrideMultipleCount > 0 )
         controllerData.overrideMultipleCount--;
-      else
-        controllerData.overrideMultiple=dtAuto;
+      else {
+        controllerData.overrideMultiple = dtAuto;
+        controllerData.overrideMultipleCount = 3;
+      }
     }
   }
 
@@ -358,6 +360,7 @@ void processControllerCommand(userEventMessage_t messageToController) {
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTempNow=false;
       controllerData.settingsChanged = true; 
+      if( controllerData.overrideMultipleCount < 2) controllerData.overrideMultipleCount = 3;
       break;
 
     case cmdSetWeekSchedule: 
