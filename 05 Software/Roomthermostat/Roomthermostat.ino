@@ -3,7 +3,7 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.1.1"
+#define VERSION "1.1.2"
 #define USE_TESTBOT false
 
 /* 
@@ -34,6 +34,8 @@
   1.1.1 Menu improvements, emoticons added
         'Forever' mode added to multiple days
         Controller module simplified
+  1.1.2 Graphical user interface redesign, using Telegram icons
+        Minor improvements to handling overrule multiple days
 
   TO DO:
     Potential improvements:

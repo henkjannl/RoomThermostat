@@ -41,7 +41,7 @@ using namespace std;
 // Screen colors converted to RGB565
 #define CLR_BACKGROUND       0xFFFF   // FF, FF, FF = white
 #define CLR_CIRCLE_OUTLINE   0x738E   // 73, 73, 73 = dark grey
-#define CLR_CIRCLE_FILL      0xC618   // C0, C0, C0 = light grey
+#define CLR_CIRCLE_FILL      0xEE13   // E8, C3, 9E = beige
 #define CLR_MEASURED_TEMP    0x0000   // 00, 00, 00 = black
 #define CLR_DARK_TEXT        0x8410   // 80, 80, 80 = dark grey
 #define CLR_LIGHT_TEXT       0xB596   // B0, B0, B0 = light grey
@@ -340,12 +340,12 @@ std::map<icon_t, string > ICONS = {
   {iconWeekend,            "/iconWeekend.jpg"        },
   {iconAway,               "/iconAway.jpg"           },
 
-  {iconHomeOverruled,      "/iconHomeOv.jpg"         },
-  {iconWorkOverruled,      "/iconWorkOv.jpg"         },
-  {iconWeekendOverruled,   "/iconWeekendOv.jpg"      },
-  {iconAwayOverruled,      "/iconAwayOv.jpg"         },
+  //{iconHomeOverruled,      "/iconHomeOv.jpg"         },
+  //{iconWorkOverruled,      "/iconWorkOv.jpg"         },
+  //{iconWeekendOverruled,   "/iconWeekendOv.jpg"      },
+  //{iconAwayOverruled,      "/iconAwayOv.jpg"         },
 
-  {iconAutomatic,          "/iconAutomatic.jpg"      },
+  {iconAutomatic,          "/iconAutomatic.jpg"      },  // not yet renewed
 
   {iconWifiConnected,      "/iconWifiConnected.jpg"  },
   {iconWifiLost,           "/iconWifiLost.jpg"       },
@@ -367,38 +367,38 @@ std::map<icon_t, string > ICONS = {
   {iconFlame7,             "/iconFlame7.jpg"         },
   {iconFlame8,             "/iconFlame8.jpg"         },
 
-  {iconToday,              "/iconToday.jpg"          },
-  {iconTomorrow,           "/iconTomorrow.jpg"       },
+  {iconToday,              "/iconToday.jpg"          }, // not yet renewed
+  {iconTomorrow,           "/iconTomorrow.jpg"       }, // not yet renewed
 
-  {iconMonday,             "/iconMonday.jpg"         },
-  {iconTuesday,            "/iconTuesday.jpg"        },
-  {iconWednesday,          "/iconWednesday.jpg"      },
-  {iconThursday,           "/iconThursday.jpg"       },
-  {iconFriday,             "/iconFriday.jpg"         },
-  {iconSaturday,           "/iconSaturday.jpg"       },
-  {iconSunday,             "/iconSunday.jpg"         },
+  {iconMonday,             "/iconMonday.jpg"         }, // not yet renewed
+  {iconTuesday,            "/iconTuesday.jpg"        }, // not yet renewed
+  {iconWednesday,          "/iconWednesday.jpg"      }, // not yet renewed
+  {iconThursday,           "/iconThursday.jpg"       }, // not yet renewed
+  {iconFriday,             "/iconFriday.jpg"         }, // not yet renewed
+  {iconSaturday,           "/iconSaturday.jpg"       }, // not yet renewed
+  {iconSunday,             "/iconSunday.jpg"         }, // not yet renewed
 
-  {iconMenu,               "/iconMenu.jpg"           },
-  {iconClock,              "/iconClock.jpg"          },
-  {iconHighTemperature,    "/iconHighTemperature.jpg"},
-  {iconLowTemperature,     "/iconLowTemperature.jpg" },
-  {iconFewer,              "/iconFewer.jpg"          },
-  {iconMore,               "/iconMore.jpg"           },
-  {iconMultipleDays,       "/iconMultipleDays.jpg"   },
-  {iconSensorOffset,       "/iconSensorOffset.jpg"   },
-  {iconSetpoint,           "/iconSetpoint.jpg"       },
-  {iconSettings,           "/iconSettings.jpg"       },
-  {iconTempHigher,         "/iconTempHigher.jpg"     },
-  {iconTempLower,          "/iconTempLower.jpg"      },
-  {iconWeekschedule,       "/iconWeekschedule.jpg"   },
-  {iconExit,               "/iconExit.jpg"           }
+  {iconMenu,               "/iconMenu.jpg"           }, // not yet renewed
+  {iconClock,              "/iconClock.jpg"          }, // not yet renewed
+  {iconHighTemperature,    "/iconHighTemperature.jpg"}, // not yet renewed
+  {iconLowTemperature,     "/iconLowTemperature.jpg" }, // not yet renewed
+  {iconFewer,              "/iconFewer.jpg"          }, // not yet renewed
+  {iconMore,               "/iconMore.jpg"           }, // not yet renewed
+  {iconMultipleDays,       "/iconMultipleDays.jpg"   }, // not yet renewed
+  {iconSensorOffset,       "/iconSensorOffset.jpg"   }, // not yet renewed
+  {iconSetpoint,           "/iconSetpoint.jpg"       }, // not yet renewed
+  {iconSettings,           "/iconSettings.jpg"       }, // not yet renewed
+  {iconTempHigher,         "/iconTempHigher.jpg"     }, // not yet renewed
+  {iconTempLower,          "/iconTempLower.jpg"      }, // not yet renewed
+  {iconWeekschedule,       "/iconWeekschedule.jpg"   }, // not yet renewed
+  {iconExit,               "/iconExit.jpg"           }  // not yet renewed
 };
 
 enum dayType_t {dtWorkFromHome, dtWorkAtOffice, dtWeekend, dtAway, dtAuto};
 String DAY_TYPES[] = { "Work from home", "Work from office", "Weekend day", "All day away", "Automatic" };
   
 const icon_t DAYTYPE_TO_ICON[]           = { iconHome,          iconWork,          iconWeekend,          iconAway,          iconAutomatic };
-const icon_t DAYTYPE_OVERRULED_TO_ICON[] = { iconHomeOverruled, iconWorkOverruled, iconWeekendOverruled, iconAwayOverruled, iconAutomatic };
+//const icon_t DAYTYPE_OVERRULED_TO_ICON[] = { iconHomeOverruled, iconWorkOverruled, iconWeekendOverruled, iconAwayOverruled, iconAutomatic };
 const char DAYTYPE_TO_EMOTICON[][5]      = { {0xf0, 0x9f, 0x8f, 0xa0, 0x0},   // House
                                              {0xf0, 0x9f, 0x8f, 0xa2, 0x0},   // Office
                                              {0xf0, 0x9f, 0x93, 0x85, 0x0},   // Calendar

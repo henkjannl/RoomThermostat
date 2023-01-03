@@ -91,8 +91,8 @@ void Display::displayHomeScreen() {
     localTime = localtime(&now); // Convert UTC to local time
 
     // Display date on top of screen
-    const int W=288;
-    const int H=26;
+    const int W=320;
+    const int H=30;
     sprite.createSprite(W, H);
     sprite.fillSprite(CLR_BACKGROUND);    
     sprite.setTextDatum(MC_DATUM);
@@ -100,7 +100,7 @@ void Display::displayHomeScreen() {
     sprite.setTextColor(CLR_DARK_TEXT, CLR_BACKGROUND);
     strftime(buffer, BUFLEN, "%A %e %B", localTime);
     sprite.drawString(buffer, W/2, H/2);
-    sprite.pushSprite(0, 4);
+    sprite.pushSprite(0, 0);
     sprite.unloadFont();
     sprite.deleteSprite();
 
@@ -112,7 +112,7 @@ void Display::displayHomeScreen() {
     sprite.setTextColor(CLR_DARK_TEXT, CLR_CIRCLE_FILL);
     strftime(buffer, BUFLEN, "%R", localTime);
     sprite.drawString(buffer, 40, 16);
-    sprite.pushSprite(18, 52);
+    sprite.pushSprite(118, 42);
     sprite.unloadFont();
     sprite.deleteSprite();
     
@@ -123,8 +123,8 @@ void Display::displayHomeScreen() {
     sprite.setTextDatum(MR_DATUM);
     sprite.setTextColor(controllerData->overrideTempNow ? CLR_RED_TEXT : CLR_DARK_TEXT, CLR_CIRCLE_FILL);
     snprintf(buffer, BUFLEN, "%.1f", controllerData->temperatureSetpoint );
-    sprite.drawString(buffer, 56, 16);
-    sprite.pushSprite(38, 109);
+    sprite.drawString(buffer, 55, 16);
+    sprite.pushSprite(137, 147);
     sprite.unloadFont();
     sprite.deleteSprite();
     
@@ -136,24 +136,24 @@ void Display::displayHomeScreen() {
     sprite.setTextColor(CLR_MEASURED_TEMP, CLR_CIRCLE_FILL);
     snprintf(buffer, BUFLEN, "%.1f", controllerData->measuredTemperature() );      
     sprite.drawString(buffer, 115, 32);
-    sprite.pushSprite(130, 88);
+    sprite.pushSprite(100, 79);
     sprite.unloadFont();
     sprite.deleteSprite();
 
     // Icons
-    drawJpeg(tft, ICONS[controllerData->dspWifiIcon  ].c_str(), 15, 166);  
-    drawJpeg(tft, ICONS[controllerData->dspBoilerIcon].c_str(), 47, 166);  
-    drawJpeg(tft, ICONS[controllerData->dspFlameIcon ].c_str(), 83, 168);  
-    drawJpeg(tft, ICONS[controllerData->dspShowerIcon].c_str(),107, 166);  
+    drawJpeg(tft, ICONS[controllerData->dspWifiIcon  ].c_str(), 6,  42);  
+    drawJpeg(tft, ICONS[controllerData->dspBoilerIcon].c_str(), 6,  78);  
+    drawJpeg(tft, ICONS[controllerData->dspFlameIcon ].c_str(), 6, 114);  
+    drawJpeg(tft, ICONS[controllerData->dspShowerIcon].c_str(), 6, 150);  
 
     // Day icons
-    int x=8;
+    int x=0;
     for(int i=0; i<7; i++) {
       if( controllerData->dayTypeOverruled[i] ) {
-        drawJpeg(tft, ICONS[ DAYTYPE_OVERRULED_TO_ICON[ controllerData->dayTypes[i] ] ].c_str(), x, 208);
-      } else {
-        drawJpeg(tft, ICONS[ DAYTYPE_TO_ICON          [ controllerData->dayTypes[i] ] ].c_str(), x, 208);
+        tft->fillRoundRect(x  , 194, 42, 42, 8, CLR_CIRCLE_FILL);
+        tft->fillRoundRect(x+2, 196, 38, 38, 6, CLR_BACKGROUND );
       }
+      drawJpeg(tft, ICONS[ DAYTYPE_TO_ICON[ controllerData->dayTypes[i] ] ].c_str(), x+5, 199);
       x+=40;
     }
   };      
