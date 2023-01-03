@@ -244,47 +244,47 @@ void processControllerCommand(userEventMessage_t messageToController) {
       break;
 
     case cmdComeHome: 
-      controllerData.overrideSetpoint= controllerData.highTemp;
-      controllerData.overrideTempNow=true;
+      controllerData.overrideSetpoint = controllerData.highTemp;
+      controllerData.overrideTempNow = true;
       break;
     
     case cmdOverruleTodayWorkFromHome:
-      controllerData.overrideToday=dtWorkFromHome; 
-      controllerData.overrideTempNow=false; 
+      controllerData.overrideToday = dtWorkFromHome; 
+      controllerData.overrideTempNow = false; 
       controllerData.settingsChanged = true;
       break;
 
     case cmdOverruleTodayWorkAtOffice: 
-      controllerData.overrideToday=dtWorkAtOffice; 
-      controllerData.overrideTempNow=false; 
+      controllerData.overrideToday = dtWorkAtOffice; 
+      controllerData.overrideTempNow = false; 
       controllerData.settingsChanged = true;      
       break;
 
     case cmdOverruleTodayWeekend: 
-      controllerData.overrideToday=dtWeekend;      
-      controllerData.overrideTempNow=false; 
+      controllerData.overrideToday = dtWeekend;      
+      controllerData.overrideTempNow = false; 
       controllerData.settingsChanged = true;
       break;
 
     case cmdOverruleTodayAway: 
-      controllerData.overrideToday=dtAway;         
-      controllerData.overrideTempNow=false; 
+      controllerData.overrideToday = dtAway;         
+      controllerData.overrideTempNow = false; 
       controllerData.settingsChanged = true; 
       break;
 
     case cmdOverruleTodayAutomatic: 
-      controllerData.overrideToday=dtAuto;         
-      controllerData.overrideTempNow=false; 
+      controllerData.overrideToday = dtAuto;         
+      controllerData.overrideTempNow = false; 
       controllerData.settingsChanged = true;
       break;
 
     case cmdOverruleTomorrowWorkFromHome: 
-      controllerData.overrideTomorrow=dtWorkFromHome; 
+      controllerData.overrideTomorrow = dtWorkFromHome; 
       controllerData.settingsChanged = true; 
       break;
 
     case cmdOverruleTomorrowWorkAtOffice : 
-      controllerData.overrideTomorrow=dtWorkAtOffice; 
+      controllerData.overrideTomorrow = dtWorkAtOffice; 
       controllerData.settingsChanged = true; 
       break;
 
@@ -308,30 +308,41 @@ void processControllerCommand(userEventMessage_t messageToController) {
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTomorrow=dtAuto;
       controllerData.overrideTempNow=false;
+
+      //Switch off the higher priority settings
       controllerData.settingsChanged = true; 
       break;
 
     case cmdOverruleMultipleWorkAtOffice:
       controllerData.overrideMultiple=dtWorkAtOffice;
+
+      //Switch off the higher priority settings
       controllerData.overrideTomorrow=dtAuto;
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTempNow=false;
+      
       controllerData.settingsChanged = true; 
       break;
 
     case cmdOverruleMultipleWeekend: 
       controllerData.overrideMultiple=dtWeekend;
+
+      //Switch off the higher priority settings
       controllerData.overrideTomorrow=dtAuto;
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTempNow=false;
+      
       controllerData.settingsChanged = true; 
       break;
 
     case cmdOverruleMultipleAway:
       controllerData.overrideMultiple=dtAway;
+
+      //Switch off the higher priority settings
       controllerData.overrideTomorrow=dtAuto;
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTempNow=false;
+      
       controllerData.settingsChanged = true; 
       break;
 
@@ -345,22 +356,37 @@ void processControllerCommand(userEventMessage_t messageToController) {
     case cmdOverruleMultipleFewerDays: 
       controllerData.multipleForever=false; 
       if(controllerData.overrideMultipleCount > 1) controllerData.overrideMultipleCount--; 
+
+      //Switch off the higher priority settings
+      controllerData.overrideTomorrow=dtAuto;
+      controllerData.overrideToday=dtAuto;
       controllerData.settingsChanged = true;
       break;
 
     case cmdOverruleMultipleMoreDays: 
       controllerData.multipleForever=false; 
       controllerData.overrideMultipleCount++; 
+
+      //Switch off the higher priority settings
+      controllerData.overrideTomorrow=dtAuto;
+      controllerData.overrideToday=dtAuto;
+      controllerData.overrideTempNow=false;
+
       controllerData.settingsChanged = true;
       break;
 
     case cmdOverruleMultipleForever: 
       controllerData.multipleForever=true;
+
+      // Reset the multiple day counter if needed
+      if( controllerData.overrideMultipleCount < 2) controllerData.overrideMultipleCount = 3;
+
+      //Switch off the lower priority settings
       controllerData.overrideTomorrow=dtAuto;
       controllerData.overrideToday=dtAuto;
       controllerData.overrideTempNow=false;
+
       controllerData.settingsChanged = true; 
-      if( controllerData.overrideMultipleCount < 2) controllerData.overrideMultipleCount = 3;
       break;
 
     case cmdSetWeekSchedule: 
