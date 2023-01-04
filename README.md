@@ -61,23 +61,23 @@ The settings menu has the following options:
 
 The scenario is that we are going on a holiday for a few days and we will return on Sunday.
 
-To do this, select ```Overrule multiple days``` in the main menu:
+To do this, select ```Overrule multiple days...``` in the main menu:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="361"/> 
 </p>
 
-The icons in the next windows show that the next three days are currently **Work from office**-days, followed by two **weekend days**.
-
-Select ```All day away``` since we will be going on a holiday:
+The icons in the next window show that the next three days are currently **Work from office**-days, followed by two **weekend days**.
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="383"/> 
 </p>
 
+Select ```All day away``` since we will be going on a holiday:
+
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```More days``` button multiple times in the next menu until the message says there are 4 **All day away**-days, including Saturday:
+Then select ```More days``` button multiple times in the next menu until the message says there are 4 **All day away**-days, including Saturday, which is the last day that the temperature should remain low:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="418"/> 
@@ -89,7 +89,7 @@ Next select ```Back to the main menu```:
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="418"/> 
 </p>
 
-Now, the current day is also selected as an **All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today```:
+Now, the current day is also selected as an **All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today...```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="418"/> 
@@ -103,7 +103,7 @@ Choose ```Weekend day``` so we can pack our bags comfortably:
 
 The remaining **Multiple days** will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  **multiple days** remain overruled.
 
-Finally, select ```Back to the main menu```:
+Finally, select ```Back to the main menu...```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="350"/> 
@@ -114,10 +114,10 @@ Of course it is also possible to do these steps after we leave, without the need
 ### Switch off the thermostat for a longer period of time
 
 To switch off the thermostat for a longer period of time, for instance during the summer or during a long holiday, proceed as follows:
-* Select ```Overrule multiple days``` in the main menu
+* Select ```Overrule multiple days...``` in the main menu
 * Select ```All day away```
 * Select ```Forever```
-* Select ```Back to the main menu```
+* Select ```Back to the main menu...```
 
 The thermostat is now switched off until ```Overrule multiple days``` is ```Switch off```
 
