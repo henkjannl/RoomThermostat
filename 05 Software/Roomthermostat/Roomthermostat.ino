@@ -4,8 +4,7 @@
 #include "SPIFFS.h"
 
 #define VERSION "1.1.2"
-#define USE_TESTBOT false
-
+#define USE_TESTBOT true
 /* 
   VERSION INFO:
   1.0.0 resolved some errors, improved telegramEnabled()
@@ -185,6 +184,8 @@ void loop() {
   static int eventCounter = 0;
   static int counter =0;
   userEventMessage_t message; 
+
+  ArduinoOTA.handle();
 
   // If controller settings were changed, autosave the settings every minute
   if(millis() - lastSettingsSave > 60*1000 ){

@@ -25,7 +25,7 @@ struct tgLabelCallback {
 
 std::map<command_t, tgLabelCallback> telegramButtons = {
   { cmdSetpointLower,                { String(EMOTICON_DOWN_ARROW)  + " Cooler",                 "/cmdSetpointLower"                } },
-  { cmdComeHome,                     { String(EMOTICON_HOUSE)       + " Come home",              "/cmdComeHome"                     } },
+  { cmdSetpointAutomatic,            { String(EMOTICON_MAGIC_STICK) + " Auto",                   "/cmdSetpointAutomatic"            } },
   { cmdSetpointHigher,               { String(EMOTICON_UP_ARROW)    + " Warmer",                 "/cmdSetpointHigher"               } },
 
   { cmdMenuOverruleToday,            { "Overrule today...",                                      "/cmdMenuOverruleToday"            } },
@@ -38,20 +38,20 @@ std::map<command_t, tgLabelCallback> telegramButtons = {
   { cmdOverruleTodayWorkAtOffice,    { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTodayWorkAtOffice"    } },
   { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTodayWeekend"         } },
   { cmdOverruleTodayAway,            { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTodayAway"            } },
-  { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleTodayAutomatic"       } },
+  { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleTodayAutomatic"       } },
   { cmdMenuMain,                     { String(EMOTICON_BACK)        + " Back to main menu...",   "/cmdMenuMain"                     } },
 
   { cmdOverruleTomorrowWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleTomorrowWorkFromHome" } },
   { cmdOverruleTomorrowWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTomorrowWorkAtOffice" } },
   { cmdOverruleTomorrowWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTomorrowWeekend"      } },
   { cmdOverruleTomorrowAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTomorrowAway"         } },
-  { cmdOverruleTomorrowAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleTomorrowAutomatic"    } },
+  { cmdOverruleTomorrowAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleTomorrowAutomatic"    } },
 
   { cmdOverruleMultipleWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleMultipleWorkFromHome" } },
   { cmdOverruleMultipleWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleMultipleWorkAtOffice" } },
   { cmdOverruleMultipleWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleMultipleWeekend"      } },
   { cmdOverruleMultipleAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleMultipleAway"         } },
-  { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Automatic",              "/cmdOverruleMultipleAutomatic"    } },
+  { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleMultipleAutomatic"    } },
   { cmdOverruleMultipleFewerDays,    { "..days",                                                 "/cmdOverruleMultipleFewerDays"    } },
   { cmdOverruleMultipleMoreDays,     { "..days",                                                 "/cmdOverruleMultipleMoreDays"     } },
   { cmdOverruleMultipleForever,      { String(EMOTICON_SPIDERWEB) + " Forever",                  "/cmdOverruleMultipleForever"      } },
@@ -270,12 +270,11 @@ String keyboard(screen_t & screen, ControllerData_t & controllerData) {
 
     default:
 
-      return "[[" + btnInline(cmdSetpointLower)        + "," + btnInline(cmdSetpointHigher)         + "]," +
-              "[" + btnInline(cmdOverruleTodayAway)    + "," + btnInline(cmdOverruleTodayAutomatic) + "," + btnInline(cmdComeHome)+ "]," +
+      return "[[" + btnInline(cmdSetpointLower) + "," + btnInline(cmdSetpointAutomatic)+ "," + btnInline(cmdSetpointHigher) + "]," +
               "[" + btnInline(cmdMenuOverruleToday)                                                 + "]," +
               "[" + btnInline(cmdMenuOverruleTomorrow)                                              + "]," +
               "[" + btnInline(cmdMenuOverruleMultipleDays)                                          + "]," +
-              "[" + btnInline(cmdMenuSettings)         + "," + btnInline(cmdUpdateStatus)           + "]]";
+              "[" + btnInline(cmdMenuSettings) + "," + btnInline(cmdUpdateStatus) + "]]";
 
   } // switch (screen)
 }
@@ -616,10 +615,9 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   switch (message.command)  {
 
     case cmdStartTelegram:     response= String(EMOTICON_THERMOMETER) + " Welcome to the room thermostat\n"; break;    
-    case cmdSetpointLower:     response= "The setpoint temperature is lowered to "   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
-    case cmdComeHome:          response= "The setpoint is set to "                   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
-    case cmdSetpointHigher:    response= "The setpoint temperature is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
-    case cmdOverruleTodayAway: response= "Status changed to 'Away'\n"; break;
+    case cmdSetpointLower:     response= "The temperature setpoint is lowered to "   + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
+    case cmdSetpointAutomatic: response= "The temperature setpoint is no longer overruled\n";                                                 break;
+    case cmdSetpointHigher:    response= "The temperature setpoint is increased to " + String(controllerData->temperatureSetpoint, 1)+"°C\n"; break;
 
     case cmdUpdateStatus:      
 

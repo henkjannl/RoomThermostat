@@ -51,7 +51,7 @@ void Display::processMessage(const userEventMessage_t message) {
 
   if( message.command == cmdBoilerSending) {
       Serial.println("Display: Icon boiler transmitting");
-      if( selectedScreen()==scnHome ) drawJpeg(tft, ICONS[iconBoilerTransmit].c_str(), 47, 166);  
+      if( selectedScreen()==scnHome ) drawJpeg(tft, ICONS[iconBoilerTransmit].c_str(), 6, 78);  
   }
   else {
     
@@ -106,7 +106,7 @@ void Display::displayHomeScreen() {
 
     // Display time
     sprite.createSprite(80, 32);
-    sprite.fillSprite(CLR_CIRCLE_FILL);    
+    sprite.fillSprite(CLR_BACKGROUND);    
     sprite.setTextDatum(MC_DATUM);
     sprite.loadFont(FONT_TIME);
     sprite.setTextColor(CLR_DARK_TEXT, CLR_CIRCLE_FILL);
@@ -118,10 +118,10 @@ void Display::displayHomeScreen() {
     
     // Display temperature setpoint
     sprite.createSprite(56, 32);
-    sprite.fillSprite(CLR_CIRCLE_FILL);    
+    sprite.fillSprite(CLR_BACKGROUND);    
     sprite.loadFont(FONT_TIME);
     sprite.setTextDatum(MR_DATUM);
-    sprite.setTextColor(controllerData->overrideTempNow ? CLR_RED_TEXT : CLR_DARK_TEXT, CLR_CIRCLE_FILL);
+    sprite.setTextColor(controllerData->overrideTempNow ? CLR_RED_TEXT : CLR_DARK_TEXT, CLR_BACKGROUND);
     snprintf(buffer, BUFLEN, "%.1f", controllerData->temperatureSetpoint );
     sprite.drawString(buffer, 55, 16);
     sprite.pushSprite(137, 147);
@@ -130,10 +130,10 @@ void Display::displayHomeScreen() {
     
     // Display measured temperature
     sprite.createSprite(116, 64);
-    sprite.fillSprite(CLR_CIRCLE_FILL);    
+    sprite.fillSprite(CLR_BACKGROUND);    
     sprite.loadFont(FONT_TEMP_MEASURED);
     sprite.setTextDatum(MR_DATUM);
-    sprite.setTextColor(CLR_MEASURED_TEMP, CLR_CIRCLE_FILL);
+    sprite.setTextColor(CLR_MEASURED_TEMP, CLR_BACKGROUND);
     snprintf(buffer, BUFLEN, "%.1f", controllerData->measuredTemperature() );      
     sprite.drawString(buffer, 115, 32);
     sprite.pushSprite(100, 79);
@@ -150,8 +150,8 @@ void Display::displayHomeScreen() {
     int x=0;
     for(int i=0; i<7; i++) {
       if( controllerData->dayTypeOverruled[i] ) {
-        tft->fillRoundRect(x  , 194, 42, 42, 8, CLR_CIRCLE_FILL);
-        tft->fillRoundRect(x+2, 196, 38, 38, 6, CLR_BACKGROUND );
+        tft->fillSmoothRoundRect( x , 194, 42, 42, 8, CLR_RED_TEXT,   CLR_BACKGROUND);
+        tft->fillSmoothRoundRect(x+2, 196, 38, 38, 6, CLR_BACKGROUND, CLR_RED_TEXT  );
       }
       drawJpeg(tft, ICONS[ DAYTYPE_TO_ICON[ controllerData->dayTypes[i] ] ].c_str(), x+5, 199);
       x+=40;

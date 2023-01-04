@@ -242,7 +242,13 @@ void processControllerCommand(userEventMessage_t messageToController) {
       controllerData.settingsChanged = true; 
 
       break;
+      
+    case cmdSetpointAutomatic:
+      controllerData.overrideTempNow = false;
+      controllerData.settingsChanged = true; 
 
+      break;
+    
     case cmdComeHome: 
       controllerData.overrideSetpoint = controllerData.highTemp;
       controllerData.overrideTempNow = true;

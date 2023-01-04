@@ -1,6 +1,6 @@
 # Roomthermostat
 
-I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to turn down the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful since visitors may not want to use Telegram.
+I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to switch off the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful since visitors may not want to use Telegram.
 
 <p align="center">
   <img src="02 User interface\photo.png" alt="photo" width="500"/> 
@@ -20,22 +20,27 @@ This fully (software & mechanics & electronics) open source project is based on 
 
 The temperature setpoint can be chosen in four different ways, with increasing priority:
 1. The lowest priority is the **normal week schedule**, which says which day type it is depending on the day of the week. 
+    * There are four predefined day types:
+        * **work from home**: temperature high at wake up, and low at bed time
+        * **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
+        * **weekend**: temperature high at wake up, and low at bed time
+        * **day away**: temperature low throughout the day
     * The days of the week can be programmed in **settings**. 
     * All times for each type of day type can be modified
     * The low temperature and high temperature can be modified. These are the same temperatures for all day types
 2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away). 
-    * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is reset to **automatic** by the user
-    * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and reset it back to **automatic** in autumn.
+    * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is **switched off** by the user
+    * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and **switched off** in autumn.
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
-    * Each can be set back to **automatic** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. 
-    * At midnight, **tomorrow** will be set back to **automatic**
+    * Each can be **switched off** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. 
+    * At midnight, **tomorrow** will be switched off
     * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
     * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program.
 
-Icons of days according to the normal week schedule are displayed on the unit with a black icon. Overruled days are displayed in blue. If the setpoint is manually overruled, the setpoint temperature is displayed in red font.
+Overruled day icons are surrounded by a red rectangle on the hardware unit. If the temperature setpoint is manually overruled, it is displayed in red font.
 
-The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes based on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
+The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
 ## Controlling the thermostat through Telegram
 ### Main menu in Telegram
@@ -46,7 +51,7 @@ After selecting ```/start``` in Telegram, the following message and keyboard are
   <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
 </p>
 
-The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```Status``` button cn be used to update the status.
+The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```Status``` button can be used to update the status.
 
 The settings menu has the following options:
 
@@ -57,7 +62,7 @@ The settings menu has the following options:
 
 ### Simple use case in Telegram: going on a short holiday
 
-The scenario is that we are going on a holiday for a few days and we will return on Monday.
+The scenario is that we are going on a holiday for a few days and we will return on Sunday.
 
 To do this, select ```Overrule multiple days``` in the main menu:
 
@@ -65,7 +70,7 @@ To do this, select ```Overrule multiple days``` in the main menu:
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="372"/> 
 </p>
 
-The icons in the next windows show that the next five days are currently 'Work from office'-days, followed by two 'weekend days'.
+The icons in the next windows show that the next three days are currently **Work from office**-days, followed by two **weekend days**.
 
 Select ```All day away``` since we will be going on a holiday:
 
@@ -75,7 +80,7 @@ Select ```All day away``` since we will be going on a holiday:
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```More days``` button multiple times in the next menu until the message says there are 5 'All day away'-days, ending on Saturday:
+Then select ```More days``` button multiple times in the next menu until the message says there are 4 **All day away**-days, including Saturday:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="401"/> 
@@ -87,7 +92,7 @@ Next select ```Back to the main menu```:
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="401"/> 
 </p>
 
-Now, the current day is also selected as an ```All day away```, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today```:
+Now, the current day is also selected as an **All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="429"/> 
@@ -99,7 +104,7 @@ Choose ```Weekend day``` so we can pack our bags comfortably:
   <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="296"/> 
 </p>
 
-The remaining ```Multiple days``` will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  ```multiple days``` remain overruled.
+The remaining **Multiple days** will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  **multiple days** remain overruled.
 
 Finally, select ```Back to the main menu```:
 
@@ -117,10 +122,42 @@ To switch off the thermostat for a longer period of time, for instance during th
 * Select ```Forever```
 * Select ```Back to the main menu```
 
-The thermostat is now switched off until ```Overrule multiple days``` is switched to ```Automatic```
+The thermostat is now switched off until ```Overrule multiple days``` is ```Switch off```
+
+## Building the device
+
+### Electronic hardware 
+The hardware consists of:
+* an ESP32 (mh-et-live-minikit-d1)
+* an OpenTherm adaptor designed by Ihor Melnyk (DIYless Master OpenTherm Shield - https://diyless.com/product/master-opentherm-shield)
+* a 2.4" 320x240 TFT screen (ILI9341)
+* a 3D printed housing designed in FreeCad
+* up to 4 Dallas DS18B20 temperature sensors
+* a 4k7 resistor as pull-up for the Dallas temperature sensors
+* 3 touch buttons (stainless steel screws, ISO7380-1, M5 x 16 + nut ISO4032 M5)
+* 16 magnets (ø10 x 2.75 mm)
+* a PCB designed in KiCad. This is optional, components can also be connected with wires, although it is more work and less reliable
+
+Except for the housing and the OpenTherm interface, everything was ordered at AliExpress. The total bill of materials was about €35. The bill of materials can be found here ```\04 Electrical\Bill of materials.ods```.
+
+### Mechanical hardware
+
+There are two options:
+* Connecting electronics via the cross connect PCB - the casing then consists of two panels, see ```03 Mechanical\RoomThermostat.FCStd```
+* Connecting electronics via wires - the casing then consists of three panels, see ```03 Mechanical\RoomThermostat with PCB.FCStd```
+
+In case of the PCB, there are two main parts to 3D print, a **front panel** and a **rear panel**. The rear panel can be screwed to the wall. The front panel is clicked on the rear panel through magnets.
+
+Both prints need to be paused in some layer during printing to add round magnets before recommencing the printing.
+
+It is possible to add up to four Dallas temperature sensors on the PCB (but fewer sensors should also work).
+
+There are central ventilation openings on the bottom and top of the device to cool the ESP32 and prevent thermal cross talk between the heat of the ESP32 and the temperature sensors. There are ventilation openings in front of each temperature sensor also to measure the room temperature as accurate as possible.
+
+The sofware has an **adjust sensor offset** feature to add or subtract a value from the measured temperature for calibration. That means that if the temperature measured by the thermostate is different from the actual room temperature, this can be corrected through the hardware buttons or via Telegram. 
 
 
-## First use
+### Software preparation
 It is required to make a specific Telegram bot account for the thermostat. There are many sources explaining how a new Telegram bot can be created, such as in this [Random Nerd Tutorials Telegram example](https://randomnerdtutorials.com/telegram-control-esp32-esp8266-nodemcu-outputs/).
 
 One ChatID can be provided to which the roomthermostat sends a message upon startup. This is useful to be aware that the thermostat was reset, due to a software bug or power outage.
@@ -147,6 +184,10 @@ The format of the `config.json` file is as follows:
 }
 ```
 
+Note that there is a `config.json` and a The format of the `config_test.jsn`. The `config_test.jsn` is for test purposes, with a different bot token. It can be used for test purposes while the main thermostat bot remains accessible. To use the test bot, specify ```#define USE_TESTBOT true``` in `Roomthermostat.ino`.
+
+Next it is necessary to upload the data folder to the ESP32 using `Tools` > `ESP32 Sketch Data Upload` in the Arduino IDE (see how this works at [Random Nerd Tutorials Telegram](https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/).
+
 Also, a number of libraries must be installed in Arduino:
 * `TFT_eSPI` by Bodmer - https://github.com/Bodmer/TFT_eSPI
 * `JPEGDecoder` by Bodmer - https://github.com/Bodmer/JPEGDecoder
@@ -156,40 +197,7 @@ Also, a number of libraries must be installed in Arduino:
 
 Big shout out to everyone for creating and maintaining these beautiful pieces of work!
 
-
-## Electronic hardware 
-The hardware consists of:
-* an ESP32 (mh-et-live-minikit-d1)
-* an OpenTherm adaptor designed by Ihor Melnyk (DIYless Master OpenTherm Shield - https://diyless.com/product/master-opentherm-shield)
-* a 2.4" 320x240 TFT screen (ILI9341)
-* a 3D printed housing designed in FreeCad
-* up to 4 Dallas DS18B20 temperature sensors
-* a 4k7 resistor
-* 3 touch buttons (stainless steel screws, ISO7380-1, M5 x 16 + nut ISO4032 M5)
-* 16 magnets (ø10 x 2.75 mm)
-* a PCB designed in KiCad. This is optional, components can also be connected with wires, although it is less reliable
-
-Except for the housing and the OpenTherm interface, everything was ordered at AliExpress. The total bill of materials was about €35. The bill of materials can be found here ```\04 Electrical\Bill of materials.ods```.
-
-
-## Mechanical hardware
-
-There are two options:
-* Connecting electronics via the cross connect PCB - the casing then consists of two panels, see ```03 Mechanical\RoomThermostat.FCStd```
-* Connecting electronics via wires - the casing then consists of three panels, see ```03 Mechanical\RoomThermostat with PCB.FCStd```
-
-In case of the PCB, there are two main parts to 3D print, a **front panel** and a **rear panel**. The rear panel can be screwed to the wall. The front panel is clicked on the rear panel through magnets.
-
-Both prints need to be paused in some layer during printing to add round magnets before recommencing the printing.
-
-It is possible to add up to four Dallas temperature sensors on the PCB (but fewer sensors should also work).
-
-There are central ventilation openings on the bottom and top of the device to cool the ESP32 and prevent thermal cross talk between the heat of the ESP32 and the temperature sensors. There are ventilation openings in front of each temperature sensor also to measure the room temperature as accurate as possible.
-
-The sofware has an **adjust sensor offset** feature to add or subtract a value from the measured temperature for calibration. That means that if the temperature measured by the thermostate is different from the actual room temperature, this can be corrected through the hardware buttons or via Telegram. 
-
-
-## Software
+## Software internals
 
 ### Overview of processes
 | File               | Module                                                       |
@@ -287,24 +295,32 @@ During these five minutes, th blue LED on the back of the ESP32 will blink. Duri
 # To do
 
 Potential improvements:
-* improvement of responsiveness (keys and Telegram)
-* switch off multiple days forever fro the main menu
-* while waiting for over the air software update, display message on screen
-* send logfile as attachment to Telegram
+* over the air update still not working well
+* over the air update does not display network port in Arduino IDE (perhaps call ArduinoOTA.handle() more often?)
+  * while waiting for over the air software update, display message on screen
+* improve responsiveness (keys and Telegram)
+  * try to get FreeRTOS working again to improve performance of buttons and Telegram
+    * perhaps Telegram can run on other core?
+  * implement OpenTherm protocol in hardware timer in non-blocking way
 * include icons in the menu
-* allow user to modify water temperature of heater and shower
-* save logdata through WiFi connection (Deta Base?)
+* save logdata through WiFi connection 
+  * Deta Base?
+  * send logfile as attachment to Telegram
 * much code can be simplified to remove structures that were used in previous attempts to get the code working
-* try to get FreeRTOS working again to improve performance of buttons and Telegram
-* automatic updates to last message of known clients every 15 minutes
-* implement OpenTherm protocoll in hardware timer
-* optimize actual heater control functionality
+    * some userEventMessage_t constructs can be replaced with sendMessage() calls
+    * some userEventMessage_t constructors may no longer be used
+    * ...
+* send automatic updates to last message of known clients every 15 minutes
+  * also store list of chatIDs in permanent storage?
+  * add functionality to whitelist or blacklist chatIDs?
+* optimize heater control functionality
+    * allow user to modify water temperature of heater and shower
     * check if D-action is implemented well in PID controller
     * take into account the weather in the control strategy
-    * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier
+    * monitor the time it takes to heat the room in the morning, and compensate that by starting earlier or start with higher temperature
 * also enable setting the time and date through hardware buttons if WiFi is unavailable
 * display progress upon startup
-* try if SPI frequency in TFT_eSPI can be higher
+* try if SPI frequency in TFT_eSPI can be set to higher value
 
 Code cleanup:
 * find replace action GoOut > Leave
