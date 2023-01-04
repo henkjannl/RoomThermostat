@@ -186,7 +186,7 @@ void loop() {
   static int counter =0;
   userEventMessage_t message; 
 
-  ArduinoOTA.handle();
+  // ArduinoOTA.handle();
 
   // If controller settings were changed, autosave the settings every minute
   if(millis() - lastSettingsSave > 60*1000 ){

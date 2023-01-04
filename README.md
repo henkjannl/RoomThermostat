@@ -35,9 +35,11 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program
     * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
 
-Overruled day icons are surrounded by a red rectangle on the hardware unit. If the temperature setpoint is manually overruled, it is displayed in red font.
+Overruled day icons are surrounded by a red rectangle on the hardware unit. 
+If the temperature setpoint is manually overruled, it is displayed in red font.
 
-The thermostat can be controlled by three touchbuttons on the device or via Telegram. In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
+The thermostat can be controlled by three touchbuttons on the device or via Telegram. 
+In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
 ## Controlling the thermostat through Telegram
 ### Main menu in Telegram

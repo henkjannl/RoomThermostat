@@ -213,6 +213,7 @@ void BoilerCommunicate() {
     else                                             controllerData.dspFlameIcon = iconFlame8; 
   }
   else controllerData.dspFlameIcon = iconFlame0;
+  Srrial.printf("Set flame icon to %s\n", ICONS[controllerData->dspFlameIcon ].c_str() );
 
   // Current day and time
   time_t now;
