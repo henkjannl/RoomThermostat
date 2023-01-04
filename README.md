@@ -3,7 +3,7 @@
 I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to switch off the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful since visitors may not want to use Telegram.
 
 <p align="center">
-    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
+    <img src="02 User interface/Onepager/Onepager.png" alt="drawing" width="800"/> 
 </p>
 
 This fully (software & mechanics & electronics) open source project is based on an ESP32 microcontroller and the OpenTherm protocol.
@@ -233,8 +233,6 @@ The flow of events and messages is as follows:
 <p align="center">
 <img src="01 System/Events and messages.png" alt="events and messages" width="800"/> 
 </p>
-
-<br><br>
 
 * On the left hand side, the events that trigger activities are listed
 * The circles represent code

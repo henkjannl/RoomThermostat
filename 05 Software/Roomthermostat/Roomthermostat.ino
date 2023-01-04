@@ -5,6 +5,8 @@
 
 #define VERSION "1.1.2"
 #define USE_TESTBOT true
+//#define USE_TESTBOT false
+
 /* 
   VERSION INFO:
   1.0.0 resolved some errors, improved telegramEnabled()
