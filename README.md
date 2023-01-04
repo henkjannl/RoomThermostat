@@ -3,14 +3,10 @@
 I wanted to create a room thermostat that can be controlled remotely ('honey, did you remember to switch off the heating?') but which also remains fully operational if internet connectivity is lost. Therefore it can be controlled through Telegram, but also via the hardware unit if WiFi is down. This is also useful since visitors may not want to use Telegram.
 
 <p align="center">
-  <img src="02 User interface\photo.png" alt="photo" width="500"/> 
+    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
 </p>
 
 This fully (software & mechanics & electronics) open source project is based on an ESP32 microcontroller and the OpenTherm protocol.
-
-<p align="center">
-    <img src="02 User interface/User manual/Onepager.png" alt="drawing" width="800"/> 
-</p>
 
 ### Priorities for the temperature setpoint
 
@@ -36,7 +32,8 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * At midnight, **tomorrow** will be switched off
     * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
-    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program.
+    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program
+    * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
 
 Overruled day icons are surrounded by a red rectangle on the hardware unit. If the temperature setpoint is manually overruled, it is displayed in red font.
 
@@ -67,7 +64,7 @@ The scenario is that we are going on a holiday for a few days and we will return
 To do this, select ```Overrule multiple days``` in the main menu:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="372"/> 
+  <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="361"/> 
 </p>
 
 The icons in the next windows show that the next three days are currently **Work from office**-days, followed by two **weekend days**.
@@ -75,7 +72,7 @@ The icons in the next windows show that the next three days are currently **Work
 Select ```All day away``` since we will be going on a holiday:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="401"/> 
+  <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="383"/> 
 </p>
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
@@ -83,25 +80,25 @@ The ```All day away``` scenario means that the setpoint temperature will remain 
 Then select ```More days``` button multiple times in the next menu until the message says there are 4 **All day away**-days, including Saturday:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="401"/> 
+  <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="418"/> 
 </p>
 
 Next select ```Back to the main menu```:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="401"/> 
+  <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="418"/> 
 </p>
 
 Now, the current day is also selected as an **All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today```:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="429"/> 
+  <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="418"/> 
 </p>
 
 Choose ```Weekend day``` so we can pack our bags comfortably:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="296"/> 
+  <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="287"/> 
 </p>
 
 The remaining **Multiple days** will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  **multiple days** remain overruled.
@@ -109,7 +106,7 @@ The remaining **Multiple days** will remain selected, only the current day will 
 Finally, select ```Back to the main menu```:
 
 <p align="center">
-  <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="296"/> 
+  <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="350"/> 
 </p>
 
 Of course it is also possible to do these steps after we leave, without the need to overrule the current day. As we are returning home during the next Saturday, we can also overrule the current day to ensure the house is comfortable upon arrival.

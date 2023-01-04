@@ -38,6 +38,7 @@
 
   TO DO:
     Potential improvements:
+    * over the air update still not working well
     * over the air update does not display network port in Arduino IDE (perhaps call ArduinoOTA.handle() more often?)
       * while waiting for over the air software update, display message on screen
     * improve responsiveness (keys and Telegram)

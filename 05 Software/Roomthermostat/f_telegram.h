@@ -722,6 +722,8 @@ bool telegramEnabled() { return telegramEnabledCounter; };
 
 void setupOTA() {
   
+  Serial.println("Setting up over the air updates");
+
   ArduinoOTA
     .onStart([]() {
       String type;
@@ -755,7 +757,6 @@ void startTelegram() {
   bot.maxMessageLength = 6000;
   //telegramHandler.begin( );
 
-  Serial.println("Setting up over the air updates");
   setupOTA();
 
   // Setup secure connection for Telegram

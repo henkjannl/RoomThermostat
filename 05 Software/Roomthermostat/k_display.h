@@ -91,7 +91,7 @@ void Display::displayHomeScreen() {
     localTime = localtime(&now); // Convert UTC to local time
 
     // Display date on top of screen
-    const int W=320;
+    const int W=292;
     const int H=30;
     sprite.createSprite(W, H);
     sprite.fillSprite(CLR_BACKGROUND);    
