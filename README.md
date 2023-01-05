@@ -14,12 +14,12 @@ This fully (software & mechanics & electronics) open source project is based on 
   <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
 </p>
 
-The temperature :blush: setpoint can be chosen in four different ways, with increasing priority:
+The temperature setpoint can be chosen in four different ways, with increasing priority:
 1. The lowest priority is the **normal week schedule**, which says which day type it is depending on the day of the week. 
     * There are four predefined day types:
-        * **work from home**: temperature high at wake up, and low at bed time
-        * **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
-        * **weekend**: temperature high at wake up, and low at bed time
+        * :house_with_garden: **work from home**: temperature high at wake up, and low at bed time
+        * :office: **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
+        * :calendar: **weekend**: temperature high at wake up, and low at bed time
         * :desert_island: **day away**: temperature low throughout the day
     * The days of the week can be programmed in **settings**. 
     * All times for each type of day type can be modified
@@ -30,7 +30,7 @@ The temperature :blush: setpoint can be chosen in four different ways, with incr
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
     * Each can be **switched off** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. 
     * At midnight, **tomorrow** will be switched off
-    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day**
+    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be :desert_island: **away**, after which **today** can be overruled as **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
     * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program
     * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
@@ -50,7 +50,7 @@ After selecting ```/start``` in Telegram, the following message and keyboard are
   <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
 </p>
 
-The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```Status``` button can be used to update the status.
+The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```:stethoscope: Status``` button can be used to update the status.
 
 The settings menu has the following options:
 
