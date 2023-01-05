@@ -8,6 +8,9 @@ I wanted to create a room thermostat that can be controlled remotely ('honey, di
 
 This fully (software & mechanics & electronics) open source project is based on an ESP32 microcontroller and the OpenTherm protocol.
 
+The thermostat can be controlled by three touchbuttons on the device or via Telegram. 
+In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
+
 ### Priorities for the temperature setpoint
 
 <p align="center">
@@ -28,18 +31,15 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is **switched off** by the user
     * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and **switched off** in autumn.
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
-    * Each can be **switched off** by the user, or the setting of **today** will be replaced by the setting of **tomorrow** at midnight. 
-    * At midnight, **tomorrow** will be switched off
+    * Every night at midnight, **today** is replaced by **tomorrow** and **tomorrow** is switched off
+    * Both can be **switched off** or changed by the user
     * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be :desert_island: **day away**, after which **today** can be overruled as :calendar: **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
-    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to that program
+    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back the program of the nearest lower priority
     * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
 
 Overruled day icons are surrounded by a red rectangle on the hardware unit. 
 If the temperature setpoint is manually overruled, it is displayed in red font.
-
-The thermostat can be controlled by three touchbuttons on the device or via Telegram. 
-In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
 ## Controlling the thermostat through Telegram
 ### Main menu in Telegram
