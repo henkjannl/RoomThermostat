@@ -69,7 +69,7 @@ To do this, select ```Overrule multiple days...``` in the main menu:
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="361"/> 
 </p>
 
-The icons in the next window show that the next three days are currently :office: **Work from office**-days, followed by two :calendar: **weekend days**.
+The icons in the next window show that the next three days are currently :office: **work from office**-days, followed by two :calendar: **weekend days**.
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="383"/> 
@@ -79,7 +79,7 @@ Select ```All day away``` since we will be going on a holiday:
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```More days``` button multiple times in the next menu until the message says there are 4 :desert_island:**All day away**-days, including Saturday, which is the last day that the temperature should remain low:
+Then select ```4 days``` button multiple times in the next menu until the message says there are 4 :desert_island:**all day away**-days, including Saturday, which is the last day that the temperature should remain low:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="418"/> 
