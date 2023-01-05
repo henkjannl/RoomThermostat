@@ -50,7 +50,7 @@ After selecting ```/start``` in Telegram, the following message and keyboard are
   <img src="02 User interface\Telegram main menu.png" alt="telegram main menu" width="800"/> 
 </p>
 
-The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The ```:stethoscope: Status``` button can be used to update the status.
+The temperature in the room or settings of the thermostat can change over time. The display in Telegram is not automatically updated. The :stethoscope: ```:stethoscope: Status``` button can be used to update the status.
 
 The settings menu has the following options:
 
