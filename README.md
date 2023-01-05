@@ -38,8 +38,10 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back the program of the nearest lower priority
     * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
 
-Overruled day icons are surrounded by a red rectangle on the hardware unit. 
-If the temperature setpoint is manually overruled, it is displayed in red font.
+If the temperature setpoint is manually overruled (priority 1), it is displayed in red font.
+
+Overruled day icons (priorities 2 and 3) are surrounded by a red rectangle on the hardware unit. Telegram commands that overrule priorities 2 and 3 will typically display the day type for the next 7 days.
+
 
 ## Controlling the thermostat through Telegram
 ### Main menu in Telegram
