@@ -14,13 +14,13 @@ This fully (software & mechanics & electronics) open source project is based on 
   <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
 </p>
 
-The temperature setpoint can be chosen in four different ways, with increasing priority:
+The temperature :blush: setpoint can be chosen in four different ways, with increasing priority:
 1. The lowest priority is the **normal week schedule**, which says which day type it is depending on the day of the week. 
     * There are four predefined day types:
         * **work from home**: temperature high at wake up, and low at bed time
         * **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
         * **weekend**: temperature high at wake up, and low at bed time
-        * **day away**: temperature low throughout the day
+        * :desert_island: **day away**: temperature low throughout the day
     * The days of the week can be programmed in **settings**. 
     * All times for each type of day type can be modified
     * The low temperature and high temperature can be modified. These are the same temperatures for all day types
