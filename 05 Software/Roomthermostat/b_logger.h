@@ -5,6 +5,23 @@
 
 using namespace std;
 
+/* Rewrite the function like:
+#include <iostream>
+#include <cstdio>
+#include <cstdarg>
+
+void myPrintf(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}
+
+int main() {
+    myPrintf("Hello, %s!\n", "world");
+    return 0;
+}
+*/
 void logMessage(String message) {
   Serial.println(message);
 }

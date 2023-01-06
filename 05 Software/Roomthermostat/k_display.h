@@ -47,10 +47,10 @@ void Display::processMessage(const userEventMessage_t message) {
   static screen_t previousScreen = scnSettingsSensorOffset;
   
   Serial.printf("Display::processMessage() screen: %s menu item: %s\n", screenTitle[selectedScreen()].c_str(), commandLabels[selectedMenuItem()].c_str() );
-  Serial.printf(" previousScreen: %s message.command: %s\n", screenTitle[previousScreen].c_str(), commandLabels[message.command].c_str() );
+  //Serial.printf(" previousScreen: %s message.command: %s\n", screenTitle[previousScreen].c_str(), commandLabels[message.command].c_str() );
 
   if( message.command == cmdBoilerSending) {
-      Serial.println("Display: Icon boiler transmitting");
+      Serial//.println("Display: Icon boiler transmitting");
       if( selectedScreen()==scnHome ) drawJpeg(tft, ICONS[iconBoilerTransmit].c_str(), 6, 78);  
   }
   else {

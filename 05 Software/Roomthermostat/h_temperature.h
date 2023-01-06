@@ -235,7 +235,7 @@ void BoilerCommunicate() {
   */
   if(true) {
 
-    Serial.printf("BoilerCommunicate()\nEnable boiler\n");
+    //Serial.printf("BoilerCommunicate()\nEnable boiler\n");
     //response = opentherm.setBoilerStatus(controllerData.enableCentralHeating, controllerData.enableHotWater, controllerData.enableCooling);
     response = opentherm.setBoilerStatus(true, true, false);
     
