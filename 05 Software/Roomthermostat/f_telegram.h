@@ -361,7 +361,7 @@ void TelegramChat::handleCallback(String & callback) {
   } 
   else {
     // If controller settings do not need to be changed, send the command directly to the Telegram queue
-    Serial.printf("Sending Telegram > Telegram [%s]\n", commandLabels[command].c_str() );
+    //Serial.printf("Sending Telegram > Telegram [%s]\n", commandLabels[command].c_str() );
     sendMessage(sndTelegram, command, telegramQueue, chatID);
   }
     
@@ -376,9 +376,9 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
   const int BUFLEN = 80;
   char buffer[BUFLEN];
   bool showWeekSchedule = false;
-  String response=""; // Mesage to the user
+  String response=""; // Message to the user
   
-  Serial.printf("TelegramChat::respondToUser() cmd= %s\n", commandLabels[message.command].c_str() );
+  //Serial.printf("TelegramChat::respondToUser() cmd= %s\n", commandLabels[message.command].c_str() );
 
   // After handling the command by the controller, determine the new message
   // First create default message
@@ -449,7 +449,7 @@ void TelegramChat::respondToUser(UniversalTelegramBot & bot, userEventMessage_t 
 
   
   // STEP 2: Prepare response based on screen
-  Serial.printf( "Requesting response for screen [%s]\n", screenTitle[screen].c_str() );
+  //Serial.printf( "Requesting response for screen [%s]\n", screenTitle[screen].c_str() );
 
   switch (screen) {
   
@@ -734,8 +734,11 @@ void setupOTA() {
 
       // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
       Serial.println("Start updating " + type);
+      disableKeyboard(); // Writing to SPIFFS must not be interrupted by the capacitive touch keys
+
     })
     .onEnd([]() {
+      enableKeyboard();
       Serial.println("\nEnd");
     })
     .onProgress([](unsigned int progress, unsigned int total) {
@@ -785,7 +788,7 @@ void handleNewMessages(int numNewMessages){
   
   for (int i = 0; i < numNewMessages; i++) {
     String chatID = bot.messages[i].chat_id;
-    Serial.printf("Message from chatID: %s\n", chatID);
+    Serial.printf("Message %s from chatID: %s\n", bot.messages[i].text.c_str(), chatID);
 
     // If chat is not yet listed, create new item
     if (userConversation.find(chatID) == userConversation.end()) {
@@ -801,16 +804,16 @@ void handleNewMessages(int numNewMessages){
     userConversation[chatID].chatID = chatID;
     userConversation[chatID].lastMessageID = bot.messages[i].message_id;
     userConversation[chatID].lastMessageIDknown = true;
-    Serial.printf("Set chat[%s].lastMessageID: %d\n", chatID, userConversation[chatID].lastMessageID );
+    //Serial.printf("Set chat[%s].lastMessageID: %d\n", chatID, userConversation[chatID].lastMessageID );
 
     if(bot.messages[i].type=="message") {
       String message = bot.messages[i].text;
-      Serial.printf("Handle message %s\n", message.c_str());
+      //Serial.printf("Handle message %s\n", message.c_str());
       userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
       userConversation[chatID].respondToUser( bot, command); 
     }    
     else if (bot.messages[i].type=="callback_query") {
-      Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot.messages[i].text.c_str());
+      //Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot.messages[i].text.c_str());
 
       // Recognize callback string and send command to the controller or to the Telegram Queue
       userConversation[chatID].handleCallback(bot.messages[i].text);
@@ -821,9 +824,9 @@ void handleNewMessages(int numNewMessages){
 void checkNewMessages() {
   int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
 
-  Serial.println("checkNewMessages()");
+  //Serial.println("checkNewMessages()");
   while (numNewMessages) {
-    Serial.println("got response");
+    //Serial.println("got response");
     handleNewMessages(numNewMessages);
     numNewMessages = bot.getUpdates(bot.last_message_received + 1);
   }
@@ -860,7 +863,7 @@ void checkTelegramIfNeeded() {
       default:
         String chatID = message.chatID;
         if( chatID.length()>1 ) {
-          Serial.printf("Handle queue command for chatID: %s\n", chatID);
+          //Serial.printf("Handle queue command for chatID: %s\n", chatID);
           userConversation[chatID].respondToUser( bot, message );
         }
       }; // switch( message.command )

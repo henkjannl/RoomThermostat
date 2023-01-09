@@ -8,35 +8,39 @@ I wanted to create a room thermostat that can be controlled remotely ('honey, di
 
 This fully (software & mechanics & electronics) open source project is based on an ESP32 microcontroller and the OpenTherm protocol.
 
+The thermostat can be controlled by three touchbuttons on the device or via Telegram. 
+In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
+
 ### Priorities for the temperature setpoint
 
 <p align="center">
   <img src="02 User interface\SetpointPriorities.png" alt="setpoint priorities" width="500"/> 
 </p>
 
-The temperature setpoint can be chosen in four different ways, with increasing priority:
-1. The lowest priority is the **normal week schedule**, which says which day type it is depending on the day of the week. 
+The temperature setpoint can be chosen in four different ways, with increasing priority level:
+1. The lowest priority level is the **normal week schedule**, which says which day type it is depending on the day of the week. 
     * There are four predefined day types:
-        * **work from home**: temperature high at wake up, and low at bed time
-        * **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
-        * **weekend**: temperature high at wake up, and low at bed time
-        * **day away**: temperature low throughout the day
+        * :house_with_garden: **work from home**: temperature high at wake-up, and low at bed time
+        * :office: **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
+        * :calendar: **weekend**, like :house_with_garden: **work from home** but with different wake-up and bed times
+        * :desert_island: **all day away**: temperature low throughout the day
     * The days of the week can be programmed in **settings**. 
     * All times for each type of day type can be modified
     * The low temperature and high temperature can be modified. These are the same temperatures for all day types
-2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as weekend day (e.g. holiday at home) or as days away (e.g. holiday away). 
+2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as :calendar: **weekend day** (e.g. holiday at home) or as :desert_island: **days away** (e.g. holiday away). 
     * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is **switched off** by the user
     * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer. The **overrule multiple days** can then be **switched off** in autumn.
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
-    * At midnight, **today** will be replaced by the setting of **tomorrow** and **tomorrow** will be switched off
-    * Each can also be **switched off** by the user
-    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be **away**, after which **today** can be overruled as **weekend day** (see example below)
+    * Every night at midnight, **today** is replaced by **tomorrow** and **tomorrow** is switched off
+    * Both can be **switched off** or changed by the user
+    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be :desert_island: **day away**, after which **today** can be overruled as :calendar: **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
-    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back to the setpoint of the current day type
-    * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off, or by selecting **Overrule today** > **Switch off** in the menu of the hardware unit.
+    * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back the program of the nearest lower priority
+    * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
 
-Overruled day icons are surrounded by a red rectangle on the hardware unit. 
-If the temperature setpoint is manually overruled, it is displayed in red font.
+If the temperature setpoint is manually overruled (priority level 4), it is displayed in red font.
+
+Overruled day icons (priority levels 2 and 3) are surrounded by a red rectangle on the hardware unit. Telegram commands that overrule priority levels 2 and 3 will typically display  day type icons for the next 7 days.
 
 The thermostat can be controlled by three touchbuttons on the device or via Telegram.
 In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
@@ -69,7 +73,7 @@ To do this, select ```Overrule multiple days...``` in the main menu:
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="361"/> 
 </p>
 
-The icons in the next window show that the next three days are currently **Work from office**-days, followed by two **weekend days**.
+The icons in the next window show that the next three days are currently :office: **work from office**-days, followed by two :calendar: **weekend days**.
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="383"/> 
@@ -79,7 +83,7 @@ Select ```All day away``` since we will be going on a holiday:
 
 The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```More days``` button multiple times in the next menu until the message says there are 4 **All day away**-days, including Saturday, which is the last day that the temperature should remain low:
+Then select ```4 days``` button multiple times in the next menu until the message says there are 4 :desert_island:**all day away**-days, including Saturday, which is the last day that the temperature should remain low:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="418"/> 
@@ -91,7 +95,7 @@ Next select ```Back to the main menu```:
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="418"/> 
 </p>
 
-Now, the current day is also selected as an **All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today...```:
+Now, the current day is also selected as an :desert_island:**All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today...```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="418"/> 

@@ -573,7 +573,7 @@ void processControllerIfNeeded() {
     // Send any request made by Telegram back to Telegram to send a response to the user
     if( message.sender == sndTelegram ) {
       message.sender = sndController;
-      Serial.printf("Controller sending command back to Telegram with chatID: %s\n", message.chatID);
+      //Serial.printf("Controller sending command back to Telegram with chatID: %s\n", message.chatID);
       xQueueSend( telegramQueue, &message, ( TickType_t ) 10 );  
     }
             

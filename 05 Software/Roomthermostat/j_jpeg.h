@@ -96,7 +96,7 @@ void drawJpeg(TFT_eSPI *tft, const char *filename, int xpos, int ypos) {
 
   //ESP32 always seems to return 1 for jpegFile so this null trap does not work
   if ( !jpegFile ) {
-    Serial.print("ERROR: File \""); Serial.print(filename); Serial.println ("\" not found!");
+    Serial.print("drawJpeg ERROR: File \""); Serial.print(filename); Serial.println ("\" not found!");
     return;
   }
 
@@ -112,6 +112,6 @@ void drawJpeg(TFT_eSPI *tft, const char *filename, int xpos, int ypos) {
     jpegRender(tft, xpos, ypos);
   }
   else {
-    Serial.print("ERROR: File \""); Serial.print(filename); Serial.println ("\" Jpeg file format not supported");
+    Serial.print("drawJpeg ERROR: File \""); Serial.print(filename); Serial.println ("\" Jpeg file format not supported");
   }
 }

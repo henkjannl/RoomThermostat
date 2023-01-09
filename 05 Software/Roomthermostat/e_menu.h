@@ -425,7 +425,7 @@ void checkMenu() {
           // The backlight sends a message that it is switching off
           // Jump to the home screen but do not switch on the backlight again
           menu.selectScreen(scnHome);
-          Serial.println("Menu flipping back to home screen since backlight has switched off");          
+          //Serial.println("Menu flipping back to home screen since backlight has switched off");          
           break;
           
       } // switch()

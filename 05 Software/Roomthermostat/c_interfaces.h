@@ -168,7 +168,7 @@ void ControllerData_t::loadSettings(fs::FS &fs, const char * settingsFile) {
   File input = fs.open(settingsFile);
 
   if(!input || input.isDirectory()){
-      Serial.println("- failed to open file for reading");
+      Serial.printf("- failed to open settings file %s for reading", settingsFile);
       return;
   }
   
