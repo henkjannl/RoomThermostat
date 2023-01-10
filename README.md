@@ -29,7 +29,7 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * The low temperature and high temperature can be modified. These are the same temperatures for all day types
 2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as :calendar: **weekend day** (e.g. holiday at home) or as :desert_island: **days away** (e.g. holiday away). 
     * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is **switched off** by the user
-    * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer, and **switched off** in autumn.
+    * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer. The **overrule multiple days** can then be **switched off** in autumn.
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
     * Every night at midnight, **today** is replaced by **tomorrow** and **tomorrow** is switched off
     * Both can be **switched off** or changed by the user
@@ -42,6 +42,8 @@ If the temperature setpoint is manually overruled (priority level 4), it is disp
 
 Overruled day icons (priority levels 2 and 3) are surrounded by a red rectangle on the hardware unit. Telegram commands that overrule priority levels 2 and 3 will typically display  day type icons for the next 7 days.
 
+The thermostat can be controlled by three touchbuttons on the device or via Telegram.
+In Telegram, an inline keyboard is used which changes depending on the context. This way, the user experience is similar to controlling the device via the hardware. The menu status of each Telegram user is kept in memory, so all users can communicate with the thermostat independently.
 
 ## Controlling the thermostat through Telegram
 ### Main menu in Telegram

@@ -201,19 +201,6 @@ void BoilerCommunicate() {
   // Also switch off heater if we request almost no heat
   if(controllerData.boilerPercentage < 0.05) controllerData.enableCentralHeating=false;
 
-  //if (controllerData.flameOn) {
-    if      (controllerData.boilerPercentage < 0.05) controllerData.dspFlameIcon = iconFlame0; 
-    else if (controllerData.boilerPercentage < 0.10) controllerData.dspFlameIcon = iconFlame1; 
-    else if (controllerData.boilerPercentage < 0.15) controllerData.dspFlameIcon = iconFlame2; 
-    else if (controllerData.boilerPercentage < 0.20) controllerData.dspFlameIcon = iconFlame3; 
-    else if (controllerData.boilerPercentage < 0.35) controllerData.dspFlameIcon = iconFlame4; 
-    else if (controllerData.boilerPercentage < 0.50) controllerData.dspFlameIcon = iconFlame5; 
-    else if (controllerData.boilerPercentage < 0.65) controllerData.dspFlameIcon = iconFlame6; 
-    else if (controllerData.boilerPercentage < 0.80) controllerData.dspFlameIcon = iconFlame7; 
-    else                                             controllerData.dspFlameIcon = iconFlame8; 
-  //}
-  //else controllerData.dspFlameIcon = iconFlame0;
-
   // Current day and time
   time_t now;
   time(&now); // Get current time
@@ -332,6 +319,20 @@ void BoilerCommunicate() {
     //controllerData.boilerPressure                    = opentherm.getPressure();
     controllerData.boilerPressure                    = 0;
   }
+
+  if( controllerData.boilerOnline ) {
+    if      (controllerData.boilerPercentage < 0.05) controllerData.dspFlameIcon = iconFlame0; 
+    else if (controllerData.boilerPercentage < 0.10) controllerData.dspFlameIcon = iconFlame1; 
+    else if (controllerData.boilerPercentage < 0.15) controllerData.dspFlameIcon = iconFlame2; 
+    else if (controllerData.boilerPercentage < 0.20) controllerData.dspFlameIcon = iconFlame3; 
+    else if (controllerData.boilerPercentage < 0.35) controllerData.dspFlameIcon = iconFlame4; 
+    else if (controllerData.boilerPercentage < 0.50) controllerData.dspFlameIcon = iconFlame5; 
+    else if (controllerData.boilerPercentage < 0.65) controllerData.dspFlameIcon = iconFlame6; 
+    else if (controllerData.boilerPercentage < 0.80) controllerData.dspFlameIcon = iconFlame7; 
+    else                                             controllerData.dspFlameIcon = iconFlame8; 
+  }
+    else controllerData.dspFlameIcon = iconFlame0;
+
 
   // Switch keyboard on
   enableKeyboard(); 
