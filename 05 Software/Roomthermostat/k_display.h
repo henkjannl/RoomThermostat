@@ -50,7 +50,7 @@ void Display::processMessage(const userEventMessage_t message) {
   //Serial.printf(" previousScreen: %s message.command: %s\n", screenTitle[previousScreen].c_str(), commandLabels[message.command].c_str() );
 
   if( message.command == cmdBoilerSending) {
-      Serial//.println("Display: Icon boiler transmitting");
+      //Serial.println("Display: Icon boiler transmitting");
       if( selectedScreen()==scnHome ) drawJpeg(tft, ICONS[iconBoilerTransmit].c_str(), 6, 78);  
   }
   else {

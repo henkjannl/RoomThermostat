@@ -24,9 +24,9 @@ struct tgLabelCallback {
 };
 
 std::map<command_t, tgLabelCallback> telegramButtons = {
-  { cmdSetpointLower,                { String(EMOTICON_DOWN_ARROW)  + " Cooler",                 "/cmdSetpointLower"                } },
+  { cmdSetpointLower,                { String(EMOTICON_MINUS)       + " Cooler",                 "/cmdSetpointLower"                } },
   { cmdSetpointAutomatic,            { String(EMOTICON_MAGIC_STICK) + " Auto",                   "/cmdSetpointAutomatic"            } },
-  { cmdSetpointHigher,               { String(EMOTICON_UP_ARROW)    + " Warmer",                 "/cmdSetpointHigher"               } },
+  { cmdSetpointHigher,               { String(EMOTICON_PLUS)        + " Warmer",                 "/cmdSetpointHigher"               } },
 
   { cmdMenuOverruleToday,            { "Overrule today...",                                      "/cmdMenuOverruleToday"            } },
   { cmdMenuOverruleTomorrow,         { "Overrule tomorrow...",                                   "/cmdMenuOverruleTomorrow"         } },
@@ -36,32 +36,32 @@ std::map<command_t, tgLabelCallback> telegramButtons = {
 
   { cmdOverruleTodayWorkFromHome,    { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleTodayWorkFromHome"    } },
   { cmdOverruleTodayWorkAtOffice,    { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTodayWorkAtOffice"    } },
-  { cmdOverruleTodayWeekend,         { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTodayWeekend"         } },
+  { cmdOverruleTodayWeekend,         { String(EMOTICON_DANCER)      + " Weekend day",            "/cmdOverruleTodayWeekend"         } },
   { cmdOverruleTodayAway,            { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTodayAway"            } },
   { cmdOverruleTodayAutomatic,       { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleTodayAutomatic"       } },
   { cmdMenuMain,                     { String(EMOTICON_BACK)        + " Back to main menu...",   "/cmdMenuMain"                     } },
 
   { cmdOverruleTomorrowWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleTomorrowWorkFromHome" } },
   { cmdOverruleTomorrowWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleTomorrowWorkAtOffice" } },
-  { cmdOverruleTomorrowWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleTomorrowWeekend"      } },
+  { cmdOverruleTomorrowWeekend,      { String(EMOTICON_DANCER)      + " Weekend day",            "/cmdOverruleTomorrowWeekend"      } },
   { cmdOverruleTomorrowAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleTomorrowAway"         } },
   { cmdOverruleTomorrowAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleTomorrowAutomatic"    } },
 
   { cmdOverruleMultipleWorkFromHome, { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdOverruleMultipleWorkFromHome" } },
   { cmdOverruleMultipleWorkAtOffice, { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdOverruleMultipleWorkAtOffice" } },
-  { cmdOverruleMultipleWeekend,      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdOverruleMultipleWeekend"      } },
+  { cmdOverruleMultipleWeekend,      { String(EMOTICON_DANCER)      + " Weekend day",            "/cmdOverruleMultipleWeekend"      } },
   { cmdOverruleMultipleAway,         { String(EMOTICON_ISLAND)      + " All day away",           "/cmdOverruleMultipleAway"         } },
   { cmdOverruleMultipleAutomatic,    { String(EMOTICON_MAGIC_STICK) + " Switch off",             "/cmdOverruleMultipleAutomatic"    } },
   { cmdOverruleMultipleFewerDays,    { "..days",                                                 "/cmdOverruleMultipleFewerDays"    } },
   { cmdOverruleMultipleMoreDays,     { "..days",                                                 "/cmdOverruleMultipleMoreDays"     } },
-  { cmdOverruleMultipleForever,      { String(EMOTICON_SPIDERWEB) + " Forever",                  "/cmdOverruleMultipleForever"      } },
+  { cmdOverruleMultipleForever,      { String(EMOTICON_SPIDERWEB)   + " Forever",                "/cmdOverruleMultipleForever"      } },
 
-  { cmdMenuWeekSchedule,             { String(EMOTICON_CLIPBOARD) + " Weekly schedule...",       "/cmdMenuWeekSchedule"             } },
+  { cmdMenuWeekSchedule,             { String(EMOTICON_CLIPBOARD)   + " Weekly schedule...",     "/cmdMenuWeekSchedule"             } },
   { cmdMenuHomeTimes,                { String(EMOTICON_HOUSE)       + " Home times...",          "/cmdMenuHomeTimes"                } },
   { cmdMenuOfficeTimes,              { String(EMOTICON_OFFICE)      + " Office times...",        "/cmdMenuOfficeTimes"              } },
-  { cmdMenuWeekendTimes,             { String(EMOTICON_CALENDAR)    + " Weekend times...",       "/cmdMenuWeekendTimes"             } },
+  { cmdMenuWeekendTimes,             { String(EMOTICON_DANCER)      + " Weekend times...",       "/cmdMenuWeekendTimes"             } },
   { cmdMenuTemperature,              { String(EMOTICON_BULLSEYE)    + " Temperatures...",        "/cmdMenuTemperature"              } },
-  { cmdMenuSensorOffset,             { String(EMOTICON_THERMOMETER) + " Sensor offset...",       "/cmdMenuSensorOffset"             } },
+  { cmdMenuSensorOffset,             { String(EMOTICON_LEVEL_SLIDER) + " Sensor offset...",      "/cmdMenuSensorOffset"             } },
   { cmdMenuDebug,                    { String(EMOTICON_LIFEBUOY)    + " Debugging...",           "/cmdMenuDebug"                    } },
   
   { cmdReportBoiler,                 { String(EMOTICON_FLAME)       + " Boiler report",          "/cmdReportBoiler"                 } },
@@ -85,7 +85,7 @@ std::map<command_t, tgLabelCallback> telegramButtons = {
 
   { cmdWorkFromHome,                 { String(EMOTICON_HOUSE)       + " Work from home",         "/cmdWorkFromHome"                 } },
   { cmdWorkAtOffice,                 { String(EMOTICON_OFFICE)      + " Work from office",       "/cmdWorkAtOffice"                 } },
-  { cmdWeekend,                      { String(EMOTICON_CALENDAR)    + " Weekend day",            "/cmdWeekend"                      } },
+  { cmdWeekend,                      { String(EMOTICON_DANCER)      + " Weekend day",            "/cmdWeekend"                      } },
   { cmdAllDayAway,                   { String(EMOTICON_ISLAND)      + " All day away",           "/cmdAllDayAway"                   } },
 
   { cmdHomeWakeUpEarlier,            { String(EMOTICON_ALARM_CLOCK) + " Wake up -",              "/cmdHomeWakeUpEarlier"            } },
@@ -720,6 +720,16 @@ void enableTelegram()  { telegramEnabledCounter=true;   };
 void disableTelegram() { telegramEnabledCounter=false;  };
 bool telegramEnabled() { return telegramEnabledCounter; };
 
+String convertToHexString( String input ) {
+  String result = "{ ";
+  for( int i=0; i<input.length(); i++ ) {
+    result += String("0x") + String( (int) input[i], HEX ) + ", ";
+  }
+  result+="0x00 };";
+  result.toLowerCase();
+  return result;
+}
+
 void setupOTA() {
   
   Serial.println("Setting up over the air updates");
@@ -808,14 +818,16 @@ void handleNewMessages(int numNewMessages){
 
     if(bot.messages[i].type=="message") {
       String message = bot.messages[i].text;
+      
+      // For convenience, return sample code to convert emoticons to printale strings
+      if( message != "/start" ) bot.sendMessage(bot.messages[i].chat_id, String( "const char EMOTICON[] = " ) + convertToHexString( message ), "");
+      
+      userConversation[chatID].lastMessageIDknown = false; // Start a new keyboard if a message is received
       //Serial.printf("Handle message %s\n", message.c_str());
       userEventMessage_t command = userEventMessage_t(sndTelegram, cmdStartTelegram);
-      userConversation[chatID].respondToUser( bot, command); 
+      userConversation[chatID].respondToUser( bot, command ); 
     }    
     else if (bot.messages[i].type=="callback_query") {
-      //Serial.printf("Handle callback: chatID: %s  txt:%s\n", chatID.c_str(), bot.messages[i].text.c_str());
-
-      // Recognize callback string and send command to the controller or to the Telegram Queue
       userConversation[chatID].handleCallback(bot.messages[i].text);
     }
   } // for i
