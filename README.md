@@ -295,7 +295,7 @@ During these five minutes, th blue LED on the back of the ESP32 will blink. Duri
 
 # To do
 
-Potential improvements:
+Software:
 * over the air update still not working well
 * over the air update does not display network port in Arduino IDE (perhaps call ArduinoOTA.handle() more often?)
   * while waiting for over the air software update, display message on screen
@@ -331,3 +331,8 @@ Code cleanup:
 
 Hardware:
 * add a capacitor to prevent brownout of the ESP32 at startup
+* little more space between adjacent boards
+* more room for connector
+* no two components at same location on either side of the main PCB (order of soldering doesn't matter, desoldering is possible)
+* next step: integrate OpenTherm components and ESP32 components on main board
+
