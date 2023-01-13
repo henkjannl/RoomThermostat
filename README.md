@@ -303,6 +303,7 @@ Software:
   * try to get FreeRTOS working again to improve performance of buttons and Telegram
     * perhaps Telegram can run on other core?
   * implement OpenTherm protocol in hardware timer in non-blocking way
+* separate timers for blocking Telegram and backlight (backlight longer than blocking Telegram)
 * include icons in the menu
 * save logdata through WiFi connection 
   * Deta Base?
