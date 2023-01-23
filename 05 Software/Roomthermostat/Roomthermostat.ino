@@ -40,6 +40,7 @@
 
   TO DO:
     Potential improvements:
+    * ESP crashes after use of hardware buttons
     * improve responsiveness (keys and Telegram)
       * try to get FreeRTOS working again to improve performance of buttons and Telegram
         * perhaps Telegram can run on other core?
