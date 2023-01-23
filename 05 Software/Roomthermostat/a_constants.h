@@ -408,11 +408,6 @@ String DAY_TYPES[] = { "Work from home", "Work from office", "Weekend day", "All
   
 const icon_t DAYTYPE_TO_ICON[]           = { iconHome,          iconWork,          iconWeekend,          iconAway,          iconAutomatic };
 //const icon_t DAYTYPE_OVERRULED_TO_ICON[] = { iconHomeOverruled, iconWorkOverruled, iconWeekendOverruled, iconAwayOverruled, iconAutomatic };
-const char DAYTYPE_TO_EMOTICON[][5]      = { {0xf0, 0x9f, 0x8f, 0xa0, 0x0},   // House
-                                             {0xf0, 0x9f, 0x8f, 0xa2, 0x0},   // Office
-                                             {0xf0, 0x9f, 0x93, 0x85, 0x0},   // Calendar
-                                             {0xf0, 0x9f, 0x8f, 0x96, 0x0},   // Island
-                                             {0xf0, 0x9f, 0xaa, 0x84, 0x0} }; // Magic stick
 
 enum setpointReason_t { spWeekSchedule,  spMultipleDays, spOverrideToday, spOverrideNow };
 
