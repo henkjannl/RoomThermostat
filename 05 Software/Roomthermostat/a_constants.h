@@ -83,7 +83,8 @@ using namespace std;
 #define SECS_PER_HOUR    (              60 * 60)
 #define SECS_PER_MINUTE  (                   60)
 
-const char EMOTICON_ALARM_CLOCK[]         = { 0xe2, 0x8f, 0xb0, 0x00 };
+String EMOTICON_ALARM_CLOCK = String( const char { 0xe2, 0x8f, 0xb0, 0x00 } );
+//const char EMOTICON_ALARM_CLOCK[]         = { 0xe2, 0x8f, 0xb0, 0x00 };
 const char EMOTICON_BACK[]                = { 0xf0, 0x9f, 0x94, 0x99, 0x00 };
 const char EMOTICON_BATH[]                = { 0xf0, 0x9f, 0x9b, 0x81, 0x00 };
 const char EMOTICON_BED[]                 = { 0xf0, 0x9f, 0x9b, 0x8f, 0x00 };
