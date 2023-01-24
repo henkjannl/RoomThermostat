@@ -77,14 +77,13 @@ using namespace std;
   Font Noway_Regular24 height   23
  */
 
-#define SECS_PER_YEAR    (365.25 * 24 * 60 * 60)
-#define SECS_PER_WEEK    (     7 * 24 * 60 * 60)
-#define SECS_PER_DAY     (         24 * 60 * 60)
-#define SECS_PER_HOUR    (              60 * 60)
-#define SECS_PER_MINUTE  (                   60)
+#define SECS_PER_MINUTE  (         60                   )
+#define SECS_PER_HOUR    (         60 * SECS_PER_MINUTE )
+#define SECS_PER_DAY     (         24 * SECS_PER_HOUR   )
+#define SECS_PER_WEEK    (          7 * SECS_PER_DAY    )
+#define SECS_PER_YEAR    ( 365.242199 * SECS_PER_DAY    )
 
-String EMOTICON_ALARM_CLOCK = String( const char { 0xe2, 0x8f, 0xb0, 0x00 } );
-//const char EMOTICON_ALARM_CLOCK[]         = { 0xe2, 0x8f, 0xb0, 0x00 };
+const char EMOTICON_ALARM_CLOCK[]         = { 0xe2, 0x8f, 0xb0, 0x00 };
 const char EMOTICON_BACK[]                = { 0xf0, 0x9f, 0x94, 0x99, 0x00 };
 const char EMOTICON_BATH[]                = { 0xf0, 0x9f, 0x9b, 0x81, 0x00 };
 const char EMOTICON_BED[]                 = { 0xf0, 0x9f, 0x9b, 0x8f, 0x00 };
