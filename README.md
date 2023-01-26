@@ -192,11 +192,12 @@ Note that there is a `config.json` and a The format of the `config_test.jsn`. Th
 Next it is necessary to upload the data folder to the ESP32 using `Tools` > `ESP32 Sketch Data Upload` in the Arduino IDE (see how this works at [Random Nerd Tutorials Telegram](https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/).
 
 Also, a number of libraries must be installed in Arduino:
-* `TFT_eSPI` by Bodmer - https://github.com/Bodmer/TFT_eSPI
-* `JPEGDecoder` by Bodmer - https://github.com/Bodmer/JPEGDecoder
 * `ArduinoJSON` by Benoît Blanchon - https://arduinojson.org/
 * `DallasTemperature` by Miles Burton - https://github.com/milesburton/Arduino-Temperature-Control-Library
+* `JPEGDecoder` by Bodmer - https://github.com/Bodmer/JPEGDecoder
 * `OpenTherm` by Ihor Melnyk - https://github.com/ihormelnyk/opentherm_library
+* `TFT_eSPI` by Bodmer - https://github.com/Bodmer/TFT_eSPI
+* `UniversalTelegram` by Brian Lough - https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot
 
 Big shout out to everyone for creating and maintaining these beautiful pieces of work!
 
