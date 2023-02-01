@@ -3,9 +3,9 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.1.2"
-#define USE_TESTBOT true
-//#define USE_TESTBOT false
+#define VERSION "1.1.3"
+//#define USE_TESTBOT true
+#define USE_TESTBOT false
 
 /* 
   VERSION INFO:
@@ -37,7 +37,8 @@
         Controller module simplified
   1.1.2 Graphical user interface redesign, using Telegram icons
         Minor improvements to handling overrule multiple days
-
+  1.1.3 Weekend icon changed
+  
   TO DO:
     Potential improvements:
     * ESP crashes after use of hardware buttons
