@@ -263,7 +263,9 @@ void setup() {
   mainKeyboard.addButton("Cooler",                     CB_COOLER,            KeyboardButtonQuery, onCooler           );
   mainKeyboard.addRow();
   mainKeyboard.addButton("Overrule today...",          CB_OVERRULE_TODAY,    KeyboardButtonQuery, onOverruleToday    );
+  mainKeyboard.addRow();
   mainKeyboard.addButton("Overrule tomorrow...",       CB_OVERRULE_TOMORROW, KeyboardButtonQuery, onOverruleTomorrow );
+  mainKeyboard.addRow();
   mainKeyboard.addButton("Overrule multiple days...",  CB_OVERRULE_MULTIPLE, KeyboardButtonQuery, onOverruleMultiple );
   mainKeyboard.addRow();
   mainKeyboard.addButton("Settings...",                CB_SETTINGS,          KeyboardButtonQuery, onSettings         );
@@ -292,6 +294,7 @@ void setup() {
   Serial.print("\nTest Telegram connection... ");
   myBot.begin() ? Serial.println("OK") : Serial.println("NOK");
   myBot.addInlineKeyboard(&mainKeyboard);
+  myBot.addInlineKeyboard(&settingsKeyboard);
 
   myBot.setFormattingStyle(AsyncTelegram2::FormatStyle::HTML /* MARKDOWN */);
 
