@@ -1,8 +1,8 @@
 #include "FS.h"
 #include "SPIFFS.h"
 #include <AsyncTelegram2.h>
-#include <map>
 #include <DS18B20.h>
+#include <map>
 
 #include "MyCredentials.h"
 /* The second file in the same folder as this sketch named "MyCredentials.h" contains:
@@ -10,20 +10,24 @@ const char* ssid  =  "xxxxxxxxx";     // SSID WiFi network
 const char* pass  =  "xxxxxxxxx";     // Password  WiFi network
 const char* token =  "xxxxxx:xxxxxxxxxxxxx";  // Telegram token
 
-// Check the userid with the help of bot @JsonDumpBot or @getidsbot (work also with groups)
-// https://t.me/JsonDumpBot  or  https://t.me/getidsbot
 int64_t userid = 123456789;
-*/
 
+I included MyCredentials.h to prevent the information from being uploaded to github (MyCredentials.h is in gitignore)
+*/
 
 // Timezone definition
 #define MYTZ "CET-1CEST,M3.5.0,M10.5.0/3"
-struct tm sysTime;
 
 #define FORMAT_SPIFFS_IF_FAILED false
 #define LOG_FILE "/templog.csv"
+#define SEND_LOG_CALLBACK  "sendlog"
+#define STATUS_CALLBACK    "status"
+#define CLEAR_LOG_CALLBACK "clearlog"
+#define SENSOR_OFFSET -6.6 // 18.1-24.7
 
 #include <WiFiClientSecure.h>
+
+// The secure wifi client
 WiFiClientSecure client;
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
@@ -31,15 +35,15 @@ WiFiClientSecure client;
   X509List  certificate(telegram_cert);
 #endif
 
+// The Telegram bot
 AsyncTelegram2 myBot(client);
 InlineKeyboard inlineKeyboard; 
 
+// The dallas sensor
 DS18B20 ds(32);
 
+// Logdata, with times and measured temperatures
 std::map<time_t, float> TemperatureLog;
-
-#define SEND_LOG_CALLBACK  "sendlog"
-#define CLEAR_LOG_CALLBACK "clearlog"
 
 // Callback functions definition for inline keyboard buttons
 void onSendLog(const TBMessage &queryMsg){
@@ -70,13 +74,19 @@ void onSendLog(const TBMessage &queryMsg){
     Serial.println("Can't open the file. Upload \"data\" folder to filesystem");
 };
 
-// Callback functions definition for inline keyboard buttons
+void onStatus(const TBMessage &queryMsg){
+  float tempC = ds.getTempC()+SENSOR_OFFSET;
+  String message = "Current temperature " + String(tempC, 3) + "°C";
+  myBot.editMessage(queryMsg, message.c_str(), inlineKeyboard);    
+}
+
 void onClearLog(const TBMessage &queryMsg){
   TemperatureLog.clear();
   Serial.println("Logfile cleared");
-  myBot.sendMessage(queryMsg, "Log file cleared", inlineKeyboard);          
+  myBot.editMessage(queryMsg, "Log file cleared", inlineKeyboard);          
 }
 
+// General setup function
 void setup() {
   // initialize the Serial
   Serial.begin(115200);
@@ -103,7 +113,7 @@ void setup() {
   ds.setResolution(RES_12_BIT);
   
   Serial.printf("Devices: %d\n", ds.getNumberOfDevices());
-  Serial.print(ds.getTempC());
+  Serial.print(ds.getTempC()+SENSOR_OFFSET);
 
 #ifdef ESP8266
   // Sync time with NTP, to check properly Telegram certificate
@@ -119,11 +129,10 @@ void setup() {
 #endif
 
   // Add inline keyboard
-  // add a button that will turn on LED on pin assigned
-  inlineKeyboard.addButton("Send logfile",  SEND_LOG_CALLBACK, KeyboardButtonQuery, onSendLog);
-  // add a button that will turn off LED on pin assigned
+  inlineKeyboard.addButton("Send logfile",  SEND_LOG_CALLBACK,  KeyboardButtonQuery, onSendLog);
   inlineKeyboard.addButton("Clear logfile", CLEAR_LOG_CALLBACK, KeyboardButtonQuery, onClearLog);
-  Serial.printf("Added %d buttons to keyboard\n", inlineKeyboard.getButtonsNumber());
+  inlineKeyboard.addRow();
+  inlineKeyboard.addButton("Update status", STATUS_CALLBACK,    KeyboardButtonQuery, onStatus);
 
   // Set the Telegram bot properies
   myBot.setUpdateTime(1000);
@@ -145,8 +154,7 @@ void setup() {
   myBot.sendTo(userid, welcome_msg);
 }
 
-
-
+// General loop function
 void loop() {
   printHeapStats();
 
@@ -156,7 +164,7 @@ void loop() {
     lastMeasurement = millis();
     time_t now;
     time(&now); // Get current time
-    float tempC = ds.getTempC();
+    float tempC = ds.getTempC()+SENSOR_OFFSET;
     TemperatureLog[now]=tempC;
     Serial.printf("Temperature: %.3f°C\n", tempC);
     if( TemperatureLog.size()>10 ) logInterval = 1000*60*3; // Go to lower frequency after some samples, for debugging.
@@ -183,11 +191,9 @@ void loop() {
       else {
         myBot.sendMessage(msg, "Welcome to the temperature logger\nchoose a button", inlineKeyboard);
       }
-
     }
   }
 }
-
 
 // List all files saved in the selected filesystem
 void listDir(const char * dirname, uint8_t levels) {
@@ -216,6 +222,7 @@ void listDir(const char * dirname, uint8_t levels) {
 
 void printHeapStats() {
   static uint32_t infoTime;
+  struct tm sysTime;
   if (millis() - infoTime > 10000) {
     infoTime = millis();
     time_t now = time(nullptr);

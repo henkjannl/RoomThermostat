@@ -22,18 +22,18 @@ The temperature setpoint can be chosen in four different ways, with increasing p
     * There are four predefined day types:
         * :house_with_garden: **work from home**: temperature high at wake-up, and low at bed time
         * :office: **work from the office**: temperature high at wake up, low when going out, high when coming home and again low at bed time
-        * :calendar: **weekend**, like :house_with_garden: **work from home** but with different wake-up and bed times
-        * :desert_island: **all day away**: temperature low throughout the day
+        * :dancer: **weekend**, like :house_with_garden: **work from home** but with different wake-up and bed times
+        * :palm_tree: **all day away**: temperature low throughout the day
     * The days of the week can be programmed in **settings**. 
     * All times for each type of day type can be modified
     * The low temperature and high temperature can be modified. These are the same temperatures for all day types
-2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as :calendar: **weekend day** (e.g. holiday at home) or as :desert_island: **days away** (e.g. holiday away). 
+2. It is possible to **overrule multiple days** with a different day type, for instance to program multiple days as :dancer: **weekend day** (e.g. holiday at home) or as :palm_tree: **days away** (e.g. holiday away). 
     * The thermostat will be overruled until the number of days expires, or if the **overrule multiple days** function is **switched off** by the user
     * It is also possible to set the number of days to **forever**, for instance if heating is not required during the summer. The **overrule multiple days** can then be **switched off** in autumn.
 3. **Today** and **tomorrow** can be overruled by a schedule that is different from the normal schedule.
     * Every night at midnight, **today** is replaced by **tomorrow** and **tomorrow** is switched off
     * Both can be **switched off** or changed by the user
-    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be :desert_island: **day away**, after which **today** can be overruled as :calendar: **weekend day**
+    * For instance: if the holiday starts tomorrow, **multiple days** can be overruled to be :palm_tree: **day away**, after which **today** can be overruled as :dancer: **weekend day**
 4. At all times, a **higher or lower temperature** can be manually selected. 
     * When the next programmed timeslot of the lower priority day type dawns, the temperature setting switches back the program of the nearest lower priority
     * It is also possible to choose ```Auto``` from the main menu in Telegram to switch the manual setpoint override off
@@ -65,7 +65,7 @@ The settings menu has the following options:
 
 ### Simple use case in Telegram: going on a short holiday
 
-The scenario is that we are going on a holiday for a few days and we will return on Sunday.
+The scenario is that we are going on a holiday for a few days and we will return on Monday.
 
 To do this, select ```Overrule multiple days...``` in the main menu:
 
@@ -73,17 +73,17 @@ To do this, select ```Overrule multiple days...``` in the main menu:
   <img src="02 User interface\Example - holiday\Step 1.png" alt="events and messages" width="361"/> 
 </p>
 
-The icons in the next window show that the next three days are currently :office: **work from office**-days, followed by two :calendar: **weekend days**.
+The icons in the next window show that the next two days are currently :office: **work from office**-days, followed by two :dancer: **weekend days** and again some :office: **work from office**-days.
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 2.png" alt="events and messages" width="383"/> 
 </p>
 
-Select ```All day away``` since we will be going on a holiday:
+Select :palm_tree:```All day away``` since we will be going on a holiday:
 
-The ```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
+The :palm_tree:```All day away``` scenario means that the setpoint temperature will remain low throughout the day.
 
-Then select ```4 days``` button multiple times in the next menu until the message says there are 4 :desert_island:**all day away**-days, including Saturday, which is the last day that the temperature should remain low:
+Then select ```4 days``` button multiple times in the next menu until the message says there are 5 :palm_tree:**all day away**-days, including Monday, which is the last day that the temperature should remain low:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 3.png" alt="events and messages" width="418"/> 
@@ -95,21 +95,19 @@ Next select ```Back to the main menu```:
   <img src="02 User interface\Example - holiday\Step 4.png" alt="events and messages" width="418"/> 
 </p>
 
-Now, the current day is also selected as an :desert_island:**All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today...```:
+Now, the current day is also selected as an :palm_tree:**All day away**, with a low temperature setting for the remaining part of the day. To resolve this select ```Overrule today...```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 5.png" alt="events and messages" width="418"/> 
 </p>
 
-Choose ```Weekend day``` so we can pack our bags comfortably:
+Choose :dancer:```Weekend day``` so we can pack our bags comfortably:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 6.png" alt="events and messages" width="287"/> 
 </p>
 
 The remaining **Multiple days** will remain selected, only the current day will be overruled. It is also possible to overrule the next day while the remaining  **multiple days** remain overruled.
-
-Finally, select ```Back to the main menu...```:
 
 <p align="center">
   <img src="02 User interface\Example - holiday\Step 7.png" alt="events and messages" width="350"/> 
@@ -121,11 +119,11 @@ Of course it is also possible to do these steps after we leave, without the need
 
 To switch off the thermostat for a longer period of time, for instance during the summer or during a long holiday, proceed as follows:
 * Select ```Overrule multiple days...``` in the main menu
-* Select ```All day away```
+* Select :palm_tree: ```All day away```
 * Select ```Forever```
 * Select ```Back to the main menu...```
 
-The thermostat is now switched off until ```Overrule multiple days``` is ```Switch off```
+The thermostat is now switched off until ```Overrule multiple days``` is ```Switched off```
 
 ## Building the device
 
