@@ -258,9 +258,10 @@ void setup() {
 #endif
 
   // Add main keyboard
-  mainKeyboard.addButton("Warmer",                     CB_WARMER,            KeyboardButtonQuery, onWarmer           );
-  mainKeyboard.addButton("Auto",                       CB_AUTO,              KeyboardButtonQuery, onAuto             );
-  mainKeyboard.addButton("Cooler",                     CB_COOLER,            KeyboardButtonQuery, onCooler           );
+  char buffer [100];
+  snprintf( buffer, 100, "%s %s", EMOTICON_PLUS,         "Warmer"               ); mainKeyboard.addButton( buffer, CB_WARMER,            KeyboardButtonQuery, onWarmer           );
+  snprintf( buffer, 100, "%s %s", EMOTICON_MAGIC_STICK,  "Auto"                 ); mainKeyboard.addButton( buffer, CB_AUTO,              KeyboardButtonQuery, onAuto             );
+  snprintf( buffer, 100, "%s %s", EMOTICON_MINUS,        "Cooler"               ); mainKeyboard.addButton( buffer, CB_COOLER,            KeyboardButtonQuery, onCooler           );
   mainKeyboard.addRow();
   mainKeyboard.addButton("Overrule today...",          CB_OVERRULE_TODAY,    KeyboardButtonQuery, onOverruleToday    );
   mainKeyboard.addRow();
@@ -268,23 +269,36 @@ void setup() {
   mainKeyboard.addRow();
   mainKeyboard.addButton("Overrule multiple days...",  CB_OVERRULE_MULTIPLE, KeyboardButtonQuery, onOverruleMultiple );
   mainKeyboard.addRow();
-  mainKeyboard.addButton("Settings...",                CB_SETTINGS,          KeyboardButtonQuery, onSettings         );
-  mainKeyboard.addButton("Status",                     CB_STATUS,            KeyboardButtonQuery, onStatus           );
+  snprintf( buffer, 100, "%s %s", EMOTICON_GEAR,         "Settings..."          ); mainKeyboard.addButton( buffer, CB_SETTINGS,          KeyboardButtonQuery, onSettings         );
+  snprintf( buffer, 100, "%s %s", EMOTICON_STHETOSCOPE,  "Status"               ); mainKeyboard.addButton( buffer, CB_STATUS,            KeyboardButtonQuery, onStatus           );
 
   // Add settings keyboard
-  settingsKeyboard.addButton("Weekly schedule...",     CB_WEEKLY_SCHEDULE,  KeyboardButtonQuery, onWeeklySchedule    );
-  settingsKeyboard.addButton("Home times...",          CB_HOME_TIMES,       KeyboardButtonQuery, onHomeTimes         );
+  snprintf( buffer, 100, "%s %s", EMOTICON_CLIPBOARD,    "Weekly schedule..."   ); settingsKeyboard.addButton(buffer, CB_WEEKLY_SCHEDULE,  KeyboardButtonQuery, onWeeklySchedule    );
+  snprintf( buffer, 100, "%s %s", EMOTICON_HOUSE,        "Home times..."        ); settingsKeyboard.addButton(buffer, CB_HOME_TIMES,       KeyboardButtonQuery, onHomeTimes         );
   settingsKeyboard.addRow();
-  settingsKeyboard.addButton("Office times...",        CB_OFFICE_TIMES,     KeyboardButtonQuery, onOfficeTimes       );
-  settingsKeyboard.addButton("Weekend times times...", CB_WEEKEND_TIMES,    KeyboardButtonQuery, onWeekendTimes      );
+  snprintf( buffer, 100, "%s %s", EMOTICON_OFFICE,       "Office times..."      ); settingsKeyboard.addButton(buffer, CB_OFFICE_TIMES,     KeyboardButtonQuery, onOfficeTimes       );
+  snprintf( buffer, 100, "%s %s", EMOTICON_DANCER,       "Weekend times..."     ); settingsKeyboard.addButton(buffer, CB_WEEKEND_TIMES,    KeyboardButtonQuery, onWeekendTimes      );
   settingsKeyboard.addRow();
-  settingsKeyboard.addButton("Temperatures...",        CB_TEMPERATURES,     KeyboardButtonQuery, onTemperatures      );
-  settingsKeyboard.addButton("Sensor offset...",       CB_SENSOR_OFFSET,    KeyboardButtonQuery, onSensorOffset      );
+  snprintf( buffer, 100, "%s %s", EMOTICON_BULLSEYE,     "Temperatures..."      ); settingsKeyboard.addButton(buffer, CB_TEMPERATURES,     KeyboardButtonQuery, onTemperatures      );
+  snprintf( buffer, 100, "%s %s", EMOTICON_LEVEL_SLIDER, "Sensor offset..."     ); settingsKeyboard.addButton(buffer, CB_SENSOR_OFFSET,    KeyboardButtonQuery, onSensorOffset      );
   settingsKeyboard.addRow();
-  settingsKeyboard.addButton("Debugging...",           CB_DEBUGGING,        KeyboardButtonQuery, onDebugging         );
+  snprintf( buffer, 100, "%s %s", EMOTICON_LIFEBUOY,     "Debugging..."         ); settingsKeyboard.addButton(buffer, CB_DEBUGGING,        KeyboardButtonQuery, onDebugging         );
   settingsKeyboard.addRow();
-  settingsKeyboard.addButton("Back to main menu...",   CB_MAIN_MENU,        KeyboardButtonQuery, onMainMenu          );
+  snprintf( buffer, 100, "%s %s", EMOTICON_BACK,         "Back to main menu..." ); settingsKeyboard.addButton(buffer, CB_MAIN_MENU,        KeyboardButtonQuery, onMainMenu          );
 
+  // Add weekly schedule
+  weekScheduleKeyboard.addButton("Monday",    CB_WSCH_MONDAY,    KeyboardButtonQuery, onWeeklySchedule    );
+  weekScheduleKeyboard.addButton("Tuesday",   CB_WSCH_TUESDAY,   KeyboardButtonQuery, onWeeklySchedule    );
+  settingsKeyboard.addRow();
+  weekScheduleKeyboard.addButton("Wednesday", CB_WSCH_WDNESDAY,  KeyboardButtonQuery, onWeeklySchedule    );
+  weekScheduleKeyboard.addButton("Thursday",  CB_WSCH_THURSDAY,  KeyboardButtonQuery, onWeeklySchedule    );
+  settingsKeyboard.addRow();
+  weekScheduleKeyboard.addButton("Friday",    CB_WSCH_FRIDAY,    KeyboardButtonQuery, onWeeklySchedule    );
+  weekScheduleKeyboard.addButton("Saturday",  CB_WSCH_SATURDAY,  KeyboardButtonQuery, onWeeklySchedule    );
+  settingsKeyboard.addRow();
+  weekScheduleKeyboard.addButton("Sunday",    CB_WSCH_SUNDAY,    KeyboardButtonQuery, onWeeklySchedule    );
+  settingsKeyboard.addRow();
+  snprintf( buffer, 100, "%s %s", EMOTICON_GEAR, "Back to settings..." ); weekScheduleKeyboard.addButton(buffer, CB_SETTINGS, KeyboardButtonQuery, onDebugging         );
   
   // Set the Telegram bot properies
   myBot.setUpdateTime(1000);

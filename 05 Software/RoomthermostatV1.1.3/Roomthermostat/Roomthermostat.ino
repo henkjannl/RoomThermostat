@@ -3,9 +3,9 @@
 #include "FS.h"
 #include "SPIFFS.h"
 
-#define VERSION "1.1.4"
-#define USE_TESTBOT true
-//#define USE_TESTBOT false
+#define VERSION "1.1.3"
+//#define USE_TESTBOT true
+#define USE_TESTBOT false
 
 /* 
   VERSION INFO:
@@ -38,7 +38,6 @@
   1.1.2 Graphical user interface redesign, using Telegram icons
         Minor improvements to handling overrule multiple days
   1.1.3 Weekend icon changed
-  1.1.4 Switch to new Telegram client
   
   TO DO:
     Potential improvements:
