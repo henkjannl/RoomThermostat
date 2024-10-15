@@ -3199,7 +3199,7 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 72.39) (xy 128.27 72.39)
+			(xy 138.43 72.39) (xy 128.27 72.39)
 		)
 		(stroke
 			(width 0)
@@ -3229,7 +3229,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 72.39) (xy 154.94 72.39)
+			(xy 146.05 72.39) (xy 154.94 72.39)
 		)
 		(stroke
 			(width 0)
@@ -5585,7 +5585,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 144.78 72.39 270)
+		(at 142.24 72.39 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5594,7 +5594,7 @@
 		(fields_autoplaced yes)
 		(uuid "d0193a4e-4ef7-490e-b4b0-6e7d991af52f")
 		(property "Reference" "R7"
-			(at 144.78 66.04 90)
+			(at 142.24 66.04 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5602,7 +5602,7 @@
 			)
 		)
 		(property "Value" "330"
-			(at 144.78 68.58 90)
+			(at 142.24 68.58 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5610,7 +5610,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
-			(at 144.78 70.612 90)
+			(at 142.24 70.612 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5619,7 +5619,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 144.78 72.39 0)
+			(at 142.24 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5628,7 +5628,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 144.78 72.39 0)
+			(at 142.24 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5637,7 +5637,7 @@
 			)
 		)
 		(property "LCSC Part # " "C17630"
-			(at 144.78 72.39 0)
+			(at 142.24 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -5,6 +5,76 @@
 	(uuid "dee7d3c3-6abb-4cb3-8df4-3e3e37989a04")
 	(paper "A4")
 	(lib_symbols)
+	(polyline
+		(pts
+			(xy 74.93 88.9) (xy 80.01 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0925232c-50e5-4426-95b7-d76b80794736")
+	)
+	(polyline
+		(pts
+			(xy 74.93 48.26) (xy 80.01 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b34532d-3c32-4120-b003-a12b62afdcd0")
+	)
+	(polyline
+		(pts
+			(xy 180.34 114.3) (xy 180.34 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2292b91f-13da-4d2e-8d29-f3cb6a68b571")
+	)
+	(polyline
+		(pts
+			(xy 198.12 88.9) (xy 203.2 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "674a8005-d430-4a31-8a46-5c5b4d45acd9")
+	)
+	(polyline
+		(pts
+			(xy 139.7 114.3) (xy 139.7 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c08d59c0-26d9-4307-99d6-53b1d0a561e7")
+	)
+	(polyline
+		(pts
+			(xy 96.52 114.3) (xy 96.52 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed1d8cd0-35c4-48a6-8705-5554f44f3d85")
+	)
+	(polyline
+		(pts
+			(xy 198.12 44.45) (xy 203.2 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ffd62481-d749-4525-a31d-a0accbcfc76a")
+	)
 	(sheet
 		(at 203.2 27.94)
 		(size 30.48 34.29)
@@ -44,7 +114,7 @@
 		)
 	)
 	(sheet
-		(at 44.45 27.94)
+		(at 43.18 27.94)
 		(size 31.75 35.56)
 		(fields_autoplaced yes)
 		(stroke
@@ -56,7 +126,7 @@
 		)
 		(uuid "27673a3a-5c62-493b-b19a-59601297fae0")
 		(property "Sheetname" "USB and power"
-			(at 44.45 27.2284 0)
+			(at 43.18 27.2284 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -65,7 +135,7 @@
 			)
 		)
 		(property "Sheetfile" "USB_and_power.kicad_sch"
-			(at 44.45 64.0846 0)
+			(at 43.18 64.0846 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -120,7 +190,7 @@
 		)
 	)
 	(sheet
-		(at 44.45 72.39)
+		(at 43.18 72.39)
 		(size 31.75 33.02)
 		(fields_autoplaced yes)
 		(stroke
@@ -132,7 +202,7 @@
 		)
 		(uuid "7a22ee33-5bef-4c62-b34e-91e104b3ec80")
 		(property "Sheetname" "Opentherm interface"
-			(at 44.45 71.6784 0)
+			(at 43.18 71.6784 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -141,7 +211,7 @@
 			)
 		)
 		(property "Sheetfile" "Opentherm_interface.kicad_sch"
-			(at 44.45 105.9946 0)
+			(at 43.18 105.9946 0)
 			(effects
 				(font
 					(size 1.27 1.27)
