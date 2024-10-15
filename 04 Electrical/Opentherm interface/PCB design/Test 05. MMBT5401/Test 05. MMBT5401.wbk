@@ -4,7 +4,7 @@
     {
       "analysis": "DC",
       "commands": [
-        ".dc I1 -450u 450u 1u",
+        ".dc I1 -50u 450u 1u",
         ".kicad adjustpaths",
         ".save all",
         ".probe alli",
