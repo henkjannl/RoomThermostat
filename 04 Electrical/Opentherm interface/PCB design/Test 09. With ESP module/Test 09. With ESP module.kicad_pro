@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 0.0,
+          "height": 2.5,
+          "width": 2.5
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -48,10 +48,16 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "min_clearance": 0.0
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -113,7 +119,7 @@
         "min_clearance": 0.0,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
-        "min_hole_clearance": 0.25,
+        "min_hole_clearance": 0.18,
         "min_hole_to_hole": 0.25,
         "min_microvia_diameter": 0.2,
         "min_microvia_drill": 0.1,
@@ -171,7 +177,10 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0,
+        0.35
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -198,7 +207,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -438,7 +452,7 @@
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.2,
+        "clearance": 0.15,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -469,7 +483,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "Test 08. With EPS32.step",
+      "step": "Test 09. With EPS32.step",
       "svg": "",
       "vrml": ""
     },
@@ -646,12 +660,18 @@
           "group_by": false,
           "label": "Field7",
           "name": "Field7",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
           "label": "JLCPCB",
           "name": "JLCPCB",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Field5",
+          "name": "Field5",
           "show": true
         }
       ],
@@ -715,7 +735,35 @@
     ],
     [
       "bd5268ae-2faf-441e-9d8c-8a98dae2e504",
-      "Power and ESP32-S3"
+      "ESP32-S3"
+    ],
+    [
+      "27673a3a-5c62-493b-b19a-59601297fae0",
+      "USB and power"
+    ],
+    [
+      "7a22ee33-5bef-4c62-b34e-91e104b3ec80",
+      "Opentherm interface"
+    ],
+    [
+      "4ee7237d-7490-448a-a94f-f4ace25b8494",
+      "Display"
+    ],
+    [
+      "1ee783e5-877a-4e23-8a1c-34a8f840b01c",
+      "Thermometers"
+    ],
+    [
+      "c10dcd2b-f94d-4b79-ac64-852f0c201877",
+      "Buttons"
+    ],
+    [
+      "e6947289-cd9f-4e72-bd23-2c845458e136",
+      "LEDs"
+    ],
+    [
+      "9496b48a-90bf-416c-bf1c-039c65c989b9",
+      "Time of flight"
     ]
   ],
   "text_variables": {}
