@@ -5,22 +5,13 @@
 	(uuid "236ea07a-79b8-44d8-9e9d-af5ae1b0e9f6")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector:TestPoint"
-			(pin_numbers hide)
+		(symbol "Connector:Conn_01x04_Pin"
 			(pin_names
-				(offset 0.762) hide)
+				(offset 1.016) hide)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
+			(property "Reference" "J"
 				(at 0 5.08 0)
 				(effects
 					(font
@@ -28,8 +19,16 @@
 					)
 				)
 			)
+			(property "Value" "Conn_01x04_Pin"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
 			(property "Footprint" ""
-				(at 5.08 0 0)
+				(at 0 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -38,15 +37,6 @@
 				)
 			)
 			(property "Datasheet" "~"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "test point"
 				(at 0 0 0)
 				(effects
 					(font
@@ -55,7 +45,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "test point tp"
+			(property "Description" "Generic connector, single row, 01x04, script generated"
 				(at 0 0 0)
 				(effects
 					(font
@@ -64,7 +54,15 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Pin* Test*"
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
 				(at 0 0 0)
 				(effects
 					(font
@@ -73,24 +71,112 @@
 					(hide yes)
 				)
 			)
-			(symbol "TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x04_Pin_1_1"
+				(polyline
+					(pts
+						(xy 1.27 -5.08) (xy 0.8636 -5.08)
+					)
 					(stroke
-						(width 0)
+						(width 0.1524)
 						(type default)
 					)
 					(fill
 						(type none)
 					)
 				)
-			)
-			(symbol "TestPoint_1_1"
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
 				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "1"
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -98,6 +184,60 @@
 						)
 					)
 					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1802,18 +1942,6 @@
 		(uuid "3c46f189-b49c-4def-b8b3-5ea984892fcb")
 	)
 	(junction
-		(at 179.07 116.84)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "554eb386-32af-4a9a-8da9-aba45065a22a")
-	)
-	(junction
-		(at 175.26 137.16)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "55f31e79-db61-4e24-86b6-0d47d8b8dc7f")
-	)
-	(junction
 		(at 138.43 137.16)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1842,12 +1970,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "82f7ded5-ee2e-4777-abd4-2f1f6293c474")
-	)
-	(junction
-		(at 176.53 52.07)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "842c5ec4-b772-4f9a-bb48-b0a1ac3e63f4")
 	)
 	(junction
 		(at 163.83 137.16)
@@ -1911,6 +2033,16 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 91.44) (xy 241.3 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01913a09-3ad5-4c40-96c0-f1cdcd81be3a")
+	)
+	(wire
+		(pts
 			(xy 153.67 116.84) (xy 163.83 116.84)
 		)
 		(stroke
@@ -1971,6 +2103,16 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 93.98) (xy 241.3 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f565c3a-0151-415d-b424-770199030da8")
+	)
+	(wire
+		(pts
 			(xy 156.21 59.69) (xy 124.46 59.69)
 		)
 		(stroke
@@ -2001,13 +2143,23 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 116.84) (xy 182.88 116.84)
+			(xy 175.26 116.84) (xy 182.88 116.84)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "3bf0035d-4cd7-45b7-811a-654ac26b969c")
+	)
+	(wire
+		(pts
+			(xy 231.14 101.6) (xy 231.14 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3e1d74e5-93b9-43b0-b0a9-0f156ce23e50")
 	)
 	(wire
 		(pts
@@ -2041,17 +2193,17 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 46.99) (xy 176.53 52.07)
+			(xy 231.14 96.52) (xy 241.3 96.52)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "494cfd2e-5be1-434a-b023-aa5c24647c78")
+		(uuid "5152eed6-f468-4be7-be68-26ddef681ea8")
 	)
 	(wire
 		(pts
-			(xy 176.53 52.07) (xy 180.34 52.07)
+			(xy 172.72 52.07) (xy 180.34 52.07)
 		)
 		(stroke
 			(width 0)
@@ -2068,16 +2220,6 @@
 			(type default)
 		)
 		(uuid "53b9d026-6e72-4524-a41a-afbd0bca1f1a")
-	)
-	(wire
-		(pts
-			(xy 180.34 111.76) (xy 179.07 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "54dc1c99-3228-4320-8bad-c1217b68e9f0")
 	)
 	(wire
 		(pts
@@ -2161,23 +2303,13 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 111.76) (xy 179.07 116.84)
+			(xy 238.76 99.06) (xy 241.3 99.06)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "74b020b9-d2de-4adc-b4c0-3edccae77422")
-	)
-	(wire
-		(pts
-			(xy 172.72 52.07) (xy 176.53 52.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "799c2375-0524-4f58-be1d-363f99f94c30")
+		(uuid "7d9cb6cf-1bef-44c3-a085-0707ae50253d")
 	)
 	(wire
 		(pts
@@ -2291,16 +2423,6 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 116.84) (xy 179.07 116.84)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9ce4c93a-47b8-41bd-b13f-af55008b7572")
-	)
-	(wire
-		(pts
 			(xy 111.76 137.16) (xy 111.76 130.81)
 		)
 		(stroke
@@ -2391,16 +2513,6 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 137.16) (xy 180.34 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d02fda58-456c-497a-a21a-16b5f403070a")
-	)
-	(wire
-		(pts
 			(xy 153.67 116.84) (xy 153.67 123.19)
 		)
 		(stroke
@@ -2468,6 +2580,16 @@
 			(type default)
 		)
 		(uuid "eac59faa-273b-49a6-adce-a38724951101")
+	)
+	(wire
+		(pts
+			(xy 238.76 101.6) (xy 238.76 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed119f28-a905-4856-9789-738742c9b643")
 	)
 	(wire
 		(pts
@@ -2621,6 +2743,28 @@
 	)
 	(global_label "VCC_5V"
 		(shape input)
+		(at 228.6 91.44 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c39c117f-0a7f-418c-abb0-c6b22aef9e38")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 218.7205 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC_5V"
+		(shape input)
 		(at 109.22 116.84 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2632,6 +2776,28 @@
 		(uuid "f1e02d74-c05f-4637-ba97-a62d5765affe")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 99.3405 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VCC_3V3"
+		(shape input)
+		(at 228.6 93.98 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fdcb4243-4c8a-438a-aebf-bb4e3a8fa47a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 217.511 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2660,7 +2826,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "C2286"
+		(property "Value" "XL-1608UGC-04"
 			(at 179.07 124.7774 90)
 			(effects
 				(font
@@ -2678,7 +2844,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1810231112_Hubei-KENTO-Elec-KT-0603R_C2286.pdf"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2402181505_XINGLIGHT-XL-1608UGC-04_C965804.pdf"
 			(at 175.26 121.92 0)
 			(effects
 				(font
@@ -2687,7 +2853,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Light emitting diode, red"
+		(property "Description" "LED, green, 520nm"
 			(at 175.26 121.92 0)
 			(effects
 				(font
@@ -2696,7 +2862,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C2286"
+		(property "LCSC Part # " "C965804"
 			(at 175.26 121.92 0)
 			(effects
 				(font
@@ -3142,7 +3308,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 157.988 77.47 90)
 			(effects
 				(font
@@ -3370,6 +3536,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 238.76 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3d2109d8-623d-4df3-8db2-068021ee9fce")
+		(property "Reference" "#PWR035"
+			(at 238.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 238.76 105.664 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 238.76 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.76 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 238.76 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a67bf9c0-c281-4050-93c3-b2734eae27aa")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "#PWR035")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 175.26 130.81 180)
 		(unit 1)
@@ -3397,7 +3628,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 177.038 130.81 90)
 			(effects
 				(font
@@ -3443,73 +3674,6 @@
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
 					(reference "R4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 176.53 46.99 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "54bb7adf-6da7-47db-8fea-dc846a9289ef")
-		(property "Reference" "TP1"
-			(at 181.61 45.7199 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "5V"
-			(at 181.61 48.2599 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 176.53 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 176.53 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 176.53 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "59576985-eb23-457e-a0c5-a1265b4bb5fa")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "TP1")
 					(unit 1)
 				)
 			)
@@ -3887,73 +4051,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 180.34 137.16 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "97d0c157-b281-47c5-a0c2-627e8659ac58")
-		(property "Reference" "TP3"
-			(at 185.42 135.8899 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GND"
-			(at 185.42 138.4299 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 180.34 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 180.34 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 180.34 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "03d7c374-be60-4da4-8a54-f10cadb9ebdd")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "TP3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 163.83 77.47 180)
 		(unit 1)
@@ -3981,7 +4078,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0201_0603Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 165.608 77.47 90)
 			(effects
 				(font
@@ -4224,35 +4321,16 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 180.34 111.76 270)
+		(lib_id "power:GND")
+		(at 231.14 101.6 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a19eb33c-e9c9-4de8-b229-c00ffd6c226e")
-		(property "Reference" "TP2"
-			(at 185.42 110.4899 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "3V3"
-			(at 185.42 113.0299 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 180.34 116.84 0)
+		(uuid "ab0ff1ef-81d7-48b0-8747-3b44dc294d5f")
+		(property "Reference" "#PWR036"
+			(at 231.14 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4260,8 +4338,16 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 180.34 116.84 0)
+		(property "Value" "GND1"
+			(at 231.14 105.664 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 231.14 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4269,8 +4355,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "test point"
-			(at 180.34 111.76 0)
+		(property "Datasheet" ""
+			(at 231.14 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 231.14 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4279,12 +4374,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "2331604f-196b-4d5c-9b61-1f2ae32a8b15")
+			(uuid "5b537d68-6d76-4a61-8b39-11409c81a1fe")
 		)
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "TP2")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -4502,6 +4597,83 @@
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
 					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 246.38 93.98 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e755c3e9-fa75-47f5-b946-45fa176d0730")
+		(property "Reference" "J3"
+			(at 247.65 93.9799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "Test connector"
+			(at 247.65 96.5199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Project:PinHeader_1x04_P2.54mm_Horizontal"
+			(at 246.38 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 246.38 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 246.38 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "349145d0-959a-4c54-90d4-dabc20f8adb9")
+		)
+		(pin "2"
+			(uuid "1011e1b5-82b1-4daa-812e-c409614a3e49")
+		)
+		(pin "1"
+			(uuid "21218d9f-6955-446f-9045-ba4ef44b7b10")
+		)
+		(pin "3"
+			(uuid "35cdd48e-9397-4c82-949a-eb9e14dfa810")
+		)
+		(instances
+			(project ""
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "J3")
 					(unit 1)
 				)
 			)
