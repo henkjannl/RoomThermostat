@@ -1,4 +1,4 @@
-23936401867188311
+23951941355516597
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -56692,13 +56692,6 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
-EL357N-G
-OPTO_EL357N-G
-
-
-0
-4
-4
 ESP32_mini
 ESP32_mini
 
@@ -95525,6 +95518,76 @@ TestPoint
 TestPoint_THTPad_D4.0mm_Drill2.0mm
 THT pad as test Point, diameter 4.0mm, hole diameter 2.0mm
 test point THT pad
+0
+1
+1
+Thermostat
+Amphenol ICC 01x02
+simple 2-pin terminal block, pitch 5.08mm, revamped version of bornier2
+terminal block bornier2
+0
+2
+2
+Thermostat
+DS18B20
+
+
+0
+3
+3
+Thermostat
+ILI9341
+CR2013-MI2120 ILI9341 LCD Breakout http://pan.baidu.com/s/11Y990
+CR2013-MI2120 ILI9341 LCD Breakout
+0
+22
+18
+Thermostat
+ILI9341_no_touch
+CR2013-MI2120 ILI9341 LCD Breakout http://pan.baidu.com/s/11Y990
+CR2013-MI2120 ILI9341 LCD Breakout
+0
+17
+13
+Thermostat
+Opentherm Master Shield
+
+
+0
+24
+24
+Thermostat
+Phoenix_MSTB-2,5-2-G
+
+
+0
+2
+2
+Thermostat
+PinHeader_1x04_P2.54mm_Horizontal
+Through hole angled pin header, 1x04, 2.54mm pitch, 6mm pin length, single row
+Through hole angled pin header THT 1x04 2.54mm single row
+0
+4
+4
+Thermostat
+Resistor
+
+
+0
+2
+2
+Thermostat
+SW_Push_SPEH
+http://www.alps.com/prod/info/E/HTML/Tact/SurfaceMount/SKRK/SKRKAHE020.html
+SMD SMT button
+0
+2
+2
+Thermostat
+TouchPin
+
+
 0
 1
 1

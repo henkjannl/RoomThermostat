@@ -2620,6 +2620,12 @@
 		(uuid "6a4ef277-dcbd-44b3-a475-6fa5afea93fc")
 	)
 	(junction
+		(at 66.04 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "80f6e137-b354-423c-baf7-cfbb75310b9c")
+	)
+	(junction
 		(at 128.27 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2642,6 +2648,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ac3e72cd-dde3-4029-b134-3656327825cb")
+	)
+	(junction
+		(at 66.04 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b5859092-4741-48ff-accf-7edc7636ae19")
 	)
 	(junction
 		(at 182.88 80.01)
@@ -2719,6 +2731,16 @@
 	)
 	(wire
 		(pts
+			(xy 69.85 81.28) (xy 66.04 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "16e491eb-2d00-44c1-af00-d07563950508")
+	)
+	(wire
+		(pts
 			(xy 128.27 99.06) (xy 128.27 105.41)
 		)
 		(stroke
@@ -2729,13 +2751,23 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 85.09) (xy 97.79 85.09)
+			(xy 60.96 85.09) (xy 66.04 85.09)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "26b99415-8bfa-42f6-8cb6-5534b22b5787")
+	)
+	(wire
+		(pts
+			(xy 66.04 85.09) (xy 97.79 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3774d489-4c2c-428f-af56-3b0b44cdf7e7")
 	)
 	(wire
 		(pts
@@ -2866,6 +2898,26 @@
 			(type default)
 		)
 		(uuid "68ed9a1a-d181-4a29-8068-03b04a507a11")
+	)
+	(wire
+		(pts
+			(xy 66.04 81.28) (xy 66.04 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71e0cd10-dc99-474e-84b4-2bc67f5ea23f")
+	)
+	(wire
+		(pts
+			(xy 66.04 91.44) (xy 66.04 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "72286e76-8287-44df-95e9-fef6ad33fb40")
 	)
 	(wire
 		(pts
@@ -3009,7 +3061,7 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 87.63) (xy 110.49 87.63)
+			(xy 60.96 87.63) (xy 66.04 87.63)
 		)
 		(stroke
 			(width 0)
@@ -3149,6 +3201,16 @@
 	)
 	(wire
 		(pts
+			(xy 69.85 91.44) (xy 66.04 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3d3dff6-57a8-40ce-b9e6-97b9f5aed60a")
+	)
+	(wire
+		(pts
 			(xy 185.42 80.01) (xy 182.88 80.01)
 		)
 		(stroke
@@ -3156,6 +3218,16 @@
 			(type default)
 		)
 		(uuid "d652f2aa-a161-4dbe-b3e1-f9aa6ca17d40")
+	)
+	(wire
+		(pts
+			(xy 66.04 87.63) (xy 110.49 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6fae8cd-eac9-48c6-aee5-fb29856bd767")
 	)
 	(wire
 		(pts
@@ -3250,6 +3322,50 @@
 		(uuid "0f1bb968-138a-4765-9807-6896e4bb44ac")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 216.0426 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Boiler 2"
+		(shape input)
+		(at 69.85 91.44 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3e3b29fa-987c-4d04-9fa5-d0c2ea595332")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 80.5761 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Boiler 1"
+		(shape input)
+		(at 69.85 81.28 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "59989d6e-eb9b-4584-99bf-97db5dd7e8f3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 80.5761 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3783,7 +3899,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x02_Pin")
-		(at 82.55 85.09 0)
+		(at 55.88 85.09 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3792,7 +3908,7 @@
 		(fields_autoplaced yes)
 		(uuid "3ed674b8-55a0-4357-907e-c85868a7b0b0")
 		(property "Reference" "J2"
-			(at 83.185 80.01 0)
+			(at 56.515 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3800,7 +3916,7 @@
 			)
 		)
 		(property "Value" "Boiler"
-			(at 83.185 82.55 0)
+			(at 56.515 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3808,7 +3924,7 @@
 			)
 		)
 		(property "Footprint" "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal"
-			(at 82.55 85.09 0)
+			(at 55.88 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3817,7 +3933,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_JST-SM02B-SRSS-TB-LF-SN_C160402.pdf"
-			(at 82.55 85.09 0)
+			(at 55.88 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3826,7 +3942,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 82.55 85.09 0)
+			(at 55.88 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3835,7 +3951,7 @@
 			)
 		)
 		(property "Field5" ""
-			(at 82.55 85.09 0)
+			(at 55.88 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3844,7 +3960,7 @@
 			)
 		)
 		(property "LCSC Part # " "C160402"
-			(at 82.55 85.09 0)
+			(at 55.88 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4071,7 +4187,7 @@
 				)
 			)
 		)
-		(property "Footprint" "EL357N-G:OPTO_EL357N-G"
+		(property "Footprint" "Package_SO:SOP-4_3.8x4.1mm_P2.54mm"
 			(at 168.91 82.55 0)
 			(effects
 				(font
@@ -5838,7 +5954,7 @@
 				)
 			)
 		)
-		(property "Footprint" "EL357N-G:OPTO_EL357N-G"
+		(property "Footprint" "Package_SO:SOP-4_3.8x4.1mm_P2.54mm"
 			(at 182.88 107.95 0)
 			(effects
 				(font
