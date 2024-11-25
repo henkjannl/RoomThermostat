@@ -649,7 +649,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e9964c8b-07f1-4a20-9cf1-a3ae8d59be31")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR036"
 			(at 134.62 101.6 0)
 			(effects
 				(font
@@ -699,7 +699,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/9496b48a-90bf-416c-bf1c-039c65c989b9"
-					(reference "#PWR032")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)

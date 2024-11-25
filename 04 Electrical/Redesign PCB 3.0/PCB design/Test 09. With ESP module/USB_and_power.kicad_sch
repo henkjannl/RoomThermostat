@@ -2923,7 +2923,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0976dfff-9285-4b63-9004-8caebf731453")
-		(property "Reference" "D5"
+		(property "Reference" "D6"
 			(at 179.07 122.2374 90)
 			(effects
 				(font
@@ -2986,7 +2986,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "D5")
+					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -3001,7 +3001,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0a09874b-c151-4d39-8caa-02eade19a502")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR013"
 			(at 163.83 100.33 0)
 			(effects
 				(font
@@ -3051,7 +3051,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR011")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -3066,7 +3066,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0da40388-143b-4da8-ad2a-249d67d0543a")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR09"
 			(at 139.7 100.33 0)
 			(effects
 				(font
@@ -3116,7 +3116,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR07")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -3132,7 +3132,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "12ae46ec-0166-46fb-92f7-0bf85626aa4c")
-		(property "Reference" "C5"
+		(property "Reference" "C6"
 			(at 125.73 125.7299 0)
 			(effects
 				(font
@@ -3204,7 +3204,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "C5")
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -3308,7 +3308,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "23b96721-a7c1-4ae2-8405-3b8d9a3d93f9")
-		(property "Reference" "D1"
+		(property "Reference" "D2"
 			(at 134.62 76.1999 90)
 			(effects
 				(font
@@ -3380,7 +3380,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "D1")
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -3396,7 +3396,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "294cf243-4402-4bb7-9964-aefa5f707598")
-		(property "Reference" "R2"
+		(property "Reference" "R4"
 			(at 158.75 76.1999 0)
 			(effects
 				(font
@@ -3468,7 +3468,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "R2")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -3484,7 +3484,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3203dab2-b283-4ba4-985e-ac70686d27aa")
-		(property "Reference" "C8"
+		(property "Reference" "C9"
 			(at 176.53 76.1999 0)
 			(effects
 				(font
@@ -3547,7 +3547,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "C8")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -3563,7 +3563,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3cb9aebb-b8f2-42e6-8786-7e2a2cb19c75")
-		(property "Reference" "C7"
+		(property "Reference" "C8"
 			(at 167.64 125.7299 0)
 			(effects
 				(font
@@ -3635,7 +3635,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "C7")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -3651,7 +3651,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4653858c-0a4e-49d0-bbd3-06b2264fa2ec")
-		(property "Reference" "R4"
+		(property "Reference" "R6"
 			(at 177.8 129.5399 0)
 			(effects
 				(font
@@ -3714,7 +3714,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "R4")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -3729,7 +3729,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "56149671-7aea-4f83-8791-96d235f06842")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR010"
 			(at 144.78 146.05 0)
 			(effects
 				(font
@@ -3779,7 +3779,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR08")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -3794,7 +3794,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5fbf84fc-4c4c-4383-8a32-24153d8ac7ad")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR012"
 			(at 156.21 100.33 0)
 			(effects
 				(font
@@ -3844,7 +3844,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR010")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -3859,7 +3859,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "75b079b0-6a2d-49b8-9d4e-d7c524ec48d5")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR07"
 			(at 109.22 100.33 0)
 			(effects
 				(font
@@ -3909,7 +3909,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR05")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -3925,7 +3925,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "78208add-ba8c-40bc-ad7f-a93ece210198")
-		(property "Reference" "C4"
+		(property "Reference" "C5"
 			(at 115.57 125.7299 0)
 			(effects
 				(font
@@ -3997,7 +3997,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "C4")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -4012,7 +4012,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "82a140c5-3e6c-4246-bad6-f10f912fec5f")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR016"
 			(at 223.52 105.41 0)
 			(effects
 				(font
@@ -4062,7 +4062,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR034")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -4078,7 +4078,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94f86810-d794-42d3-bd37-d0018eada455")
-		(property "Reference" "C6"
+		(property "Reference" "C7"
 			(at 157.48 125.7299 0)
 			(effects
 				(font
@@ -4150,7 +4150,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "C6")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -4165,7 +4165,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "95cd102a-831d-4307-8808-95d590b79e46")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR015"
 			(at 215.9 105.41 0)
 			(effects
 				(font
@@ -4215,7 +4215,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR033")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -4231,7 +4231,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b60f234-d18f-43d4-a35c-ddda0536f570")
-		(property "Reference" "R3"
+		(property "Reference" "R5"
 			(at 166.37 76.1999 0)
 			(effects
 				(font
@@ -4294,7 +4294,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "R3")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -4310,7 +4310,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a02d8c47-88c9-434c-ae23-2b67b4a7166c")
-		(property "Reference" "D4"
+		(property "Reference" "D5"
 			(at 163.83 45.72 0)
 			(effects
 				(font
@@ -4398,7 +4398,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "D4")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -4413,7 +4413,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a0706aa2-c94e-4bb5-9d2f-9c788cefeb35")
-		(property "Reference" "D2"
+		(property "Reference" "D3"
 			(at 142.24 76.1999 90)
 			(effects
 				(font
@@ -4485,7 +4485,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "D2")
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -4500,7 +4500,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bee4b526-54b6-41a0-bc3f-8b7576719463")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR014"
 			(at 172.72 100.33 0)
 			(effects
 				(font
@@ -4550,7 +4550,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR012")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -4565,7 +4565,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c93da336-c708-45fb-ae5f-33e53502244b")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR08"
 			(at 132.08 100.33 0)
 			(effects
 				(font
@@ -4615,7 +4615,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR06")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -4630,7 +4630,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d87335eb-9872-4531-ac46-924b14088c70")
-		(property "Reference" "D3"
+		(property "Reference" "D4"
 			(at 149.86 76.1999 90)
 			(effects
 				(font
@@ -4702,7 +4702,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "D3")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -4716,10 +4716,10 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "e755c3e9-fa75-47f5-b946-45fa176d0730")
-		(property "Reference" "J3"
+		(property "Reference" "J2"
 			(at 247.65 93.9799 0)
 			(effects
 				(font
@@ -4785,7 +4785,7 @@
 		(instances
 			(project ""
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "J3")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -4800,7 +4800,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e7708f86-371f-4a75-983b-98cada882c2d")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR011"
 			(at 147.32 100.33 0)
 			(effects
 				(font
@@ -4850,7 +4850,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR09")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)

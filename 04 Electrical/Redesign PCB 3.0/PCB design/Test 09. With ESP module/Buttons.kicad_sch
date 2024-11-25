@@ -983,7 +983,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0b247caf-d890-4adb-8162-2757c955278c")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR031"
 			(at 130.81 50.8 0)
 			(effects
 				(font
@@ -1033,7 +1033,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "#PWR027")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -1041,32 +1041,33 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 142.24 57.15 0)
+		(at 142.24 82.55 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "121fe32f-e25d-455c-8522-6ada7ccfe6e4")
-		(property "Reference" "SW2"
-			(at 142.24 49.53 0)
+		(uuid "0fd69eb3-ce5f-4f96-8d93-698b13d23ecb")
+		(property "Reference" "SW_5"
+			(at 142.24 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "btn_up"
-			(at 142.24 52.07 0)
+		(property "Value" "DOWN"
+			(at 142.24 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Project:SW_Push_SPEH"
-			(at 142.24 52.07 0)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+			(at 142.24 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1074,8 +1075,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1808100031_ALPSALPINE-SPEH110100_C97448.pdf"
-			(at 142.24 52.07 0)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_XKB-Connection-TS-1187A-B-A-B_C318884.pdf"
+			(at 142.24 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1084,7 +1085,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 142.24 57.15 0)
+			(at 142.24 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1092,25 +1093,181 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C97448"
-			(at 142.24 57.15 0)
+		(property "LCSC" "C318884"
+			(at 142.24 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
-		)
-		(pin "1"
-			(uuid "1fb27129-c8b3-4693-b3d9-d4052199b4f1")
 		)
 		(pin "2"
-			(uuid "2d737cbe-29f7-40bb-93d5-f3b7cfa57615")
+			(uuid "d57a2094-c145-46c2-b4cc-bd263d7e1167")
+		)
+		(pin "1"
+			(uuid "37405ba6-d573-48c8-bec4-17f310fa02f1")
 		)
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "SW2")
+					(reference "SW_5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 142.24 132.08 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "320c59e7-9cfb-4e53-9bf3-1c1f1be28fd1")
+		(property "Reference" "SW_7"
+			(at 142.24 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BACK"
+			(at 142.24 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+			(at 142.24 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_XKB-Connection-TS-1187A-B-A-B_C318884.pdf"
+			(at 142.24 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 142.24 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C318884"
+			(at 142.24 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "bf938bf6-5471-45cc-b431-0c86369d3286")
+		)
+		(pin "1"
+			(uuid "172fb4e4-20ea-4d6c-bd55-15933b89098e")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
+					(reference "SW_7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 142.24 33.02 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "43ef0531-2c93-4c81-bf66-ffac23136f71")
+		(property "Reference" "SW_3"
+			(at 142.24 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "HOME"
+			(at 142.24 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+			(at 142.24 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_XKB-Connection-TS-1187A-B-A-B_C318884.pdf"
+			(at 142.24 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 142.24 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C318884"
+			(at 142.24 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "328fa02d-d78b-408a-a4fd-cd1327b0e0c7")
+		)
+		(pin "1"
+			(uuid "09c4395e-e8b3-4d22-9615-3249c0a596b4")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
+					(reference "SW_3")
 					(unit 1)
 				)
 			)
@@ -1126,7 +1283,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "542d3a5f-ce25-4811-97f4-1a50f58a028f")
-		(property "Reference" "D17"
+		(property "Reference" "D18"
 			(at 142.24 134.62 0)
 			(effects
 				(font
@@ -1187,7 +1344,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "D17")
+					(reference "D18")
 					(unit 1)
 				)
 			)
@@ -1202,7 +1359,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6a2ae349-5f76-45a1-af29-7af817606c99")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR033"
 			(at 130.81 100.33 0)
 			(effects
 				(font
@@ -1252,7 +1409,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "#PWR029")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -1268,7 +1425,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f068c53-6401-4924-a627-129bb2be593d")
-		(property "Reference" "D16"
+		(property "Reference" "D17"
 			(at 142.24 109.22 0)
 			(effects
 				(font
@@ -1329,7 +1486,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "D16")
+					(reference "D17")
 					(unit 1)
 				)
 			)
@@ -1345,7 +1502,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8cdda7bd-900d-4012-ae4e-5e8d94872115")
-		(property "Reference" "D15"
+		(property "Reference" "D16"
 			(at 142.24 85.09 0)
 			(effects
 				(font
@@ -1406,7 +1563,85 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "D15")
+					(reference "D16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 142.24 106.68 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8f2b3be2-49e8-46ac-9a3d-188d0c745582")
+		(property "Reference" "SW_6"
+			(at 142.24 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CONFIRM"
+			(at 142.24 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+			(at 142.24 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_XKB-Connection-TS-1187A-B-A-B_C318884.pdf"
+			(at 142.24 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 142.24 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C318884"
+			(at 142.24 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6bbee6dd-e423-42b8-b391-5ba6c4341893")
+		)
+		(pin "1"
+			(uuid "e7384cbd-88ae-4bc7-b6b4-6b1b5c0276fa")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
+					(reference "SW_6")
 					(unit 1)
 				)
 			)
@@ -1421,7 +1656,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a1d2f6c6-485f-43dc-90ed-8ba5653a51b4")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR034"
 			(at 130.81 124.46 0)
 			(effects
 				(font
@@ -1471,84 +1706,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "#PWR030")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 142.24 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a3ffbf12-a26e-4acd-a516-31cf54b40457")
-		(property "Reference" "SW4"
-			(at 142.24 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "btn_confirm"
-			(at 142.24 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Project:SW_Push_SPEH"
-			(at 142.24 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1808100031_ALPSALPINE-SPEH110100_C97448.pdf"
-			(at 142.24 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 142.24 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part # " "C97448"
-			(at 142.24 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f9159029-bdc6-483a-9971-fa274effeb8b")
-		)
-		(pin "2"
-			(uuid "a5ea37e5-d1fd-48d4-acad-69b56e7c673f")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "SW4")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -1564,7 +1722,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ba67741c-dd3f-4d81-aba6-df68d001c65f")
-		(property "Reference" "D13"
+		(property "Reference" "D14"
 			(at 142.24 35.56 0)
 			(effects
 				(font
@@ -1625,7 +1783,85 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "D13")
+					(reference "D14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 142.24 57.15 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bd302ada-4aeb-4657-880a-da7badea16f3")
+		(property "Reference" "SW_4"
+			(at 142.24 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "UP"
+			(at 142.24 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
+			(at 142.24 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_XKB-Connection-TS-1187A-B-A-B_C318884.pdf"
+			(at 142.24 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 142.24 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C318884"
+			(at 142.24 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b74c6a24-5c64-44da-93b3-346ea9dec9cb")
+		)
+		(pin "1"
+			(uuid "67c6ffe6-793e-4f97-86a1-c35a4c02cf89")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
+					(reference "SW_4")
 					(unit 1)
 				)
 			)
@@ -1640,7 +1876,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c08b5263-450c-45d6-b0ed-2212b1c715ef")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR032"
 			(at 130.81 74.93 0)
 			(effects
 				(font
@@ -1690,84 +1926,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "#PWR028")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 142.24 33.02 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c6d7153a-69e0-41d4-b7eb-51e1cf32a80a")
-		(property "Reference" "SW1"
-			(at 142.24 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "btn_home"
-			(at 142.24 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Project:SW_Push_SPEH"
-			(at 142.24 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1808100031_ALPSALPINE-SPEH110100_C97448.pdf"
-			(at 142.24 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 142.24 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part # " "C97448"
-			(at 142.24 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "827626d0-ab43-48f9-a419-5f86d2402095")
-		)
-		(pin "2"
-			(uuid "9d9fd51e-3592-4771-99b3-f921a3d99d6f")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "SW1")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -1783,7 +1942,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "da2ed452-dcbb-4b92-8237-b01fb3dd3800")
-		(property "Reference" "D14"
+		(property "Reference" "D15"
 			(at 142.24 59.69 0)
 			(effects
 				(font
@@ -1844,7 +2003,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "D14")
+					(reference "D15")
 					(unit 1)
 				)
 			)
@@ -1859,7 +2018,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "db043e98-59e8-4545-bf90-9378df1223ab")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR035"
 			(at 130.81 149.86 0)
 			(effects
 				(font
@@ -1909,161 +2068,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "#PWR031")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 142.24 82.55 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e0be6c65-97ee-4c7e-bf4c-e38139f0f096")
-		(property "Reference" "SW3"
-			(at 142.24 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "btn_down"
-			(at 142.24 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Project:SW_Push_SPEH"
-			(at 142.24 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1808100031_ALPSALPINE-SPEH110100_C97448.pdf"
-			(at 142.24 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 142.24 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part # " "C97448"
-			(at 142.24 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "cc1baf33-a171-4742-bd4c-4453b9a15b6e")
-		)
-		(pin "2"
-			(uuid "69404eec-c7bd-4feb-9103-78f102c7fbbf")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "SW3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 142.24 132.08 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ebb0dfb6-999d-4c89-ac0e-7aac7541001d")
-		(property "Reference" "SW5"
-			(at 142.24 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "btn_back"
-			(at 142.24 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Project:SW_Push_SPEH"
-			(at 142.24 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1808100031_ALPSALPINE-SPEH110100_C97448.pdf"
-			(at 142.24 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Push button switch, generic, two pins"
-			(at 142.24 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part # " "C97448"
-			(at 142.24 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c03f7127-6be5-4ff6-8095-e8d2001e604c")
-		)
-		(pin "2"
-			(uuid "8e9b3334-0d66-4d9a-a7d2-b819c8b2c1cd")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/c10dcd2b-f94d-4b79-ac64-852f0c201877"
-					(reference "SW5")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)

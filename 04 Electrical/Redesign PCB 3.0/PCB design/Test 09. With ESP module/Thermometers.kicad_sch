@@ -495,52 +495,16 @@
 		(uuid "269b242e-5246-49e8-8429-a4d6e666eeac")
 	)
 	(junction
-		(at 168.91 83.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "515e4717-ee47-41ea-8fd7-cde1847ab2b9")
-	)
-	(junction
-		(at 160.02 81.28)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5478383a-c395-492d-8e12-f43647b7b1e4")
-	)
-	(junction
-		(at 160.02 102.87)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "66ea7f9c-4cb1-4441-8d6e-3bf7aea127f5")
-	)
-	(junction
-		(at 147.32 83.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "724f47f4-6c7c-4ffd-a7f9-c84fa6604392")
-	)
-	(junction
-		(at 149.86 102.87)
+		(at 171.45 102.87)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b3179083-f848-4e3a-afc2-71c1f6e3acc9")
-	)
-	(junction
-		(at 138.43 102.87)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d81eb736-7842-4210-917b-ab0c64f5284c")
 	)
 	(junction
 		(at 195.58 81.28)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e05fff19-1a44-47bd-a37a-ba3e820164ef")
-	)
-	(junction
-		(at 138.43 81.28)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e2641ced-3651-4be8-9a0e-66ce82e88f77")
 	)
 	(wire
 		(pts
@@ -564,16 +528,6 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 81.28) (xy 138.43 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "14f61374-62cd-42dd-94b1-04b74b8e4c54")
-	)
-	(wire
-		(pts
 			(xy 181.61 81.28) (xy 195.58 81.28)
 		)
 		(stroke
@@ -584,26 +538,6 @@
 	)
 	(wire
 		(pts
-			(xy 138.43 100.33) (xy 138.43 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f325ac4-6272-42a8-b534-4d486ef6d07f")
-	)
-	(wire
-		(pts
-			(xy 138.43 102.87) (xy 149.86 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "372cb776-ce65-489d-9eb1-89f6e418a92c")
-	)
-	(wire
-		(pts
 			(xy 168.91 83.82) (xy 168.91 92.71)
 		)
 		(stroke
@@ -611,26 +545,6 @@
 			(type default)
 		)
 		(uuid "48876cd3-0013-4059-87da-243b01af2a0a")
-	)
-	(wire
-		(pts
-			(xy 113.03 102.87) (xy 138.43 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "53cd0e5a-7b51-44a3-8176-165df951679b")
-	)
-	(wire
-		(pts
-			(xy 146.05 92.71) (xy 147.32 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "57a9c884-4115-44dd-85a9-80f153b8dfaf")
 	)
 	(wire
 		(pts
@@ -664,17 +578,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 85.09) (xy 113.03 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "747fc467-2d72-4b47-b907-fa877556b829")
-	)
-	(wire
-		(pts
-			(xy 149.86 102.87) (xy 160.02 102.87)
+			(xy 171.45 102.87) (xy 160.02 102.87)
 		)
 		(stroke
 			(width 0)
@@ -684,33 +588,13 @@
 	)
 	(wire
 		(pts
-			(xy 138.43 81.28) (xy 160.02 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "87ae1889-16ac-403d-bcb9-5c1ac7b92962")
-	)
-	(wire
-		(pts
-			(xy 181.61 102.87) (xy 160.02 102.87)
+			(xy 181.61 102.87) (xy 171.45 102.87)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "8943263a-0e90-49ab-b353-b19defc9b0cb")
-	)
-	(wire
-		(pts
-			(xy 147.32 83.82) (xy 147.32 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ac442a28-1bcc-4d88-9145-ee2f255ba978")
 	)
 	(wire
 		(pts
@@ -744,26 +628,6 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 92.71) (xy 123.19 92.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bfcfb8e8-dd6b-441d-bedf-8e880a7b9db1")
-	)
-	(wire
-		(pts
-			(xy 138.43 81.28) (xy 138.43 85.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c0602bd8-7db1-407c-92a7-f8167a5090f1")
-	)
-	(wire
-		(pts
 			(xy 195.58 81.28) (xy 203.2 81.28)
 		)
 		(stroke
@@ -784,7 +648,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 102.87) (xy 149.86 105.41)
+			(xy 171.45 102.87) (xy 171.45 105.41)
 		)
 		(stroke
 			(width 0)
@@ -814,36 +678,6 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 92.71) (xy 123.19 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ef7f2ed0-6955-4915-bded-b0796244dc6f")
-	)
-	(wire
-		(pts
-			(xy 113.03 100.33) (xy 113.03 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f4644ab5-1561-4fb9-8fdf-bfbbc7116703")
-	)
-	(wire
-		(pts
-			(xy 123.19 83.82) (xy 147.32 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f5ba8b29-0ec9-4e50-8c26-738732ad5bd6")
-	)
-	(wire
-		(pts
 			(xy 195.58 92.71) (xy 203.2 92.71)
 		)
 		(stroke
@@ -851,16 +685,6 @@
 			(type default)
 		)
 		(uuid "fa8b4757-b45d-4743-95d1-7ffceba0a27b")
-	)
-	(wire
-		(pts
-			(xy 147.32 83.82) (xy 168.91 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "faf08dca-2159-481a-b1b4-eacab0ce1e07")
 	)
 	(wire
 		(pts
@@ -926,7 +750,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "407ccec3-4f05-4217-9885-726c59645009")
-		(property "Reference" "R10"
+		(property "Reference" "R12"
 			(at 198.12 85.0899 0)
 			(effects
 				(font
@@ -989,7 +813,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "R10")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -1005,7 +829,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "653b9909-c129-4fe6-81d2-7e093eb8a5e0")
-		(property "Reference" "U8"
+		(property "Reference" "U6"
 			(at 153.67 91.4399 0)
 			(effects
 				(font
@@ -1071,7 +895,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "U8")
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -1079,7 +903,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 149.86 105.41 0)
+		(at 171.45 105.41 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1087,8 +911,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "67985620-bb89-49f9-95e9-d5aad1ecd752")
-		(property "Reference" "#PWR026"
-			(at 149.86 111.76 0)
+		(property "Reference" "#PWR030"
+			(at 171.45 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1097,7 +921,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 149.86 110.49 0)
+			(at 171.45 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1105,7 +929,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 149.86 105.41 0)
+			(at 171.45 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1114,7 +938,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 149.86 105.41 0)
+			(at 171.45 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1123,7 +947,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 149.86 105.41 0)
+			(at 171.45 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1137,89 +961,7 @@
 		(instances
 			(project ""
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "#PWR026")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Sensor_Temperature:DS18S20")
-		(at 138.43 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "75124f06-4b00-44d3-a2a9-cb23ec49efd1")
-		(property "Reference" "U7"
-			(at 132.08 91.4399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "DS18S20"
-			(at 132.08 93.9799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92L_HandSolder"
-			(at 113.03 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://datasheets.maximintegrated.com/en/ds/DS18S20.pdf"
-			(at 134.62 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "High-Precision 1-Wire Digital Thermometer TO-92"
-			(at 138.43 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
-			(at 138.43 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "3476925e-1ca8-49e8-8ab3-f9cd3d715443")
-		)
-		(pin "2"
-			(uuid "2d9960bb-d78a-4fb1-a2fa-4c53e7dc7419")
-		)
-		(pin "1"
-			(uuid "112b4a06-1bf9-453a-840a-a4fad3340099")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "U7")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -1235,7 +977,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "77ea28ea-99da-44c8-bd34-90950f4b01e4")
-		(property "Reference" "U9"
+		(property "Reference" "U7"
 			(at 175.26 91.4399 0)
 			(effects
 				(font
@@ -1301,89 +1043,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "U9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Sensor_Temperature:DS18S20")
-		(at 113.03 92.71 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "969ed915-e4da-4120-ac87-273ce4666d53")
-		(property "Reference" "U6"
-			(at 106.68 91.4399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "DS18S20"
-			(at 106.68 93.9799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92L_HandSolder"
-			(at 87.63 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://datasheets.maximintegrated.com/en/ds/DS18S20.pdf"
-			(at 109.22 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "High-Precision 1-Wire Digital Thermometer TO-92"
-			(at 113.03 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
-			(at 113.03 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "358a42f8-fc9e-441f-82c0-41d2b2875f64")
-		)
-		(pin "2"
-			(uuid "78c45668-4774-4a0f-b57d-fdf98ccbe1da")
-		)
-		(pin "1"
-			(uuid "738311de-850e-4698-b902-f73d238e7fbd")
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "U6")
+					(reference "U7")
 					(unit 1)
 				)
 			)

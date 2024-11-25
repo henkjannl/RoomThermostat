@@ -506,6 +506,10 @@
       {
         "netclass": "Power",
         "pattern": "Vusb"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "GND1"
       }
     ]
   },
@@ -517,7 +521,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "Test 09. With EPS32.step",
+      "step": "mechanical/Test 09. With EPS32.step",
       "svg": "",
       "vrml": ""
     },
