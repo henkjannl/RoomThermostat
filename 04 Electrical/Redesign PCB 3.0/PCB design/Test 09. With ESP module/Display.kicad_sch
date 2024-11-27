@@ -876,7 +876,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3f878c1d-1724-40b0-9bb0-d335fc566c98")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR027"
 			(at 147.32 107.95 0)
 			(effects
 				(font
@@ -926,7 +926,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/4ee7237d-7490-448a-a94f-f4ace25b8494"
-					(reference "#PWR029")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -939,7 +939,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "9a3c35c1-845d-47a8-a970-e483e2d5ec0c")
 		(property "Reference" "U5"
@@ -979,6 +979,15 @@
 			)
 		)
 		(property "Description" "ILI9341 controller, SPI TFT LCD Display, 9-pin breakout PCB, 4-pin SD card interface, 5V/3.3V"
+			(at 147.32 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 147.32 93.98 0)
 			(effects
 				(font

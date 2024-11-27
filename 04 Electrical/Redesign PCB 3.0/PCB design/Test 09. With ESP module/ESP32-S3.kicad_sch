@@ -2621,7 +2621,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "049842bf-8c7a-43bf-a70f-61a349abac94")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR05"
 			(at 140.97 57.15 0)
 			(effects
 				(font
@@ -2671,7 +2671,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR03")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -2733,6 +2733,15 @@
 			)
 		)
 		(property "LCSC Part # " "C2913204"
+			(at 151.13 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 151.13 96.52 0)
 			(effects
 				(font
@@ -2926,7 +2935,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C318884"
+		(property "Comment" ""
+			(at 241.3 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part # " "C318884"
 			(at 241.3 69.85 0)
 			(effects
 				(font
@@ -2986,7 +3004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010045_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf"
 			(at 227.33 69.85 0)
 			(effects
 				(font
@@ -2995,16 +3013,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 227.33 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 227.33 69.85 0)
 			(effects
 				(font
@@ -3014,6 +3023,15 @@
 			)
 		)
 		(property "LCSC Part # " "C25804"
+			(at 227.33 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 227.33 69.85 0)
 			(effects
 				(font
@@ -3044,7 +3062,7 @@
 		(exclude_from_sim yes)
 		(in_bom no)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "34bc907f-75d1-4e0a-bcd6-5d8d569e5391")
 		(property "Reference" "H2"
@@ -3092,6 +3110,15 @@
 				(hide yes)
 			)
 		)
+		(property "Comment" ""
+			(at 58.42 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "954c55be-7c29-43de-84e9-e4e7e5d3c11e")
 		)
@@ -3113,7 +3140,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3ab4f416-3720-4b2e-85af-b505b881ad44")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR08"
 			(at 254 85.09 0)
 			(effects
 				(font
@@ -3163,7 +3190,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR06")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -3206,7 +3233,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2208231630_Samsung-Electro-Mechanics-CL05A106MQ5NUNC_C15525.pdf"
 			(at 140.97 45.72 0)
 			(effects
 				(font
@@ -3215,7 +3242,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "6.3V 10uF X5R ±20% 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 140.97 45.72 0)
 			(effects
 				(font
@@ -3224,7 +3251,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "LCSC Part # " "C15525"
 			(at 140.97 45.72 0)
 			(effects
 				(font
@@ -3233,7 +3260,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " " C15525"
+		(property "Comment" ""
 			(at 140.97 45.72 0)
 			(effects
 				(font
@@ -3321,6 +3348,15 @@
 				(hide yes)
 			)
 		)
+		(property "Comment" ""
+			(at 217.17 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3abfa190-3613-4227-8192-300516e400b9")
 		)
@@ -3382,7 +3418,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 5.1kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 217.17 95.25 0)
 			(effects
 				(font
@@ -3392,6 +3428,15 @@
 			)
 		)
 		(property "LCSC Part # " "C23186"
+			(at 217.17 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 217.17 95.25 0)
 			(effects
 				(font
@@ -3450,7 +3495,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010045_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf"
 			(at 96.52 54.61 0)
 			(effects
 				(font
@@ -3459,16 +3504,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 96.52 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 10kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 96.52 54.61 0)
 			(effects
 				(font
@@ -3478,6 +3514,15 @@
 			)
 		)
 		(property "LCSC Part # " "C25804"
+			(at 96.52 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 96.52 54.61 0)
 			(effects
 				(font
@@ -3511,7 +3556,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6658a668-0540-4ed3-8edc-5f921e25c3c6")
-		(property "Reference" "#PWR01"
+		(property "Reference" "#PWR03"
 			(at 69.85 69.85 0)
 			(effects
 				(font
@@ -3561,7 +3606,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR01")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -3576,7 +3621,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "68b6c265-0d04-4bb2-9775-81423579d04b")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR06"
 			(at 151.13 144.78 0)
 			(effects
 				(font
@@ -3626,7 +3671,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR04")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -3641,7 +3686,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7ba3cc68-678b-4429-825e-5e6955679c29")
-		(property "Reference" "#PWR02"
+		(property "Reference" "#PWR04"
 			(at 129.54 57.15 0)
 			(effects
 				(font
@@ -3691,7 +3736,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR02")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -3706,7 +3751,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "888ee47f-b020-4abb-b431-9c455ec04f43")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR02"
 			(at 58.42 175.26 0)
 			(effects
 				(font
@@ -3756,7 +3801,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR038")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -3797,7 +3842,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf"
 			(at 241.3 76.2 0)
 			(effects
 				(font
@@ -3806,16 +3851,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 241.3 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "50V 1uF X5R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 241.3 76.2 0)
 			(effects
 				(font
@@ -3825,6 +3861,15 @@
 			)
 		)
 		(property "LCSC Part # " "C15849"
+			(at 241.3 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 241.3 76.2 0)
 			(effects
 				(font
@@ -3857,7 +3902,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8fc2be2e-9545-49a5-8a35-f239704debeb")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR01"
 			(at 58.42 161.29 0)
 			(effects
 				(font
@@ -3907,7 +3952,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR037")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -3947,7 +3992,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Samsung-Electro-Mechanics-CL10A105KB8NNNC_C15849.pdf"
 			(at 82.55 60.96 0)
 			(effects
 				(font
@@ -3956,16 +4001,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 82.55 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "50V 1uF X5R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 82.55 60.96 0)
 			(effects
 				(font
@@ -3975,6 +4011,15 @@
 			)
 		)
 		(property "LCSC Part # " "C15849"
+			(at 82.55 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 82.55 60.96 0)
 			(effects
 				(font
@@ -4007,7 +4052,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ba5b6daf-274d-4903-81b6-83cf34e1476b")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR07"
 			(at 217.17 115.57 0)
 			(effects
 				(font
@@ -4057,7 +4102,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/bd5268ae-2faf-441e-9d8c-8a98dae2e504"
-					(reference "#PWR05")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -4100,7 +4145,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2211101700_YAGEO-CC0603KRX7R9BB104_C14663.pdf"
 			(at 129.54 45.72 0)
 			(effects
 				(font
@@ -4109,16 +4154,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 129.54 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 129.54 45.72 0)
 			(effects
 				(font
@@ -4128,6 +4164,15 @@
 			)
 		)
 		(property "LCSC Part # " "C14663"
+			(at 129.54 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 129.54 45.72 0)
 			(effects
 				(font
@@ -4205,7 +4250,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C318884"
+		(property "Comment" ""
+			(at 82.55 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part # " "C318884"
 			(at 82.55 54.61 0)
 			(effects
 				(font
@@ -4236,7 +4290,7 @@
 		(exclude_from_sim yes)
 		(in_bom no)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "ea16a845-388d-48c5-a5ec-f9e869f007b3")
 		(property "Reference" "H1"
@@ -4276,6 +4330,15 @@
 			)
 		)
 		(property "Description" "Mounting Hole with connection"
+			(at 58.42 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 58.42 152.4 0)
 			(effects
 				(font

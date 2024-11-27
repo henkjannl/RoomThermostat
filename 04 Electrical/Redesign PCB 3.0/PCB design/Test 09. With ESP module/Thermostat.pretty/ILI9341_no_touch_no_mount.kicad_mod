@@ -2,7 +2,6 @@
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")
-	(locked yes)
 	(layer "F.Cu")
 	(descr "CR2013-MI2120 ILI9341 LCD Breakout http://pan.baidu.com/s/11Y990")
 	(tags "CR2013-MI2120 ILI9341 LCD Breakout")
@@ -18,7 +17,7 @@
 		)
 	)
 	(property "Value" "ILI9341_no_touch_no_mount"
-		(at -41.25 22.86 0)
+		(at 0.2 11.45 0)
 		(layer "F.Fab")
 		(uuid "13b7c342-38b6-48e0-9770-cffe4d62a18b")
 		(effects
@@ -29,7 +28,7 @@
 		)
 	)
 	(property "Footprint" "Project:ILI9341_no_touch"
-		(at 0 0 0)
+		(at 0.2 6.525 0)
 		(layer "F.Fab")
 		(hide yes)
 		(uuid "28038fbc-dc7c-480b-8d7c-0aeb8b6d0801")
@@ -41,7 +40,7 @@
 		)
 	)
 	(property "Datasheet" "http://pan.baidu.com/s/11Y990"
-		(at 0 0 0)
+		(at -0.5 3.55 0)
 		(layer "F.Fab")
 		(hide yes)
 		(uuid "1b6b1c52-f242-4cb0-ba39-e1fbaf37edd2")
@@ -53,7 +52,7 @@
 		)
 	)
 	(property "Description" "ILI9341 controller, SPI TFT LCD Display, 9-pin breakout PCB, 4-pin SD card interface, 5V/3.3V"
-		(at 0 0 0)
+		(at 0.325 9.075 0)
 		(layer "F.Fab")
 		(hide yes)
 		(uuid "2639c089-ceb4-4294-a79c-aead1d884737")
@@ -65,46 +64,6 @@
 		)
 	)
 	(attr through_hole)
-	(fp_line
-		(start -43.69 -21.36)
-		(end -43.69 -20.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "51ec21f0-6a5e-49ae-b9b8-5bc9a960b968")
-	)
-	(fp_line
-		(start -43.69 -21.36)
-		(end -42.69 -21.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "100bcbdc-8d80-4e3a-869d-b3deeb04736d")
-	)
-	(fp_line
-		(start -43.69 21.36)
-		(end -43.69 20.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "51e6b844-ac99-4fba-aee9-a52a79eab686")
-	)
-	(fp_line
-		(start -43.69 21.36)
-		(end -42.69 21.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "22a29524-d7d0-483f-9a80-78936ca04c21")
-	)
 	(fp_line
 		(start -43.16 -11.66)
 		(end -40.16 -11.66)
@@ -166,46 +125,6 @@
 		(uuid "eb85e87c-0bcd-40d9-8996-32f94c9f3ffb")
 	)
 	(fp_line
-		(start -24.45 -18.35)
-		(end -24.45 -17.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "2f5aed28-d667-4cf0-aec0-c059147e26c5")
-	)
-	(fp_line
-		(start -24.45 -18.35)
-		(end -23.45 -18.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "ff93d1e5-21ab-4aa8-af38-7320b238345b")
-	)
-	(fp_line
-		(start -24.45 18.35)
-		(end -24.45 17.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "37ad29f1-8bcc-4497-addc-ae0c5c18ca51")
-	)
-	(fp_line
-		(start -24.45 18.35)
-		(end -23.45 18.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "4c9b57d1-36e7-4340-917e-310944e5bdf9")
-	)
-	(fp_line
 		(start 0 -1.27)
 		(end 0 1.27)
 		(stroke
@@ -224,46 +143,6 @@
 		)
 		(layer "F.SilkS")
 		(uuid "3c5d37f4-aa54-40d4-bb01-1d4b00876882")
-	)
-	(fp_line
-		(start 24.45 -18.35)
-		(end 23.45 -18.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "24821544-4db1-4272-9ee2-a8d80367da39")
-	)
-	(fp_line
-		(start 24.45 -18.35)
-		(end 24.45 -17.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "aea83702-e8c3-4b5b-8d56-fc355512000e")
-	)
-	(fp_line
-		(start 24.45 18.35)
-		(end 23.45 18.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "cedd5a3e-ef25-4efc-b23e-926c6868f346")
-	)
-	(fp_line
-		(start 24.45 18.35)
-		(end 24.45 17.35)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "895ab408-cccd-4fc8-89bd-8d6fa006f630")
 	)
 	(fp_line
 		(start 29.99 -5.31)
@@ -324,46 +203,6 @@
 		)
 		(layer "F.SilkS")
 		(uuid "f017de33-6587-4dbd-a926-ea119556e988")
-	)
-	(fp_line
-		(start 33.49 -21.36)
-		(end 32.49 -21.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "43149910-cdc4-4409-931e-d9560a652e3f")
-	)
-	(fp_line
-		(start 33.49 -21.36)
-		(end 33.49 -20.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "b68eae9c-ccfb-4fe3-aa8d-e0767db30cd7")
-	)
-	(fp_line
-		(start 33.49 21.36)
-		(end 32.49 21.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "845d3407-cfe9-4c02-b045-2f69b2e88463")
-	)
-	(fp_line
-		(start 33.49 21.36)
-		(end 33.49 20.36)
-		(stroke
-			(width 0.1)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "8784e421-c60d-4cdc-8755-3ec1155e9438")
 	)
 	(fp_rect
 		(start -43.16 -11.66)

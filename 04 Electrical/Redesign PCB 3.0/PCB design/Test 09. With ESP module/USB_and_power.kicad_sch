@@ -5,22 +5,23 @@
 	(uuid "236ea07a-79b8-44d8-9e9d-af5ae1b0e9f6")
 	(paper "A4")
 	(lib_symbols
-		(symbol "Connector:Conn_01x06_Pin"
+		(symbol "Connector:TestPoint"
+			(pin_numbers hide)
 			(pin_names
-				(offset 1.016) hide)
+				(offset 0.762) hide)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "J"
-				(at 0 7.62 0)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Conn_01x06_Pin"
-				(at 0 -10.16 0)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -28,7 +29,7 @@
 				)
 			)
 			(property "Footprint" ""
-				(at 0 0 0)
+				(at 5.08 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -37,6 +38,15 @@
 				)
 			)
 			(property "Datasheet" "~"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "test point"
 				(at 0 0 0)
 				(effects
 					(font
@@ -45,7 +55,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x06, script generated"
+			(property "ki_keywords" "test point tp"
 				(at 0 0 0)
 				(effects
 					(font
@@ -54,15 +64,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "connector"
+			(property "ki_fp_filters" "Pin* Test*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -71,158 +73,24 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
 					)
-					(hide yes)
+					(fill
+						(type none)
+					)
 				)
 			)
-			(symbol "Conn_01x06_Pin_1_1"
-				(polyline
-					(pts
-						(xy 1.27 -7.62) (xy 0.8636 -7.62)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -5.08) (xy 0.8636 -5.08)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -2.54) (xy 0.8636 -2.54)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0) (xy 0.8636 0)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 2.54) (xy 0.8636 2.54)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 5.08) (xy 0.8636 5.08)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start 0.8636 -7.493)
-					(end 0 -7.747)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 -4.953)
-					(end 0 -5.207)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 2.667)
-					(end 0 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 5.207)
-					(end 0 4.953)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
+			(symbol "TestPoint_1_1"
 				(pin passive line
-					(at 5.08 5.08 180)
-					(length 3.81)
-					(name "Pin_1"
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -230,96 +98,6 @@
 						)
 					)
 					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 2.54 180)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 3.81)
-					(name "Pin_3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 -2.54 180)
-					(length 3.81)
-					(name "Pin_4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 -5.08 180)
-					(length 3.81)
-					(name "Pin_5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 -7.62 180)
-					(length 3.81)
-					(name "Pin_6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2215,6 +1993,16 @@
 	)
 	(wire
 		(pts
+			(xy 241.3 88.9) (xy 243.84 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a96f152-8a06-4a9b-bae1-320214808a85")
+	)
+	(wire
+		(pts
 			(xy 175.26 116.84) (xy 182.88 116.84)
 		)
 		(stroke
@@ -2315,7 +2103,17 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 93.98) (xy 241.3 93.98)
+			(xy 241.3 101.6) (xy 243.84 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d2ba518-f65c-477e-b2d7-89f55410d51a")
+	)
+	(wire
+		(pts
+			(xy 215.9 93.98) (xy 243.84 93.98)
 		)
 		(stroke
 			(width 0)
@@ -2365,7 +2163,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 96.52) (xy 241.3 96.52)
+			(xy 223.52 96.52) (xy 243.84 96.52)
 		)
 		(stroke
 			(width 0)
@@ -2402,6 +2200,16 @@
 			(type default)
 		)
 		(uuid "88dcabe7-3844-413a-bc2c-7c2418aba3b8")
+	)
+	(wire
+		(pts
+			(xy 241.3 91.44) (xy 243.84 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89a2729a-a005-4c8a-b75b-7703893c85c2")
 	)
 	(wire
 		(pts
@@ -2585,6 +2393,16 @@
 	)
 	(wire
 		(pts
+			(xy 241.3 99.06) (xy 243.84 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d63a8090-e5e1-4225-93af-06f9f92e8391")
+	)
+	(wire
+		(pts
 			(xy 153.67 130.81) (xy 153.67 137.16)
 		)
 		(stroke
@@ -2612,6 +2430,16 @@
 			(type default)
 		)
 		(uuid "e1873c04-2b50-4a1e-a7b1-3bb83504eb90")
+	)
+	(wire
+		(pts
+			(xy 241.3 104.14) (xy 243.84 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3956be2-e06e-476d-ac99-1215ea87a9c5")
 	)
 	(wire
 		(pts
@@ -2737,6 +2565,28 @@
 			)
 		)
 	)
+	(global_label "boiler"
+		(shape input)
+		(at 241.3 99.06 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2b746a72-53cd-4ee1-a2c5-2a5e43200d37")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 232.872 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "VCC_5V"
 		(shape input)
 		(at 180.34 52.07 0)
@@ -2755,6 +2605,50 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Boiler 1"
+		(shape input)
+		(at 241.3 101.6 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4437f3d0-2a92-4867-9a5b-915f2f0890c4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 230.5739 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Boiler 2"
+		(shape input)
+		(at 241.3 104.14 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5bb340d2-dd32-45e7-add6-23efa6dc5e2a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 230.5739 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -2825,28 +2719,6 @@
 			)
 		)
 	)
-	(global_label "Boiler 2"
-		(shape input)
-		(at 241.3 99.06 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ac83fca6-1b7d-4d28-8a1e-955ebdbc8ad1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 230.5739 99.06 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "USB D-"
 		(shape input)
 		(at 180.34 64.77 0)
@@ -2865,28 +2737,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Boiler 1"
-		(shape input)
-		(at 241.3 101.6 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e7a2bb4e-80d3-4dfa-9464-da15063959ae")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 230.5739 101.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -2977,6 +2827,15 @@
 				(hide yes)
 			)
 		)
+		(property "Comment" ""
+			(at 175.26 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "32408635-8c68-4783-95d2-987780bb9c12")
 		)
@@ -3001,7 +2860,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0a09874b-c151-4d39-8caa-02eade19a502")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR015"
 			(at 163.83 100.33 0)
 			(effects
 				(font
@@ -3051,7 +2910,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR013")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -3066,7 +2925,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0da40388-143b-4da8-ad2a-249d67d0543a")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR011"
 			(at 139.7 100.33 0)
 			(effects
 				(font
@@ -3116,7 +2975,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR09")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -3159,7 +3018,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2211101700_YAGEO-CC0603KRX7R9BB104_C14663.pdf"
 			(at 121.92 127 0)
 			(effects
 				(font
@@ -3168,16 +3027,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 121.92 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 121.92 127 0)
 			(effects
 				(font
@@ -3187,6 +3037,15 @@
 			)
 		)
 		(property "LCSC Part # " "C14663"
+			(at 121.92 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 121.92 127 0)
 			(effects
 				(font
@@ -3211,6 +3070,81 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 93.98 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "14d700d1-6164-41c7-a4ef-7ac52e9326ce")
+		(property "Reference" "TP3"
+			(at 248.92 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "GND1"
+			(at 253.492 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5dc509d2-091b-44c1-bb84-a18b3c07aba3")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Regulator_Linear:LT1963AxST-1.5")
 		(at 138.43 119.38 0)
 		(unit 1)
@@ -3228,7 +3162,7 @@
 				)
 			)
 		)
-		(property "Value" "SGM2212-3.3XKC3G/TR"
+		(property "Value" "UZ1086L-33-TN3-R"
 			(at 138.43 111.76 0)
 			(effects
 				(font
@@ -3236,7 +3170,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+		(property "Footprint" "Package_TO_SOT_SMD:TO-252-2"
 			(at 138.43 130.81 0)
 			(effects
 				(font
@@ -3245,7 +3179,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/1963aff.pdf"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1810111219_UTC-Unisonic-Tech-UZ1086L-33-TN3-R_C125862.pdf"
 			(at 138.43 133.35 0)
 			(effects
 				(font
@@ -3254,7 +3188,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "1.5V, 1.5A, Low Noise, Fast Transient Response LDO Regulator, SOT-223"
+		(property "Description" "72dB@(120Hz) 1.5A Fixed 3.3V Positive electrode 7.5V TO-252-2(DPAK) Voltage Regulators - Linear, Low Drop Out (LDO) Regulators ROHS"
 			(at 138.43 119.38 0)
 			(effects
 				(font
@@ -3263,7 +3197,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "LCSC Part # " "C125862"
 			(at 138.43 119.38 0)
 			(effects
 				(font
@@ -3272,7 +3206,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C3294699"
+		(property "Comment" ""
 			(at 138.43 119.38 0)
 			(effects
 				(font
@@ -3317,7 +3251,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LESD5D5.0CT1G"
+		(property "Value" "BSD5C051L"
 			(at 134.62 78.7399 0)
 			(effects
 				(font
@@ -3335,7 +3269,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1810161421_BORN-BSD5C051L_C151983.pdf"
 			(at 132.08 77.47 0)
 			(effects
 				(font
@@ -3344,7 +3278,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "3A@8/20us 13V 6V 5V SOD-523 ESD and Surge Protection (TVS/ESD) ROHS"
 			(at 132.08 77.47 0)
 			(effects
 				(font
@@ -3353,7 +3287,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C383211"
+		(property "LCSC Part # " "C151983"
 			(at 132.08 77.47 90)
 			(effects
 				(font
@@ -3362,7 +3296,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 132.08 77.47 0)
 			(effects
 				(font
@@ -3381,6 +3315,81 @@
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
 					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 104.14 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "27ec7b30-e6d0-405c-95fb-a8c8e5082ebb")
+		(property "Reference" "TP7"
+			(at 248.92 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "B2"
+			(at 253.492 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "79f78f6f-d57d-4b80-8e72-4a139873fa50")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP7")
 					(unit 1)
 				)
 			)
@@ -3432,16 +3441,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
-			(at 156.21 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 4.7kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 156.21 77.47 0)
 			(effects
 				(font
@@ -3451,6 +3451,15 @@
 			)
 		)
 		(property "LCSC Part # " "C23162"
+			(at 156.21 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 156.21 77.47 0)
 			(effects
 				(font
@@ -3511,7 +3520,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Samsung-Electro-Mechanics-CL21A226MAQNNNE_C45783.pdf"
 			(at 172.72 77.47 0)
 			(effects
 				(font
@@ -3520,7 +3529,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "25V 22uF X5R ±20% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 172.72 77.47 0)
 			(effects
 				(font
@@ -3530,6 +3539,15 @@
 			)
 		)
 		(property "LCSC Part # " "C45783"
+			(at 172.72 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 172.72 77.47 0)
 			(effects
 				(font
@@ -3590,7 +3608,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2208231630_Samsung-Electro-Mechanics-CL05A106MQ5NUNC_C15525.pdf"
 			(at 163.83 127 0)
 			(effects
 				(font
@@ -3599,7 +3617,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "6.3V 10uF X5R ±20% 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 163.83 127 0)
 			(effects
 				(font
@@ -3608,7 +3626,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "LCSC Part # " "C15525"
 			(at 163.83 127 0)
 			(effects
 				(font
@@ -3617,7 +3635,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " " C15525"
+		(property "Comment" ""
 			(at 163.83 127 0)
 			(effects
 				(font
@@ -3687,7 +3705,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 5.1kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 175.26 130.81 0)
 			(effects
 				(font
@@ -3697,6 +3715,15 @@
 			)
 		)
 		(property "LCSC Part # " "C23186"
+			(at 175.26 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 175.26 130.81 0)
 			(effects
 				(font
@@ -3729,7 +3756,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "56149671-7aea-4f83-8791-96d235f06842")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR012"
 			(at 144.78 146.05 0)
 			(effects
 				(font
@@ -3779,7 +3806,82 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR010")
+					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 91.44 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5847e4a0-7d67-4bea-9aa1-f6790f2a1456")
+		(property "Reference" "TP2"
+			(at 248.92 91.44 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "3V3"
+			(at 253.492 91.44 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 91.44 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6fe2b879-4d75-4f70-9c87-74ee6a6bb8f6")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
@@ -3794,7 +3896,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5fbf84fc-4c4c-4383-8a32-24153d8ac7ad")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR014"
 			(at 156.21 100.33 0)
 			(effects
 				(font
@@ -3844,7 +3946,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR012")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -3859,7 +3961,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "75b079b0-6a2d-49b8-9d4e-d7c524ec48d5")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR09"
 			(at 109.22 100.33 0)
 			(effects
 				(font
@@ -3909,7 +4011,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR07")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -3952,7 +4054,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2208231630_Samsung-Electro-Mechanics-CL05A106MQ5NUNC_C15525.pdf"
 			(at 111.76 127 0)
 			(effects
 				(font
@@ -3961,7 +4063,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "6.3V 10uF X5R ±20% 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 111.76 127 0)
 			(effects
 				(font
@@ -3970,7 +4072,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "LCSC Part # " "C15525"
 			(at 111.76 127 0)
 			(effects
 				(font
@@ -3979,7 +4081,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " " C15525"
+		(property "Comment" ""
 			(at 111.76 127 0)
 			(effects
 				(font
@@ -4012,7 +4114,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "82a140c5-3e6c-4246-bad6-f10f912fec5f")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR018"
 			(at 223.52 105.41 0)
 			(effects
 				(font
@@ -4062,7 +4164,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR016")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -4105,7 +4207,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2211101700_YAGEO-CC0603KRX7R9BB104_C14663.pdf"
 			(at 153.67 127 0)
 			(effects
 				(font
@@ -4114,16 +4216,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 153.67 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field7" ""
+		(property "Description" "50V 100nF X7R ±10% 0603 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 153.67 127 0)
 			(effects
 				(font
@@ -4133,6 +4226,15 @@
 			)
 		)
 		(property "LCSC Part # " "C14663"
+			(at 153.67 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 153.67 127 0)
 			(effects
 				(font
@@ -4165,7 +4267,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "95cd102a-831d-4307-8808-95d590b79e46")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR017"
 			(at 215.9 105.41 0)
 			(effects
 				(font
@@ -4215,7 +4317,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR015")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -4267,7 +4369,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 4.7kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 163.83 77.47 0)
 			(effects
 				(font
@@ -4277,6 +4379,15 @@
 			)
 		)
 		(property "LCSC Part # " "C23162"
+			(at 163.83 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 163.83 77.47 0)
 			(effects
 				(font
@@ -4335,7 +4446,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1811121309_Diodes-Incorporated-1N5819HW-7-F_C82544.pdf"
 			(at 163.83 52.07 0)
 			(effects
 				(font
@@ -4344,7 +4455,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Diode"
+		(property "Description" "40V 450mV@1A 1A SOD-123 Schottky Diodes ROHS"
 			(at 163.83 52.07 0)
 			(effects
 				(font
@@ -4380,7 +4491,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 163.83 52.07 0)
 			(effects
 				(font
@@ -4422,7 +4533,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LESD5D5.0CT1G"
+		(property "Value" "BSD5C051L"
 			(at 142.24 78.7399 0)
 			(effects
 				(font
@@ -4440,7 +4551,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1810161421_BORN-BSD5C051L_C151983.pdf"
 			(at 139.7 77.47 0)
 			(effects
 				(font
@@ -4449,7 +4560,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "3A@8/20us 13V 6V 5V SOD-523 ESD and Surge Protection (TVS/ESD) ROHS"
 			(at 139.7 77.47 0)
 			(effects
 				(font
@@ -4458,7 +4569,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C383211"
+		(property "LCSC Part # " "C151983"
 			(at 139.7 77.47 90)
 			(effects
 				(font
@@ -4467,7 +4578,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 139.7 77.47 0)
 			(effects
 				(font
@@ -4492,6 +4603,156 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 88.9 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b9a144ac-9868-422d-8d35-3d3abd9f0423")
+		(property "Reference" "TP1"
+			(at 248.92 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "5V"
+			(at 253.492 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "024cb242-7760-46e1-a7b6-f1ccde95447a")
+		)
+		(instances
+			(project ""
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 99.06 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bb1072b4-82d3-4bee-90b0-65a020b811a7")
+		(property "Reference" "TP5"
+			(at 248.92 99.06 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "opnthm"
+			(at 253.492 99.06 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 99.06 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5ebf8faa-6e4d-42fd-9d45-6e7890265fbd")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 172.72 93.98 0)
 		(unit 1)
@@ -4500,7 +4761,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bee4b526-54b6-41a0-bc3f-8b7576719463")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR016"
 			(at 172.72 100.33 0)
 			(effects
 				(font
@@ -4550,7 +4811,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR014")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -4565,7 +4826,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c93da336-c708-45fb-ae5f-33e53502244b")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR010"
 			(at 132.08 100.33 0)
 			(effects
 				(font
@@ -4615,7 +4876,157 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR08")
+					(reference "#PWR010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 101.6 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d0ae8bb0-176b-4613-9348-6f035ed19ed0")
+		(property "Reference" "TP6"
+			(at 248.92 101.6 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "B1"
+			(at 253.492 101.6 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 101.6 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c83e3a28-7d8b-4df8-960b-db29f931829e")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 243.84 96.52 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d5a73e68-308e-47ff-9cff-79009fb1daa1")
+		(property "Reference" "TP4"
+			(at 248.92 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "GND"
+			(at 253.492 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Keystone_5015_Micro-Minature"
+			(at 243.84 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2310260935_ronghe-RH-5015_C5199798.pdf"
+			(at 243.84 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 243.84 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C5199798"
+			(at 243.84 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "014b4afe-9fa6-4689-8a1f-a21cb5e275ff")
+		)
+		(instances
+			(project "Test 09. With ESP module"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
+					(reference "TP4")
 					(unit 1)
 				)
 			)
@@ -4639,7 +5050,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "LESD5D5.0CT1G"
+		(property "Value" "BSD5C051L"
 			(at 149.86 78.7399 0)
 			(effects
 				(font
@@ -4657,7 +5068,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_1810161421_BORN-BSD5C051L_C151983.pdf"
 			(at 147.32 77.47 0)
 			(effects
 				(font
@@ -4666,7 +5077,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "3A@8/20us 13V 6V 5V SOD-523 ESD and Surge Protection (TVS/ESD) ROHS"
 			(at 147.32 77.47 0)
 			(effects
 				(font
@@ -4675,7 +5086,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part # " "C383211"
+		(property "LCSC Part # " "C151983"
 			(at 147.32 77.47 90)
 			(effects
 				(font
@@ -4684,7 +5095,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 147.32 77.47 0)
 			(effects
 				(font
@@ -4709,89 +5120,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Conn_01x06_Pin")
-		(at 246.38 93.98 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp yes)
-		(fields_autoplaced yes)
-		(uuid "e755c3e9-fa75-47f5-b946-45fa176d0730")
-		(property "Reference" "J2"
-			(at 247.65 93.9799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "Test connector"
-			(at 247.65 96.5199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical"
-			(at 246.38 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 246.38 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x06, script generated"
-			(at 246.38 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "4"
-			(uuid "349145d0-959a-4c54-90d4-dabc20f8adb9")
-		)
-		(pin "2"
-			(uuid "1011e1b5-82b1-4daa-812e-c409614a3e49")
-		)
-		(pin "1"
-			(uuid "21218d9f-6955-446f-9045-ba4ef44b7b10")
-		)
-		(pin "3"
-			(uuid "35cdd48e-9397-4c82-949a-eb9e14dfa810")
-		)
-		(pin "5"
-			(uuid "bd98d589-dafe-4c80-8c37-92e2b39d3d2c")
-		)
-		(pin "6"
-			(uuid "23141f3b-a031-4a17-b7c7-cb99da3c034c")
-		)
-		(instances
-			(project ""
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "J2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 147.32 93.98 0)
 		(unit 1)
@@ -4800,7 +5128,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e7708f86-371f-4a75-983b-98cada882c2d")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR013"
 			(at 147.32 100.33 0)
 			(effects
 				(font
@@ -4850,7 +5178,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/27673a3a-5c62-493b-b19a-59601297fae0"
-					(reference "#PWR011")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -4891,7 +5219,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
+		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2111231930_SHOU-HAN-TYPE-C-16PIN-2MD-073_C2765186.pdf"
 			(at 113.03 67.31 0)
 			(effects
 				(font
@@ -4909,15 +5237,6 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" ""
-			(at 109.22 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(property "LCSC Part # " "C2765186"
 			(at 109.22 67.31 0)
 			(effects
@@ -4927,7 +5246,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 109.22 67.31 0)
 			(effects
 				(font

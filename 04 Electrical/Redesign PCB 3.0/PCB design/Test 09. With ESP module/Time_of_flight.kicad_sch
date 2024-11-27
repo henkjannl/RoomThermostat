@@ -564,10 +564,10 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "9fb6064f-9d24-40e9-aad0-a13a01d0a1a4")
-		(property "Reference" "J4"
+		(property "Reference" "J3"
 			(at 156.21 88.8999 0)
 			(effects
 				(font
@@ -612,6 +612,15 @@
 				(hide yes)
 			)
 		)
+		(property "Comment" ""
+			(at 154.94 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2e6f5620-5515-4774-995d-87cc50cfe3a1")
 		)
@@ -633,7 +642,7 @@
 		(instances
 			(project ""
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/9496b48a-90bf-416c-bf1c-039c65c989b9"
-					(reference "J4")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -649,7 +658,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e9964c8b-07f1-4a20-9cf1-a3ae8d59be31")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR034"
 			(at 134.62 101.6 0)
 			(effects
 				(font
@@ -699,7 +708,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/9496b48a-90bf-416c-bf1c-039c65c989b9"
-					(reference "#PWR036")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)

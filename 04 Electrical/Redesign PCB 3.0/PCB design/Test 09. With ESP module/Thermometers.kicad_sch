@@ -786,7 +786,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "100mW Thick Film Resistors 75V ±100ppm/℃ ±1% 4.7kΩ 0603 Chip Resistor - Surface Mount ROHS"
 			(at 195.58 86.36 0)
 			(effects
 				(font
@@ -796,6 +796,15 @@
 			)
 		)
 		(property "LCSC Part # " "C23162"
+			(at 195.58 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Comment" ""
 			(at 195.58 86.36 0)
 			(effects
 				(font
@@ -826,7 +835,7 @@
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "653b9909-c129-4fe6-81d2-7e093eb8a5e0")
 		(property "Reference" "U6"
@@ -874,7 +883,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 160.02 92.71 0)
 			(effects
 				(font
@@ -911,7 +920,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "67985620-bb89-49f9-95e9-d5aad1ecd752")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR028"
 			(at 171.45 111.76 0)
 			(effects
 				(font
@@ -961,7 +970,7 @@
 		(instances
 			(project ""
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04/1ee783e5-877a-4e23-8a1c-34a8f840b01c"
-					(reference "#PWR030")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -974,7 +983,7 @@
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "77ea28ea-99da-44c8-bd34-90950f4b01e4")
 		(property "Reference" "U7"
@@ -1022,7 +1031,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field7" ""
+		(property "Comment" ""
 			(at 181.61 92.71 0)
 			(effects
 				(font

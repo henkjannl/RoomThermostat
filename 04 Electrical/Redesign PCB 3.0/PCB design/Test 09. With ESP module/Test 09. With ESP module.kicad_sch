@@ -27,7 +27,7 @@
 	)
 	(polyline
 		(pts
-			(xy 180.34 114.3) (xy 180.34 105.41)
+			(xy 203.2 88.9) (xy 198.12 88.9)
 		)
 		(stroke
 			(width 0)
@@ -37,17 +37,7 @@
 	)
 	(polyline
 		(pts
-			(xy 198.12 88.9) (xy 203.2 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "674a8005-d430-4a31-8a46-5c5b4d45acd9")
-	)
-	(polyline
-		(pts
-			(xy 139.7 114.3) (xy 139.7 105.41)
+			(xy 171.45 114.3) (xy 171.45 105.41)
 		)
 		(stroke
 			(width 0)
@@ -57,7 +47,7 @@
 	)
 	(polyline
 		(pts
-			(xy 96.52 114.3) (xy 96.52 105.41)
+			(xy 106.68 114.3) (xy 106.68 105.41)
 		)
 		(stroke
 			(width 0)
@@ -152,8 +142,8 @@
 		)
 	)
 	(sheet
-		(at 123.19 114.3)
-		(size 33.02 30.48)
+		(at 144.78 114.3)
+		(size 53.34 30.48)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -164,7 +154,7 @@
 		)
 		(uuid "4ee7237d-7490-448a-a94f-f4ace25b8494")
 		(property "Sheetname" "Display"
-			(at 123.19 113.5884 0)
+			(at 144.78 113.5884 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -173,7 +163,7 @@
 			)
 		)
 		(property "Sheetfile" "Display.kicad_sch"
-			(at 123.19 145.3646 0)
+			(at 144.78 145.3646 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -229,7 +219,7 @@
 	)
 	(sheet
 		(at 80.01 114.3)
-		(size 33.02 30.48)
+		(size 53.34 30.48)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -260,7 +250,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
-					(page "9")
+					(page "8")
 				)
 			)
 		)
@@ -304,8 +294,8 @@
 		)
 	)
 	(sheet
-		(at 162.56 114.3)
-		(size 35.56 30.48)
+		(at 203.2 74.93)
+		(size 30.48 30.48)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -316,7 +306,7 @@
 		)
 		(uuid "c10dcd2b-f94d-4b79-ac64-852f0c201877")
 		(property "Sheetname" "Buttons"
-			(at 162.56 113.5884 0)
+			(at 203.2 74.2184 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -325,44 +315,6 @@
 			)
 		)
 		(property "Sheetfile" "Buttons.kicad_sch"
-			(at 162.56 145.3646 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "Test 09. With ESP module"
-				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
-					(page "7")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 203.2 71.12)
-		(size 30.48 34.29)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "e6947289-cd9f-4e72-bd23-2c845458e136")
-		(property "Sheetname" "LEDs"
-			(at 203.2 70.4084 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "LEDs.kicad_sch"
 			(at 203.2 105.9946 0)
 			(effects
 				(font
@@ -374,7 +326,7 @@
 		(instances
 			(project "Test 09. With ESP module"
 				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
-					(page "8")
+					(page "7")
 				)
 			)
 		)
