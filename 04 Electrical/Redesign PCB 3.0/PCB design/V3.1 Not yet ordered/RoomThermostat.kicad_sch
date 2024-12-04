@@ -1,0 +1,361 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "dee7d3c3-6abb-4cb3-8df4-3e3e37989a04")
+	(paper "A4")
+	(lib_symbols)
+	(polyline
+		(pts
+			(xy 50.8 81.28) (xy 55.88 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0925232c-50e5-4426-95b7-d76b80794736")
+	)
+	(polyline
+		(pts
+			(xy 50.8 40.64) (xy 55.88 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b34532d-3c32-4120-b003-a12b62afdcd0")
+	)
+	(polyline
+		(pts
+			(xy 179.07 81.28) (xy 173.99 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2292b91f-13da-4d2e-8d29-f3cb6a68b571")
+	)
+	(polyline
+		(pts
+			(xy 147.32 106.68) (xy 147.32 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c08d59c0-26d9-4307-99d6-53b1d0a561e7")
+	)
+	(polyline
+		(pts
+			(xy 82.55 106.68) (xy 82.55 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed1d8cd0-35c4-48a6-8705-5554f44f3d85")
+	)
+	(polyline
+		(pts
+			(xy 173.99 36.83) (xy 179.07 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ffd62481-d749-4525-a31d-a0accbcfc76a")
+	)
+	(text_box "Revision history\n\nV3.0 \nInitial version with ESP32-S3, as ordered 27-11-2024\n\nV3.1\nSwapped 'ctrl_to_boil' and 'boil_to_ctrl' labels\nMoved purpose of switches and connectors to comment field to prevent warning from JLCPCB\nAdded F unit to capacitors to prevent warning from JLCPCB\nAdded Ω unit to resistors to prevent warning from JLCPCB\n"
+		(exclude_from_sim no)
+		(at 215.9 17.78 0)
+		(size 63.5 142.24)
+		(stroke
+			(width -0.0001)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 255 194 1)
+		)
+		(effects
+			(font
+				(face "Arial")
+				(size 1.27 1.27)
+				(color 0 0 0 1)
+			)
+			(justify left top)
+		)
+		(uuid "66584f9d-a4fb-43de-92ff-08f8eeb42108")
+	)
+	(sheet
+		(at 179.07 20.32)
+		(size 30.48 34.29)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "1ee783e5-877a-4e23-8a1c-34a8f840b01c")
+		(property "Sheetname" "Thermometers"
+			(at 179.07 19.6084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Thermometers.kicad_sch"
+			(at 179.07 55.1946 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 19.05 20.32)
+		(size 31.75 35.56)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "27673a3a-5c62-493b-b19a-59601297fae0")
+		(property "Sheetname" "USB and power"
+			(at 19.05 19.6084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "USB_and_power.kicad_sch"
+			(at 19.05 56.4646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 120.65 106.68)
+		(size 53.34 30.48)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "4ee7237d-7490-448a-a94f-f4ace25b8494")
+		(property "Sheetname" "Display"
+			(at 120.65 105.9684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Display.kicad_sch"
+			(at 120.65 137.7446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 19.05 64.77)
+		(size 31.75 33.02)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7a22ee33-5bef-4c62-b34e-91e104b3ec80")
+		(property "Sheetname" "Opentherm interface"
+			(at 19.05 64.0584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Opentherm_interface.kicad_sch"
+			(at 19.05 98.3746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 55.88 106.68)
+		(size 53.34 30.48)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "9496b48a-90bf-416c-bf1c-039c65c989b9")
+		(property "Sheetname" "Time of flight"
+			(at 55.88 105.9684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Time_of_flight.kicad_sch"
+			(at 55.88 137.7446 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 55.88 20.32)
+		(size 118.11 77.47)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "bd5268ae-2faf-441e-9d8c-8a98dae2e504")
+		(property "Sheetname" "ESP32-S3"
+			(at 55.88 19.6084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ESP32-S3.kicad_sch"
+			(at 55.88 98.3746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 179.07 67.31)
+		(size 30.48 30.48)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "c10dcd2b-f94d-4b79-ac64-852f0c201877")
+		(property "Sheetname" "Buttons"
+			(at 179.07 66.5984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Buttons.kicad_sch"
+			(at 179.07 98.3746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "RoomThermostat"
+				(path "/dee7d3c3-6abb-4cb3-8df4-3e3e37989a04"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)
