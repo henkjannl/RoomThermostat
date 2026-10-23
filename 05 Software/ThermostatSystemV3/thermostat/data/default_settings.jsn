@@ -1,0 +1,33 @@
+{
+  "workFromHomeWakeUp": 420,
+  "workFromHomeSleep": 1290,
+
+  "workAtOfficeWakeUp": 390,
+  "workAtOfficeGoOut": 435,
+  "workAtOfficeComeIn": 1035,
+  "workAtOfficeSleep": 1290,
+
+  "weekendWakeUp": 540,
+  "weekendSleep": 1320,
+
+  "regularWeek": [
+    {"DayType": 2},
+    {"DayType": 1},
+    {"DayType": 1},
+    {"DayType": 1},
+    {"DayType": 1},
+    {"DayType": 1},
+    {"DayType": 2}
+  ],
+
+  "highTemp": 19.5,
+  "lowTemp": 17.0,
+
+  "overrideToday": 4,
+  "overrideTomorrow": 4,
+  "overrideMultiple": 4,
+  "overrideMultipleCount": 3,
+  "multipleForever": false,
+
+  "sensorOffset": -3.5
+}
