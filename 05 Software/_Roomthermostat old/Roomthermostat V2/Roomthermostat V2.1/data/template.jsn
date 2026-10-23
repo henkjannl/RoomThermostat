@@ -1,0 +1,10 @@
+{
+    "AccessPoints": [
+        { "SSID": "SSIDOfWifi1", "password": "PasswordOfWifi1", "timezone" : "Europe/Amsterdam" },
+        { "SSID": "SSIDOfWifi2", "password": "PasswordOfWifi2", "timezone" : "Europe/Amsterdam" }
+    ],
+    "BotName"     : "Name of the bot",
+    "BotUsername" : "Username of the bot",
+    "BotToken"    : "##########:XXXXXXXXXXXXXXXXXXXXXXXX",
+    "ChatID"      : "########"
+}
