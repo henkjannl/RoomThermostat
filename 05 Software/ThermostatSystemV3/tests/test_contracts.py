@@ -8,24 +8,25 @@ import struct
 import unittest
 import zlib
 
-PACKET=struct.Struct('<IBBBB6s6sIIIIhhIIIHBBhBB38s7sBB16s')
+PACKET=struct.Struct('<IBBBB6s6sIIIIhhIIIHBBhBB38s7sBBB16s')
 RECORD=struct.Struct('<IIIqIHBBI')
 KEY=bytes(range(32)) # Test-only key; never device provisioning material.
 
 def message():
-    data=PACKET.pack(0x33544852,2,4,6,15,b'\x01'*6,b'\x02'*6,123,7,9,1792771200,1985,2050,42,43,900,1,0,0,0,0,0,bytes(38),bytes(7),0,0,b'\0'*16)
+    data=PACKET.pack(0x33544852,3,4,6,15,b'\x01'*6,b'\x02'*6,123,7,9,1792771200,1985,2050,42,43,900,1,0,0,0,0,0,bytes(38),bytes(7),0,0,6,b'\0'*16)
     return data[:-16]+hmac.digest(KEY,data[:-16],'sha256')[:16]
 
 def accepted(data,session=123,request=7):
     if len(data)!=PACKET.size: return False
     fields=PACKET.unpack(data)
-    return (fields[0]==0x33544852 and fields[1]==2 and fields[2]==4 and
+    return (fields[0]==0x33544852 and fields[1]==3 and fields[2]==4 and
             fields[7]==session and fields[8]==request and
             hmac.compare_digest(data[-16:],hmac.digest(KEY,data[:-16],'sha256')[:16]))
 
 class Contracts(unittest.TestCase):
     def test_packet_layout(self):
-        self.assertEqual(PACKET.size,123)
+        self.assertEqual(PACKET.size,124)
+        self.assertEqual(PACKET.unpack(message())[-2],6)
         self.assertEqual(PACKET.unpack(message())[11:13],(1985,2050))
         self.assertTrue(accepted(message()))
     def test_all_single_byte_changes_rejected(self):

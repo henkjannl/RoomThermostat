@@ -163,9 +163,9 @@ void loop() {
       lastActivity=millis();
       if (x!=lastTouchX || y!=lastTouchY) Serial.printf("Touch portrait x=%d y=%d\n",x,y);
       lastTouchX=x;lastTouchY=y;
+      if (!connected && millis()-discoveryStarted>=8000) discoveryStarted=millis();
       if(released&&!pressed){RemoteUi::touch(x,y);pressed=true;paintStatus();}
       releasedAt=millis();
-      if (!connected && millis()-discoveryStarted>=8000) discoveryStarted=millis();
     }else if(millis()-releasedAt>=200){released=true;pressed=false;}
   }
   serviceRemoteRadio();

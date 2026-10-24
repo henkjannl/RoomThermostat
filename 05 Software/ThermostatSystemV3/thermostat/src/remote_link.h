@@ -1,6 +1,7 @@
 #pragma once
 #include <remote_transport.h>
 #include "remote_control.h"
+uint32_t remoteLastRequestMs=0,remoteRequestCount=0;
 
 // Core 1 only. ESP-NOW callbacks only copy into RemoteTransport's bounded queue.
 void serviceRemoteLink() {
@@ -20,6 +21,7 @@ void serviceRemoteLink() {
   for (int budget=0;budget<2 && RemoteTransport::poll(incoming);++budget) {
     const Packet &request=incoming.packet;
     if (request.kind!=Discover && request.kind!=GetStatus && request.kind!=Command) continue;
+    remoteLastRequestMs=millis();++remoteRequestCount;
     if(request.kind!=Discover&&!RemoteTransport::same(request.target,RemoteTransport::ownMac))continue;
     if (millis()-lastReply<100 || RemoteTransport::sending.load()) continue;
     if (!RemoteTransport::setPeer(incoming.mac)) continue;
@@ -63,6 +65,9 @@ void serviceRemoteLink() {
       reply.setpointCenti=lroundf(controllerData.temperatureSetpoint*100);
       if (controllerData.boilerOnline) reply.flags|=BoilerOnline;
       if (controllerData.centralHeatingActive) reply.flags|=HeatingActive;
+      static_assert(iconFlame8-iconFlame0==8,"Flame icon enum must be contiguous");
+      int selectedFlame=int(controllerData.dspFlameIcon)-int(iconFlame0);
+      reply.flameLevel=selectedFlame>=0&&selectedFlame<=8?uint8_t(selectedFlame):0;
       if (controllerData.hotWaterActive) reply.flags|=HotWaterActive;
       if (controllerData.dayIconsValid) reply.flags|=DaysValid;
       for(int i=0;i<7;++i){reply.dayTypes[i]=controllerData.dayTypes[i];if(controllerData.dayTypeOverruled[i])reply.overrideMask|=1<<i;}

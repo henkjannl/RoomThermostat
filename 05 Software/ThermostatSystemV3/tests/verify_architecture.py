@@ -90,6 +90,23 @@ class OwnershipChecks(unittest.TestCase):
         self.assertIn('controllerData.overrideMultipleCount > 1',controller)
         self.assertIn('controllerData.overrideMultiple = dtAuto',controller)
 
+    def test_telegram_timeout_units_and_diagnostics(self):
+        telegram=source('f_telegram.h')
+        self.assertNotIn('securedClient.setTimeout(3000)',telegram)
+        self.assertIn('NetworkPolicy::configureTelegramClient(securedClient)',telegram)
+        self.assertIn('bot.waitForResponse=NetworkPolicy::TelegramResponseWaitMs',telegram)
+        self.assertIn('telegramPollFinishedMs.store(millis())',telegram)
+        worker=source('m_network.h')
+        self.assertIn('markNetworkPhase(NetworkPhase::TelegramPoll)',worker)
+        self.assertIn('Network slow/stalled',worker)
+        self.assertIn('serviceReceiverWifi()',worker)
+        self.assertIn('esp_wifi_get_ps(&powerSave)',source('i_wifi_time.h'))
+
+    def test_remote_flame_uses_thermostat_display_selection(self):
+        link=source('remote_link.h')
+        self.assertIn('int(controllerData.dspFlameIcon)-int(iconFlame0)',link)
+        self.assertIn('reply.flameLevel=',link)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

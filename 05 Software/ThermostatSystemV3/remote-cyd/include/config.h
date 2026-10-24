@@ -27,7 +27,7 @@ constexpr float BATTERY_CAL = 1.0f; // Set to multimeter_voltage / displayed_vol
 constexpr bool BATTERY_ONLY = CYD_BATTERY_ONLY != 0; // Set false when USB/external power is connected.
 
 constexpr bool TOUCH_MONITOR = CYD_TOUCH_MONITOR != 0;
-constexpr const char *FIRMWARE_VERSION = "3.0.0-alpha.2";
+constexpr const char *FIRMWARE_VERSION = "3.0.0-alpha.6";
 
 // Portrait, USB at bottom: confirm four-corner mapping on the physical panel.
 constexpr uint8_t PORTRAIT_ROTATION=0;

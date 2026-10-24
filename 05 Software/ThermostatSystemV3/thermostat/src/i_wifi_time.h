@@ -1,5 +1,6 @@
 #pragma once
 #include <WiFi.h>
+#include <esp_wifi.h>
 #include <WiFiMulti.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
@@ -8,6 +9,25 @@
 
 WiFiMulti wifiMulti;
 bool wifiConnected() { return WiFi.status() == WL_CONNECTED; }
+
+// Core 0 only. Check the actual driver state, not WiFi.getSleep()'s cached preference.
+void serviceReceiverWifi() {
+  static uint32_t lastCheck=millis()-10000UL;
+  static int previousStatus=-1,previousChannel=-1;
+  const int status=WiFi.status();
+  const int channel=WiFi.channel();
+  if(status!=previousStatus||channel!=previousChannel){
+    Serial.printf("Receiver WiFi uptime=%lu status=%d channel=%d rssi=%d\n",millis(),status,channel,WiFi.RSSI());
+    previousStatus=status;previousChannel=channel;
+    lastCheck=millis()-10000UL;
+  }
+  if(millis()-lastCheck<10000)return;
+  lastCheck=millis();wifi_ps_type_t powerSave;
+  if(esp_wifi_get_ps(&powerSave)==ESP_OK && powerSave!=WIFI_PS_NONE){
+    esp_err_t result=esp_wifi_set_ps(WIFI_PS_NONE);
+    Serial.printf("Receiver WiFi corrected power-save=%d result=%d\n",int(powerSave),int(result));
+  }
+}
 
 void setupWifi(ControllerData_t &data) {
   WiFi.persistent(false); // Network worker must never persist Wi-Fi configuration.

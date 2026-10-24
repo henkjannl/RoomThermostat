@@ -1,5 +1,6 @@
 #pragma once
 #include <type_traits>
+#include "network_health.h"
 
 // Core 1 owns controllerData. Core 0 owns this separate presentation copy.
 ControllerData_t networkData;

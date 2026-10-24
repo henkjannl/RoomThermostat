@@ -49,6 +49,12 @@ inline void fit(Adafruit_GFX&lcd,const char*v,int x,int y,int maxWidth=176,uint1
   if(width(font_Noway_Light18,v)>maxWidth)small(lcd,v,x,y,maxWidth,fg);
   else text(lcd,font_Noway_Light18,v,x-width(font_Noway_Light18,v)/2,y,fg);
 }
+// Never use a faded 'on' icon for idle/unknown domestic hot water.
+inline void waterIcon(Adafruit_GFX&lcd,int x,int y,int size){
+  bool known=state.link==1&&(state.snapshot.flags&BoilerOnline);
+  if(known)icon(lcd,(state.snapshot.flags&HotWaterActive)?"/iconShowerOn.jpg":"/iconShowerOff.jpg",x,y,size);
+  else text(lcd,font_Noway_Light18,"?",x+(size-width(font_Noway_Light18,"?"))/2,y+(size-18)/2,Grey);
+}
 inline void title(Adafruit_GFX&lcd,const char*v){fit(lcd,v,120,22,178,Grey);}
 inline void add(int x,int y,int w,int h,uint8_t action,int arg=0){if(count<10)buttons[count++]={int16_t(x),int16_t(y),int16_t(w),int16_t(h),action,int16_t(arg)};}
 inline void control(Adafruit_GFX&lcd,const char*image,int x,int y,uint8_t action,int arg=0){
@@ -118,7 +124,7 @@ inline void paintMenu(Adafruit_GFX&lcd){
     fit(lcd,a,120,16);
     icon(lcd,state.link==1?"/iconWifiConnected.jpg":"/iconWifiLost.jpg",36,44,24);
     bool known=state.link==1;icon(lcd,(state.snapshot.flags&BoilerOnline)?"/iconBoilerConn.jpg":"/iconBoilerLost.jpg",84,44,24,known?255:64);
-    icon(lcd,"/iconShowerOn.jpg",132,44,24,known&&(state.snapshot.flags&BoilerOnline)?((state.snapshot.flags&HotWaterActive)?255:64):32);
+    waterIcon(lcd,132,44,24);
     snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));icon(lcd,a,180,44,28,state.batteryValid?255:64);
     crop(lcd,"/HomeScreen.jpg",64,80,32,60,31,94,26,49);
     if(state.snapshot.flags&RoomValid)snprintf(a,sizeof(a),"%.1f",state.snapshot.roomCenti/100.f);else strcpy(a,"--.-");
@@ -126,7 +132,8 @@ inline void paintMenu(Adafruit_GFX&lcd){
     crop(lcd,"/HomeScreen.jpg",104,146,32,34,65,143,27,28);
     if(state.snapshot.boot)snprintf(a,sizeof(a),"%.1f",state.snapshot.setpointCenti/100.f);else strcpy(a,"--.-");
     text(lcd,font_Noway_Medium24,a,104,147,s.manual?Amber:Grey);text(lcd,font_Noway_Light18,"\xB0" "C",160,149,Grey);
-    icon(lcd,(state.snapshot.flags&HeatingActive)?"/iconFlame1.jpg":"/iconFlame0.jpg",184,145,24,known?255:64);
+    snprintf(a,sizeof(a),"/iconFlame%u.jpg",unsigned(state.snapshot.flameLevel<=8?state.snapshot.flameLevel:0));
+    icon(lcd,a,184,145,24,known?255:64);
     a[0]=0;
     if(!known)snprintf(a,sizeof(a),state.link==0?"Verbinden...":"Geen actuele verbinding");
     else if(s.manual)strcpy(a,"Handmatig");
@@ -159,7 +166,7 @@ inline void paintMenu(Adafruit_GFX&lcd){
   }else if(page==More){title(lcd,"Meer instellingen");valueLabel(a,sizeof(a),s.offset,SetOffset);item(lcd,"Sensorcorrectie","/iconTemperature.jpg",0,4,2,SetOffset,a);item(lcd,"Automatisch","/iconAutomatic.jpg",1,4,3,Automatic);item(lcd,"Status","/iconWifiConnected.jpg",2,4,1,StatusPage);item(lcd,"Service","/iconSettings.jpg",3,4,1,Service);
   }else if(page==StatusPage){title(lcd,"Verbindingsstatus");bool known=state.link==1,boiler=state.snapshot.flags&BoilerOnline;
     const char*names[]={"Thermostaat","Ketel","Warm water","Accu"};const char*icons[]={"/iconWifiConnected.jpg","/iconBoilerConn.jpg","/iconShowerOn.jpg","/battery-75.png"};
-    for(int i=0;i<4;++i){int y=100+i*40;if(i==3)snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));icon(lcd,i==3?a:icons[i],32,y,28,i==2&&!(known&&boiler&&(state.snapshot.flags&HotWaterActive))?64:255);small(lcd,names[i],138,y+2,142);
+    for(int i=0;i<4;++i){int y=100+i*40;if(i==3)snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));if(i==2)waterIcon(lcd,32,y,28);else icon(lcd,i==3?a:icons[i],32,y,28);small(lcd,names[i],138,y+2,142);
       const char*v=i==0?(known?"Verbonden":"Geen actuele verbinding"):i==1?(!known?"Onbekend":boiler?"Communicatie OK":"Geen ketelantwoord"):i==2?(!known||!boiler?"Onbekend":state.snapshot.flags&HotWaterActive?"In gebruik":"Niet in gebruik"):a;
       if(i==3){if(state.batteryValid)snprintf(a,sizeof(a),"~%u%%",state.battery);else strcpy(a,"Onbekend");}small(lcd,v,138,y+18,142,Ink);
     }footer(lcd,FIRMWARE_VERSION);
@@ -205,9 +212,23 @@ inline void touch(int x,int y){
     }dirty=true;return;
   }
 }
-inline void paint(Adafruit_ILI9341&lcd,const State&s,const char*){
-  bool changed=state.link!=s.link||state.battery!=s.battery||state.batteryValid!=s.batteryValid||
-    state.snapshot.flags!=s.snapshot.flags||state.snapshot.roomCenti!=s.snapshot.roomCenti||state.snapshot.setpointCenti!=s.snapshot.setpointCenti||
+inline void paint(Adafruit_ILI9341&lcd,const State&s,const char*version){
+  // Welcome/discovery is not measurement data. Keep the wait screen until an
+  // authenticated Status/Ack has populated the host boot ID in the snapshot.
+  if(!s.snapshot.boot){
+    count=0;bool repaint=dirty||state.link!=s.link;state=s;
+    if(!repaint)return;
+    if(s.link<3)wake(lcd,version);
+    else{
+      lcd.fillScreen(White);
+      centered(lcd,font_Noway_Medium24,s.link==4?"Radiofout":"Geen verbinding",124);
+      centered(lcd,font_Noway_Light18,s.link==4?"Start apparaat opnieuw":"Tik om opnieuw te zoeken",158,Grey);
+      footer(lcd,version);
+    }
+    dirty=false;return;
+  }
+  bool changed=state.snapshot.boot!=s.snapshot.boot||state.link!=s.link||state.battery!=s.battery||state.batteryValid!=s.batteryValid||
+    state.snapshot.flags!=s.snapshot.flags||state.snapshot.flameLevel!=s.snapshot.flameLevel||state.snapshot.roomCenti!=s.snapshot.roomCenti||state.snapshot.setpointCenti!=s.snapshot.setpointCenti||
     state.snapshot.epoch/60!=s.snapshot.epoch/60||memcmp(&state.snapshot.settings,&s.snapshot.settings,sizeof(Settings))||
     memcmp(state.snapshot.dayTypes,s.snapshot.dayTypes,7)||state.snapshot.overrideMask!=s.snapshot.overrideMask;
   state=s;if(!dirty&&!changed)return;

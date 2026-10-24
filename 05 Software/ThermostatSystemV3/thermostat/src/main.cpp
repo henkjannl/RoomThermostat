@@ -7,7 +7,7 @@
 #include <LittleFS.h>
 #include "MilliSecTimer.h"
 
-#define VERSION "3.0.0-alpha.2"
+#define VERSION "3.0.0-alpha.5"
 // #define USE_TESTBOT true
 #define USE_TESTBOT false
 
@@ -244,6 +244,10 @@ void loop() {
     lastTimeDetailedReport = millis();
     Serial.printf("Network worker heartbeat age=%lu ms max operation=%lu ms dropped replies=%lu\n",
                   millis() - networkLastHeartbeatMs, networkMaxOperationMs, droppedNetworkReplies);
+    Serial.printf("Network phase=%s age=%lu ms; Telegram paused=%u polls=%lu last completed=%lu ms ago; radio sending=%u\n",
+                  networkPhaseName(networkPhase.load()),millis()-networkPhaseStartedMs.load(),
+                  unsigned(telegramPollingPaused.load()),telegramPollCount.load(),millis()-telegramPollFinishedMs.load(),unsigned(RemoteTransport::sending.load()));
+    Serial.printf("Remote authenticated requests=%lu last request=%lu ms ago\n",remoteRequestCount,millis()-remoteLastRequestMs);
     Serial.printf("OpenTherm max transmit gap=%lu ms late cycles=%lu\n", boilerMaxTransmitGapMs, boilerLateCycles);
     Serial.printf("OpenTherm valid status seen=%d age=%lu ms max gap=%lu ms\n",
                   boilerHasValidStatus, boilerHasValidStatus ? millis() - lastBoilerValidStatus : millis(),

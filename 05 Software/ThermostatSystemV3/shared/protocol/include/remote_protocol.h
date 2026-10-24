@@ -4,7 +4,7 @@
 
 namespace RemoteProtocol {
 constexpr uint32_t MAGIC = 0x33544852;
-constexpr uint8_t WIRE_VERSION = 2;
+constexpr uint8_t WIRE_VERSION = 3;
 enum Kind : uint8_t { Discover=1, Welcome=2, GetStatus=3, Status=4, Command=5, Ack=6 };
 enum Flags : uint8_t { RoomValid=1, BoilerOnline=2, HeatingActive=4, ClockValid=8, HotWaterActive=16, DaysValid=32 };
 enum Capability:uint16_t {SettingsControl=1,TelegramReports=2};
@@ -19,7 +19,7 @@ struct Settings {
   uint8_t week[7]={2,1,1,1,1,1,2}; // Sunday first.
   uint8_t today=Auto,tomorrow=Auto,multiple=Auto,forever=0,manual=0;
 };
-// Wire format v2: fixed-width, little-endian fields, no pointers or strings.
+// Wire format v3: fixed-width, little-endian fields, no pointers or strings.
 // Session and request are echoed; MAC addresses are authenticated as well.
 struct Packet {
   uint32_t magic = MAGIC;
@@ -42,11 +42,12 @@ struct Packet {
   uint8_t option=0,result=OK;
   Settings settings;
   uint8_t dayTypes[7]={},overrideMask=0,reason=0;
+  uint8_t flameLevel=0; // Exact thermostat display selection, 0..8; not CH on/off.
   uint8_t tag[16] = {};
 };
 #pragma pack(pop)
 static_assert(sizeof(Settings)==38,"Settings layout changed");
-static_assert(sizeof(Packet) == 123, "Protocol layout changed");
+static_assert(sizeof(Packet) == 124, "Protocol layout changed");
 static_assert(sizeof(Packet) <= 250, "ESP-NOW v1 packet limit");
 constexpr uint8_t BROADCAST[6] = {255,255,255,255,255,255};
 inline bool sameCommand(const Packet&a,const Packet&b){

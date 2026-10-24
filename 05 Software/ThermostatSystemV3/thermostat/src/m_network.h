@@ -12,13 +12,14 @@ void networkWorker(void *) {
   if (!WiFi.setSleep(false)) Serial.println("ESP-NOW warning: could not disable Wi-Fi modem sleep");
   else Serial.println("ESP-NOW receiver: Wi-Fi modem sleep disabled");
   if (!RemoteTransport::begin()) Serial.println("ESP-NOW unavailable; thermostat remains autonomous");
-  else Serial.println("ESP-NOW v2 control service ready; follows the Wi-Fi channel");
+  else Serial.println("ESP-NOW v3 control service ready; follows the Wi-Fi channel");
   bool telegramStarted = false;
   unsigned long lastTelegramAttempt = millis() - 30000UL;
   static NetworkPacket packet; // Avoid large snapshot buffers on task stack.
   unsigned long maxOperation = 0;
   for (;;) {
     unsigned long started = millis();
+    markNetworkPhase(NetworkPhase::Snapshot);
     if (xQueueReceive(networkSnapshots, &packet, 0) == pdPASS) applyNetworkPacket(packet);
     // Keep acknowledgement ordering; never answer using state older than its command.
     NetworkReply reply;
@@ -28,25 +29,31 @@ void networkWorker(void *) {
         xQueueReceive(networkReplies, &reply, 0);
         String chatID(reply.message.chatID);
         auto it = userConversation.find(chatID);
-        if (it != userConversation.end()) it->second.respondToUser(bot, reply.message);
+        if (it != userConversation.end()) {markNetworkPhase(NetworkPhase::Reply);it->second.respondToUser(bot, reply.message);}
       }
     }
+    markNetworkPhase(NetworkPhase::Reconnect);
     reconnectWiFiIfNeeded(networkData);
+    serviceReceiverWifi();
+    markNetworkPhase(NetworkPhase::Clock);
     syncTimeIfNeeded(networkData); // Also refresh local DST status while offline.
     if (wifiConnected()) {
+      markNetworkPhase(NetworkPhase::Timezone);
       requestTimeZoneIfNeeded(networkData);
       if (networkData.timeSynched && networkData.botChatID.length() != 0) {
         if (!telegramStarted && millis() - lastTelegramAttempt >= 30000UL) {
           lastTelegramAttempt = millis();
+          markNetworkPhase(NetworkPhase::TelegramStart);
           telegramStarted = startTelegram();
         }
-        if (telegramStarted) checkTelegramIfNeeded();
+        if (telegramStarted) {markNetworkPhase(NetworkPhase::TelegramPoll);checkTelegramIfNeeded();}
       }
     }
     maxOperation = max(maxOperation, millis() - started);
     NetworkStatus status{wifiConnected(), networkData.timeSynched, networkData.timeZoneOffset,
                          networkData.timeDSToffset, millis(), maxOperation};
     xQueueOverwrite(networkStatusQueue, &status);
+    markNetworkPhase(NetworkPhase::Idle);
     vTaskDelay(pdMS_TO_TICKS(20)); // Never busy-spin or starve core 0 system tasks.
   }
 }
@@ -68,6 +75,15 @@ bool startNetworkWorker() {
 }
 
 void serviceNetworkMessages() {
+  static uint32_t lastStallReport=0;
+  uint32_t now=millis();
+  if(now-networkLastHeartbeatMs>10000 && now-lastStallReport>30000){
+    lastStallReport=now;
+    Serial.printf("Network slow/stalled uptime=%lu heartbeat-age=%lu phase=%s phase-age=%lu telegram-paused=%u polls=%lu last-poll-age=%lu radio-sending=%u heap=%u largest=%u\n",
+      now,now-networkLastHeartbeatMs,networkPhaseName(networkPhase.load()),now-networkPhaseStartedMs.load(),
+      unsigned(telegramPollingPaused.load()),telegramPollCount.load(),now-telegramPollFinishedMs.load(),
+      unsigned(RemoteTransport::sending.load()),ESP.getFreeHeap(),ESP.getMaxAllocHeap());
+  }
   NetworkStatus status;
   if (networkStatusQueue && xQueueReceive(networkStatusQueue, &status, 0) == pdPASS) {
     icon_t icon = status.connected ? iconWifiConnected : iconWifiLost;

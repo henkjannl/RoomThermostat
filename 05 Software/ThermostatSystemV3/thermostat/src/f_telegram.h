@@ -4,6 +4,7 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
 #include <HTTPClient.h>
+#include "network_policy.h"
 //#include <ESP32Ping.h>
 
 #define TELEGRAM_INTERVAL 1000
@@ -736,8 +737,8 @@ String convertToHexString( String input ) {
 bool startTelegram() {
   bot.maxMessageLength = 6000;
   bot.longPoll = 0;
-  securedClient.setTimeout(3000);
-  securedClient.setHandshakeTimeout(5);
+  NetworkPolicy::configureTelegramClient(securedClient);
+  bot.waitForResponse=NetworkPolicy::TelegramResponseWaitMs;
   //telegramHandler.begin( );
 
   // OTA remains disabled; network tasks never write firmware or flash.
@@ -806,7 +807,10 @@ void handleNewMessages(int numNewMessages){
 };
 
 void checkNewMessages() {
+  telegramPollStartedMs.store(millis());
+  telegramPollCount.fetch_add(1);
   int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+  telegramPollFinishedMs.store(millis());
 
   //Serial.println("checkNewMessages()");
   if (numNewMessages > 0) {
@@ -819,6 +823,7 @@ void checkNewMessages() {
 void checkTelegramIfNeeded() {
   static unsigned long lastTimeTelegramPolled = 0;
   userEventMessage_t message;
+  telegramPollingPaused.store(!telegramEnabled());
 
   if( telegramEnabled() ) {
 

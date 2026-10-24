@@ -3,7 +3,7 @@
 #include <string>
 #include <time.h>
 inline tm*localtime_r(const time_t*t,tm*out){return localtime_s(out,t)?nullptr:out;}
-constexpr const char *FIRMWARE_VERSION="3.0.0-alpha.2";
+constexpr const char *FIRMWARE_VERSION="3.0.0-alpha.6";
 #include "remote_ui.h"
 using namespace RemoteProtocol;
 static int sends=0;static Packet submitted;
@@ -11,7 +11,7 @@ static bool sendTest(uint8_t op,uint8_t index,int16_t value,uint8_t option,uint3
   submitted=Packet{};submitted.operation=op;submitted.index=index;submitted.value=value;submitted.option=option;submitted.revision=revision;submitted.boot=boot;submitted.lease=lease;++sends;return true;
 }
 void contracts(){
-  assert(sizeof(Packet)==123&&offsetof(Packet,tag)==107);
+  assert(sizeof(Packet)==124&&offsetof(Packet,tag)==108);
   Settings s;Packet p;p.operation=SetTime;p.index=3;p.value=390;auto before=s;
   assert(apply(s,p)==Invalid&&!memcmp(&s,&before,sizeof(s)));
   p.value=480;assert(apply(s,p)==RemoteProtocol::OK&&s.times[3]==480);
@@ -34,6 +34,24 @@ void contracts(){
 }
 int main(int argc,char**argv){
   contracts();
+  {
+    Adafruit_ILI9341 waiting,expected;RemoteUi::wake(expected,FIRMWARE_VERSION);
+    RemoteUi::State initial;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
+    RemoteUi::touch(176,260);assert(sends==0&&RemoteUi::page==RemoteUi::Home);
+    initial.battery=76;initial.batteryValid=true;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
+    initial.link=1;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION); // Discovery is not a snapshot.
+    assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
+    initial.link=3;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    assert(waiting.pixels!=expected.pixels&&RemoteUi::count==0);
+    initial.link=0;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
+    // Even a zero-valued first status must reveal home via boot-ID change alone.
+    initial.snapshot.boot=17;initial.snapshot.capabilities=SettingsControl;
+    RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);assert(RemoteUi::count==3&&waiting.pixels!=expected.pixels);
+    initial.link=2;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);assert(RemoteUi::count==3);
+  }
   Adafruit_ILI9341 lcd;RemoteUi::State s;s.link=1;s.battery=76;s.batteryValid=true;
   s.snapshot.boot=17;s.snapshot.revision=3;s.snapshot.lease=21;s.snapshot.capabilities=SettingsControl|TelegramReports;
   s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;s.snapshot.roomCenti=2040;s.snapshot.setpointCenti=1950;s.snapshot.epoch=1792771200;
@@ -47,7 +65,29 @@ int main(int argc,char**argv){
   auto screenshot=[&](const char*name){if(argc<2)return;std::ofstream f(std::string(argv[1])+"/firmware-"+name+".ppm",std::ios::binary);f<<"P6\n240 320\n255\n";for(auto pixel:lcd.pixels){char rgb[]={char(((pixel>>11)&31)*255/31),char(((pixel>>5)&63)*255/63),char((pixel&31)*255/31)};f.write(rgb,3);}};
   auto tap=[&](int x,int y){RemoteUi::touch(x,y);draw();};
   auto ack=[&](){assert(RemoteUi::pending);assert(apply(s.snapshot.settings,submitted)==RemoteProtocol::OK);++s.snapshot.revision;RemoteUi::completed(RemoteProtocol::OK);draw();};
-  draw();assert(RemoteUi::count==3);screenshot("home");tap(120,260);assert(RemoteUi::page==RemoteUi::Main);screenshot("menu");tap(72,220);assert(RemoteUi::page==RemoteUi::Period);screenshot("period");
+  auto region=[&](int x,int y,int n){std::vector<uint16_t> result;for(int j=0;j<n;++j)for(int i=0;i<n;++i)result.push_back(lcd.pixels[(y+j)*240+x+i]);return result;};
+  auto checkWater=[&](RemoteUi::Page screen,int x,int y,int size){
+    RemoteUi::page=screen;RemoteUi::dirty=true;s.link=1;s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;draw();auto idle=region(x,y,size);
+    for(auto pixel:idle)assert(pixel==RemoteUi::White);
+    s.snapshot.flags|=HotWaterActive;draw();auto active=region(x,y,size);assert(active!=idle);screenshot(screen==RemoteUi::Home?"water-active-home":"water-active-status");
+    s.snapshot.flags&=~HotWaterActive;draw();assert(region(x,y,size)==idle);screenshot(screen==RemoteUi::Home?"water-idle-home":"water-idle-status");
+    s.snapshot.flags|=HotWaterActive;s.link=2;draw();auto unknown=region(x,y,size);assert(unknown!=idle&&unknown!=active);
+    s.link=1;s.snapshot.flags&=~BoilerOnline;draw();assert(region(x,y,size)==unknown);screenshot(screen==RemoteUi::Home?"water-unknown-home":"water-unknown-status");
+    s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;
+  };
+  checkWater(RemoteUi::Home,132,44,24);checkWater(RemoteUi::StatusPage,32,180,28);
+  // A flame-only change must repaint, regardless of the CH-active flag.
+  RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;s.link=1;s.snapshot.flags&=~HeatingActive;
+  for(int level=8;level>=0;--level){
+    s.snapshot.flameLevel=level;draw();auto actual=region(184,145,24);
+    Adafruit_ILI9341 expected;expected.fillScreen(RemoteUi::White);char name[40];snprintf(name,sizeof(name),"/iconFlame%d.jpg",level);
+    RemoteUi::icon(expected,name,184,145,24);
+    for(int j=0;j<24;++j)for(int i=0;i<24;++i)assert(actual[j*24+i]==expected.pixels[(145+j)*240+184+i]);
+    screenshot(("flame-"+std::to_string(level)).c_str());
+  }
+  auto noFlame=region(184,145,24);s.snapshot.flags|=HeatingActive;draw();assert(region(184,145,24)==noFlame);
+  s.snapshot.flameLevel=255;draw();assert(region(184,145,24)==noFlame);
+  RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;draw();assert(RemoteUi::count==3);screenshot("home");tap(120,260);assert(RemoteUi::page==RemoteUi::Main);screenshot("menu");tap(72,220);assert(RemoteUi::page==RemoteUi::Period);screenshot("period");
   tap(160,118);assert(RemoteUi::page==RemoteUi::DayMultiple);screenshot("daytypes");tap(72,184);assert(RemoteUi::page==RemoteUi::Confirm);tap(120,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.multiple==2);
   tap(160,180);assert(RemoteUi::page==RemoteUi::Edit);tap(176,60);assert(RemoteUi::forever);tap(120,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.forever);
   tap(160,180);tap(176,260);int previousSends=sends;tap(64,60);assert(RemoteUi::page==RemoteUi::Period&&sends==previousSends&&s.snapshot.settings.forever);

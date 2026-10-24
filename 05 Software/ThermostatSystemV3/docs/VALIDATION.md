@@ -78,3 +78,28 @@ Gebruiker meldt zwarte achtergrond en omgekeerde kleuren bij de witte UI. screen
 ## Bedienbare remote alpha.2
 
 Zie VALIDATION-ALPHA2.md en UPLOAD-ALPHA2.md voor bouwresultaten, hardwarebeperkingen en uploadvolgorde.
+
+
+## Thermostat alpha.3
+
+24 October 2026: see NETWORK-ALPHA3.md for the Telegram timeout fix, diagnostics, build/host checks and hardware follow-up. Remote alpha.2 remains compatible.
+
+
+## Remote alpha.3
+
+See REMOTE-ALPHA3.md for the domestic-hot-water icon correction, native pixel tests and upload instructions.
+
+
+## Matching flame icons alpha.4
+
+See FLAME-ALPHA4.md. Both devices require alpha.4 / protocol v3. Host pixel tests cover all nine levels. Earlier alpha.3 network and shower fixes are retained.
+
+
+## Updated icons alpha.5
+
+See ICONS-ALPHA5.md for PNG override/alpha handling, regenerated shared assets and build/host checks. Both devices report alpha.5. User artwork exports are preserved.
+
+
+## Remote wake alpha.6
+
+See WAKE-ALPHA6.md: waiting screen remains until first accepted snapshot. Host regression covers startup/failure/retry/first-status transitions. Thermostat alpha.5 and custom icons are unchanged.
