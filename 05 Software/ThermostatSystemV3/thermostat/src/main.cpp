@@ -7,7 +7,7 @@
 #include <LittleFS.h>
 #include "MilliSecTimer.h"
 
-#define VERSION "3.0.0-alpha.5"
+#define VERSION "3.0.0-alpha.8"
 // #define USE_TESTBOT true
 #define USE_TESTBOT false
 
@@ -97,6 +97,7 @@
 #include "f_telegram.h"
 #include "g_controller.h"
 #include "h_temperature.h"
+#include "telemetry.h"
 #include "i_wifi_time.h"
 #include "j_jpeg.h"
 #include "k_display.h"
@@ -188,6 +189,7 @@ void setup() {
   startBacklight();
 
   Serial.println("Starting network worker on core 0");
+  Telemetry::begin();
   startNetworkWorker();
   Serial.printf("Control/UI core=%d\n", xPortGetCoreID());
 
@@ -219,6 +221,7 @@ void loop() {
   // ArduinoOTA.handle();
 
   // Defer flash writes until OpenTherm reception and recovery are complete.
+  if (boilerStep == BoilerStep::Idle && opentherm.isReady()) serviceTelegramAccessStorage();
   static bool savePending = false;
   if (settingsTimer.lapsed()) savePending = true;
   if (savePending && boilerStep == BoilerStep::Idle && opentherm.isReady()) {
@@ -236,6 +239,7 @@ void loop() {
   controllerData.logBusyTime.start(btDisplay);        checkDisplayQueue();                     controllerData.logBusyTime.finish(btDisplay);
   serviceRemoteLink();
   serviceNetworkMessages();
+  Telemetry::serviceControl();
   controllerData.logBusyTime.start(btController);     processControllerIfNeeded();             controllerData.logBusyTime.finish(btController);
   controllerData.logBusyTime.start(btBacklight);      checkBacklight();                        controllerData.logBusyTime.finish(btBacklight);
   controllerData.logBusyTime.finish(btTotal);

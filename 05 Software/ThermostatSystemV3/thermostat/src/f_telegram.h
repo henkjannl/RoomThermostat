@@ -5,6 +5,7 @@
 #include <UniversalTelegramBot.h>
 #include <HTTPClient.h>
 #include "network_policy.h"
+#include "telegram_access_storage.h"
 //#include <ESP32Ping.h>
 
 #define TELEGRAM_INTERVAL 1000
@@ -718,6 +719,7 @@ WiFiClientSecure securedClient;                                                 
 UniversalTelegramBot bot("", securedClient);                                                         // Driver for Telegram, bot token not yet retrieved by ControllerData since SPIFFS not yet up
 //TelegramHandler telegramHandler(networkData, controllerQueue, telegramQueue, securedClient, bot); // Telegram message handler
 std::map<String, TelegramChat> userConversation; // The data for each user interacting with Telegram
+#include "telegram_access_commands.h"
 bool telegramEnabledCounter = true; // consider making it a counter, if multiple processes enable it and disable it simultaneously
 
 void enableTelegram()  { telegramEnabledCounter=true;   };
@@ -748,7 +750,8 @@ bool startTelegram() {
   bot.updateToken(networkData.botToken);
 
   const String commands = F("["
-                            "{\"command\":\"start\",   \"description\":\"Welcome message\"}" // no comma on last command
+                            "{\"command\":\"start\",\"description\":\"Thermostaatmenu openen\"},"
+                            "{\"command\":\"help\",\"description\":\"Hulp en gebruikersbeheer\"}"
                             "]");
   if (!bot.setMyCommands(commands)) return false;
 
@@ -769,8 +772,8 @@ void handleNewMessages(int numNewMessages){
 
   for (int i = 0; i < numNewMessages; i++) {
     String chatID = bot.messages[i].chat_id;
-    // Reject unknown chats before allocating a conversation or handling callbacks.
-    if (networkData.botChatID.length() == 0 || chatID != networkData.botChatID) continue;
+    // Authenticate messages and callbacks before allocating or touching a conversation.
+    if(handleTelegramAccessMessage(bot.messages[i]))continue;
     Serial.printf("Message %s from chatID: %s\n", bot.messages[i].text.c_str(), chatID.c_str());
 
     // If chat is not yet listed, create new item
@@ -853,7 +856,8 @@ void checkTelegramIfNeeded() {
         String chatID = message.chatID;
         if( chatID.length()>1 ) {
           //Serial.printf("Handle queue command for chatID: %s\n", chatID);
-          userConversation[chatID].respondToUser( bot, message );
+          auto conversation=userConversation.find(chatID);
+          if(telegramChatAllowed(chatID,chatID)&&conversation!=userConversation.end())conversation->second.respondToUser(bot,message);
         }
       }; // switch( message.command )
   }; // xQueueReceive

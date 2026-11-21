@@ -66,3 +66,8 @@ Thermostaatbasis: `RoomThermostat/05 Software/Roomthermostat V2/Roomthermostat V
 - https://www.lcdwiki.com/2.8inch_ESP32-S3_Display
 - https://docs.espressif.com/projects/esp-idf/en/v4.4.7/esp32/api-reference/network/esp_now.html
 - ESP-IDF/Arduino, TFT_eSPI, JPEGDecoder en Adafruit behouden hun eigen licenties. Gedeelde originele artwork/fonts zijn uit het bestaande lokale project overgenomen; deze repository is niet gepubliceerd.
+
+
+Telegram-gebruikersbeheer vanaf thermostaat alpha.7: zie [Telegram-gebruikers beheren](docs/TELEGRAM-USERS.md). Gebruik `/help` in de bot voor commando’s en voorbeelden.
+
+InfluxDB-logging vanaf thermostaat alpha.8: zie [instellen en testen](docs/INFLUX-LOGGING.md). De CYD en het radioprotocol blijven ongewijzigd; logging is uitgeschakeld zonder lokale tokenconfiguratie.

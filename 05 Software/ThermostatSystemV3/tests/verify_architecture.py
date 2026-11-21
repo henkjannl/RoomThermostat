@@ -12,6 +12,17 @@ def source(name):
 
 
 class OwnershipChecks(unittest.TestCase):
+    def test_telemetry_separates_capture_and_http(self):
+        telemetry = source("telemetry.h")
+        worker = telemetry.split("void serviceWorker(bool connected)", 1)[1].split("void telemetryObserveStatus", 1)[0]
+        self.assertNotRegex(worker, r"\b(?:controllerData|opentherm|dallasSensor|Preferences|LittleFS)\b")
+        capture = telemetry.split("void capture(Kind kind)", 1)[1].split("void serviceWorker", 1)[0]
+        self.assertNotRegex(capture, r"\b(?:HTTPClient|WiFiClient|delay|Preferences|LittleFS)\b")
+        self.assertIn("xQueueSend(records,&r,0)", capture)
+        self.assertIn("Telemetry::serviceWorker(wifiConnected())", source("m_network.h"))
+        self.assertIn("Telemetry::serviceControl()", source("main.cpp"))
+        self.assertNotIn("Telemetry::serviceWorker", source("main.cpp"))
+
     def test_control_task_has_no_network_operations(self):
         main = source("main.cpp")
         self.assertNotRegex(main, r"\b(?:setupWifi|startTelegram|checkTelegramIfNeeded|requestTimeZoneIfNeeded|syncTimeIfNeeded|reconnectWiFiIfNeeded|wifiConnected)\s*\(")
@@ -54,11 +65,28 @@ class OwnershipChecks(unittest.TestCase):
 
     def test_telegram_authorization_and_startup(self):
         telegram = source("f_telegram.h").split("void handleNewMessages", 1)[1]
-        self.assertLess(telegram.index("chatID != networkData.botChatID"), telegram.index("userConversation.find"))
+        self.assertLess(telegram.index("handleTelegramAccessMessage(bot.messages[i])"), telegram.index("userConversation.find"))
         worker = source("m_network.h")
         self.assertLess(worker.index("syncTimeIfNeeded(networkData)"), worker.index("telegramStarted = startTelegram()"))
         self.assertIn("if (networkData.timeSynched", worker)
         self.assertIn("if (!bot.setMyCommands(commands)) return false", source("f_telegram.h"))
+
+    def test_telegram_access_storage_stays_on_control_core(self):
+        main = source("main.cpp")
+        self.assertIn("if (boilerStep == BoilerStep::Idle && opentherm.isReady()) serviceTelegramAccessStorage();", main)
+        worker = source("m_network.h")
+        startup = worker.split("bool startNetworkWorker()", 1)[1]
+        self.assertLess(startup.index("initializeTelegramAccess()"), startup.index("xTaskCreatePinnedToCore"))
+        self.assertNotIn("serviceTelegramAccessStorage", worker)
+        self.assertNotRegex(source("telegram_access_commands.h"), r"\b(?:Preferences|putBytes|saveSettingsNVS)\b")
+
+    def test_telegram_revocation_does_not_recreate_conversations(self):
+        telegram = source("f_telegram.h")
+        replies = telegram.split("void checkTelegramIfNeeded()", 1)[1]
+        self.assertNotIn("userConversation[chatID]", replies)
+        self.assertIn("telegramChatAllowed(chatID,chatID)", replies)
+        worker = source("m_network.h").split("void networkWorker(void *)", 1)[1]
+        self.assertLess(worker.index("serviceTelegramAccessReplies()"), worker.index("checkTelegramIfNeeded()"))
 
     def test_clock_initialization_preserves_overrides(self):
         controller = source("g_controller.h")

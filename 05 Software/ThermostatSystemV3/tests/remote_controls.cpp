@@ -6,6 +6,8 @@ inline tm*localtime_r(const time_t*t,tm*out){return localtime_s(out,t)?nullptr:o
 constexpr const char *FIRMWARE_VERSION="3.0.0-alpha.6";
 #include "remote_ui.h"
 using namespace RemoteProtocol;
+static int localRestarts=0;
+static void restartTest(){++localRestarts;}
 static int sends=0;static Packet submitted;
 static bool sendTest(uint8_t op,uint8_t index,int16_t value,uint8_t option,uint32_t revision,uint32_t boot,uint32_t lease){
   submitted=Packet{};submitted.operation=op;submitted.index=index;submitted.value=value;submitted.option=option;submitted.revision=revision;submitted.boot=boot;submitted.lease=lease;++sends;return true;
@@ -40,11 +42,17 @@ int main(int argc,char**argv){
     assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
     RemoteUi::touch(176,260);assert(sends==0&&RemoteUi::page==RemoteUi::Home);
     initial.battery=76;initial.batteryValid=true;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    RemoteUi::wake(expected,FIRMWARE_VERSION,76,true);
     assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
     initial.link=1;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION); // Discovery is not a snapshot.
     assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
     initial.link=3;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
     assert(waiting.pixels!=expected.pixels&&RemoteUi::count==0);
+    initial.link=4;RemoteUi::restartLocal=restartTest;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
+    assert(RemoteUi::count==1&&RemoteUi::buttons[0].action==41);
+    RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);assert(RemoteUi::count==1);
+    RemoteUi::touch(40,200);assert(localRestarts==0&&sends==0);
+    RemoteUi::touch(120,260);assert(localRestarts==1&&sends==0);
     initial.link=0;RemoteUi::paint(waiting,initial,FIRMWARE_VERSION);
     assert(waiting.pixels==expected.pixels&&RemoteUi::count==0);
     // Even a zero-valued first status must reveal home via boot-ID change alone.
@@ -59,7 +67,7 @@ int main(int argc,char**argv){
   RemoteUi::send=sendTest;
   auto draw=[&](){RemoteUi::paint(lcd,s,FIRMWARE_VERSION);
     for(int i=0;i<RemoteUi::count;++i){auto a=RemoteUi::buttons[i];assert(a.x>=26&&a.y>=26&&a.x+a.w<=214&&a.y+a.h<=298);for(int j=i+1;j<RemoteUi::count;++j){auto b=RemoteUi::buttons[j];assert(a.x+a.w<=b.x||b.x+b.w<=a.x||a.y+a.h<=b.y||b.y+b.h<=a.y);}}
-    int backs=0;for(int i=0;i<RemoteUi::count;++i)if(!RemoteUi::buttons[i].action){auto b=RemoteUi::buttons[i];assert(b.x==36&&b.y==34&&b.w==56&&b.h==56);++backs;}
+    int backs=0;for(int i=0;i<RemoteUi::count;++i)if(!RemoteUi::buttons[i].action){auto b=RemoteUi::buttons[i];assert(b.x==120&&b.y==232&&b.w==46&&b.h==56);++backs;}
     assert(backs==(RemoteUi::page==RemoteUi::Home?0:1));
   };
   auto screenshot=[&](const char*name){if(argc<2)return;std::ofstream f(std::string(argv[1])+"/firmware-"+name+".ppm",std::ios::binary);f<<"P6\n240 320\n255\n";for(auto pixel:lcd.pixels){char rgb[]={char(((pixel>>11)&31)*255/31),char(((pixel>>5)&63)*255/63),char((pixel&31)*255/31)};f.write(rgb,3);}};
@@ -68,14 +76,14 @@ int main(int argc,char**argv){
   auto region=[&](int x,int y,int n){std::vector<uint16_t> result;for(int j=0;j<n;++j)for(int i=0;i<n;++i)result.push_back(lcd.pixels[(y+j)*240+x+i]);return result;};
   auto checkWater=[&](RemoteUi::Page screen,int x,int y,int size){
     RemoteUi::page=screen;RemoteUi::dirty=true;s.link=1;s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;draw();auto idle=region(x,y,size);
-    for(auto pixel:idle)assert(pixel==RemoteUi::White);
+    assert(std::any_of(idle.begin(),idle.end(),[](uint16_t pixel){return pixel!=RemoteUi::White;}));
     s.snapshot.flags|=HotWaterActive;draw();auto active=region(x,y,size);assert(active!=idle);screenshot(screen==RemoteUi::Home?"water-active-home":"water-active-status");
     s.snapshot.flags&=~HotWaterActive;draw();assert(region(x,y,size)==idle);screenshot(screen==RemoteUi::Home?"water-idle-home":"water-idle-status");
     s.snapshot.flags|=HotWaterActive;s.link=2;draw();auto unknown=region(x,y,size);assert(unknown!=idle&&unknown!=active);
     s.link=1;s.snapshot.flags&=~BoilerOnline;draw();assert(region(x,y,size)==unknown);screenshot(screen==RemoteUi::Home?"water-unknown-home":"water-unknown-status");
     s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;
   };
-  checkWater(RemoteUi::Home,132,44,24);checkWater(RemoteUi::StatusPage,32,180,28);
+  checkWater(RemoteUi::Home,132,12,24);checkWater(RemoteUi::StatusPage,32,154,28);
   // A flame-only change must repaint, regardless of the CH-active flag.
   RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;s.link=1;s.snapshot.flags&=~HeatingActive;
   for(int level=8;level>=0;--level){
@@ -87,15 +95,48 @@ int main(int argc,char**argv){
   }
   auto noFlame=region(184,145,24);s.snapshot.flags|=HeatingActive;draw();assert(region(184,145,24)==noFlame);
   s.snapshot.flameLevel=255;draw();assert(region(184,145,24)==noFlame);
-  RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;draw();assert(RemoteUi::count==3);screenshot("home");tap(120,260);assert(RemoteUi::page==RemoteUi::Main);screenshot("menu");tap(72,220);assert(RemoteUi::page==RemoteUi::Period);screenshot("period");
-  tap(160,118);assert(RemoteUi::page==RemoteUi::DayMultiple);screenshot("daytypes");tap(72,184);assert(RemoteUi::page==RemoteUi::Confirm);tap(120,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.multiple==2);
-  tap(160,180);assert(RemoteUi::page==RemoteUi::Edit);tap(176,60);assert(RemoteUi::forever);tap(120,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.forever);
-  tap(160,180);tap(176,260);int previousSends=sends;tap(64,60);assert(RemoteUi::page==RemoteUi::Period&&sends==previousSends&&s.snapshot.settings.forever);
-  tap(160,248);tap(120,260);ack();assert(s.snapshot.settings.multiple==Auto&&!s.snapshot.settings.forever&&RemoteUi::page==RemoteUi::Period);
-  tap(64,60);assert(RemoteUi::page==RemoteUi::Main); // No duplicate Period in stack.
+  RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;draw();assert(RemoteUi::count==3);screenshot("home");tap(120,260);assert(RemoteUi::page==RemoteUi::Main);screenshot("menu");tap(72,190);assert(RemoteUi::page==RemoteUi::Period);screenshot("period");
+  tap(160,100);assert(RemoteUi::page==RemoteUi::DayMultiple);screenshot("daytypes");tap(72,150);assert(RemoteUi::page==RemoteUi::Confirm);tap(97,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.multiple==2);
+  tap(160,150);assert(RemoteUi::page==RemoteUi::Edit);tap(176,196);assert(RemoteUi::forever);tap(97,260);ack();assert(RemoteUi::page==RemoteUi::Period&&s.snapshot.settings.forever);
+  tap(160,150);tap(176,260);int previousSends=sends;tap(143,260);assert(RemoteUi::page==RemoteUi::Period&&sends==previousSends&&s.snapshot.settings.forever);
+  tap(160,200);tap(97,260);ack();assert(s.snapshot.settings.multiple==Auto&&!s.snapshot.settings.forever&&RemoteUi::page==RemoteUi::Period);
+  tap(143,260);assert(RemoteUi::page==RemoteUi::Main); // No duplicate Period in stack.
   for(int page=RemoteUi::SettingsPage;page<=RemoteUi::DayWeek;++page){RemoteUi::page=RemoteUi::Page(page);RemoteUi::dirty=true;draw();screenshot(("screen-"+std::to_string(page)).c_str());}
-  RemoteUi::page=RemoteUi::OfficeTimes;RemoteUi::dirty=true;draw();tap(72,130);assert(RemoteUi::originalValue==390);tap(176,260);assert(RemoteUi::originalValue==390&&RemoteUi::editValue==405);screenshot("time-editor");tap(120,260);ack();assert(s.snapshot.settings.times[2]==405);
+  RemoteUi::page=RemoteUi::OfficeTimes;RemoteUi::dirty=true;draw();tap(72,100);assert(RemoteUi::originalValue==390);tap(176,260);assert(RemoteUi::originalValue==390&&RemoteUi::editValue==405);screenshot("time-editor");tap(97,260);ack();assert(s.snapshot.settings.times[2]==405);
   RemoteUi::page=RemoteUi::Home;RemoteUi::dirty=true;s.link=3;draw();previousSends=sends;tap(176,260);assert(sends==previousSends);
   s.link=1;draw();tap(176,260);assert(RemoteUi::pending);RemoteUi::completed(Expired,true);draw();assert(!RemoteUi::pending);screenshot("uncertain");
+  // Export every page and editor variant using the actual firmware renderer.
+  s.link=1;s.snapshot.flags=RoomValid|ClockValid|BoilerOnline|DaysValid;
+  s.snapshot.settings=Settings{};RemoteUi::pending=false;RemoteUi::message="";
+  const char*pageNames[]={"home","menu","period","settings","week","times","home-times","office-times","weekend-times","temperatures","more","status","service","today","tomorrow","multiple","weekday"};
+  std::vector<uint16_t> header;
+  for(int n=RemoteUi::Home;n<=RemoteUi::DayWeek;++n){
+    RemoteUi::page=RemoteUi::Page(n);RemoteUi::dirty=true;draw();screenshot(pageNames[n]);
+    std::vector<uint16_t> actual(lcd.pixels.begin(),lcd.pixels.begin()+240*40);
+    if(n==0)header=actual;else assert(actual==header);
+  }
+  auto editor=[&](const char*name,const char*title,uint8_t op,int value,int delta,int low,int high){
+    RemoteUi::page=RemoteUi::More;RemoteUi::beginEdit(title,op,0,value,delta,low,high);draw();screenshot(name);
+  };
+  editor("edit-time","Tijd instellen",SetTime,390,15,0,1425);
+  editor("edit-comfort","Comfort",SetComfort,2100,50,450,3000);
+  editor("edit-night","Nacht",SetNight,1600,50,400,2950);
+  editor("edit-offset","Sensorcorrectie",SetOffset,20,10,-500,500);
+  editor("edit-duration","Aantal dagen",SetDuration,3,1,1,365);
+  RemoteUi::forever=true;RemoteUi::dirty=true;draw();screenshot("edit-unlimited");
+  RemoteUi::ask(SetToday,0,2,"Weekend",RemoteUi::DayToday);draw();screenshot("confirm-day");
+  RemoteUi::ask(SetMultiple,0,Auto,"Automatisch",RemoteUi::Period);draw();screenshot("confirm-auto");
+  RemoteUi::ask(Restart,0,0,"Opnieuw opstarten",RemoteUi::Service);draw();screenshot("confirm-restart");
+  s.snapshot.boot=0;
+  for(int link: {0,3,4}){
+    s.link=link;RemoteUi::dirty=true;RemoteUi::paint(lcd,s,FIRMWARE_VERSION);
+    screenshot(link==0?"connecting":link==3?"disconnected":"radio-error");
+    for(int battery: {25,75}){
+      s.battery=battery;RemoteUi::paint(lcd,s,FIRMWARE_VERSION);
+      Adafruit_ILI9341 expected;expected.fillScreen(RemoteUi::White);RemoteUi::offlineStatusIcons(expected,battery,true);
+      assert(std::equal(lcd.pixels.begin(),lcd.pixels.begin()+240*40,expected.pixels.begin()));
+      assert(RemoteUi::count==(link==4?1:0));
+    }
+  }
   puts("PASS: actual C++ settings validation, command deduplication/conflicts/expiry/reboot, firmware navigation, period return, drafts, offline controls, every screen's touch geometry and fixed back.");
 }

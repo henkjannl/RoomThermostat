@@ -9,7 +9,7 @@ struct State {
   Packet snapshot;
 };
 enum Page:uint8_t {Home,Main,Period,SettingsPage,Week,Times,HomeTimes,OfficeTimes,WeekendTimes,
-  Temperatures,More,StatusPage,Service,Reports,DayToday,DayTomorrow,DayMultiple,DayWeek,Edit,Confirm};
+  Temperatures,More,StatusPage,Service,DayToday,DayTomorrow,DayMultiple,DayWeek,Edit,Confirm};
 struct Button {int16_t x,y,w,h;uint8_t action;int16_t arg;};
 static Button buttons[10];static uint8_t count=0;
 static Page page=Home,history[12],returnAfter=Home;static uint8_t depth=0,weekDay=1;
@@ -20,6 +20,7 @@ static bool forever=false,originalForever=false;
 static const char *editTitle="";
 using Send=bool(*)(uint8_t,uint8_t,int16_t,uint8_t,uint32_t,uint32_t,uint32_t);
 static Send send=nullptr;
+static void (*restartLocal)()=nullptr;
 static const char *types[]={"Thuiswerken","Kantoor","Weekend","Afwezig","Automatisch"};
 static const char *typeIcons[]={"/iconHome.jpg","/iconWork.jpg","/iconWeekend.jpg","/iconAway.jpg","/iconAutomatic.jpg"};
 static const char *days[]={"Zondag","Maandag","Dinsdag","Woensdag","Donderdag","Vrijdag","Zaterdag"};
@@ -55,11 +56,17 @@ inline void waterIcon(Adafruit_GFX&lcd,int x,int y,int size){
   if(known)icon(lcd,(state.snapshot.flags&HotWaterActive)?"/iconShowerOn.jpg":"/iconShowerOff.jpg",x,y,size);
   else text(lcd,font_Noway_Light18,"?",x+(size-width(font_Noway_Light18,"?"))/2,y+(size-18)/2,Grey);
 }
-inline void title(Adafruit_GFX&lcd,const char*v){fit(lcd,v,120,22,178,Grey);}
+inline void statusIcons(Adafruit_GFX&lcd){
+    icon(lcd,state.link==1?"/iconWifiConnected.jpg":"/iconWifiLost.jpg",36,12,24);
+    icon(lcd,(state.snapshot.flags&BoilerOnline)?"/iconBoilerConn.jpg":"/iconBoilerLost.jpg",84,12,24,state.link==1?255:64);
+    waterIcon(lcd,132,12,24);
+    batteryIcon(lcd,state.battery,state.batteryValid);
+}
+inline void title(Adafruit_GFX&lcd,const char*v){fit(lcd,v,120,51,210,Grey);}
 inline void add(int x,int y,int w,int h,uint8_t action,int arg=0){if(count<10)buttons[count++]={int16_t(x),int16_t(y),int16_t(w),int16_t(h),action,int16_t(arg)};}
 inline void control(Adafruit_GFX&lcd,const char*image,int x,int y,uint8_t action,int arg=0){
-  if(image)icon(lcd,image,x+12,y+12);else text(lcd,font_Noway_Medium24,"OK",x+28-width(font_Noway_Medium24,"OK")/2,y+18,Amber);
-  add(x,y,56,56,action,arg);
+  icon(lcd,image?image:"/iconOK.jpg",x+7,y+12);
+  add(x,y,46,56,action,arg);
 }
 inline void infinity(Adafruit_GFX&lcd,int x,int y,int size=32){
   float oldX=0,oldY=0;
@@ -108,24 +115,25 @@ inline void completed(uint8_t result,bool uncertain=false){
     if(page==DayMultiple){page=Period;if(depth&&history[depth-1]==Period)--depth;}
     if(page==DayToday||page==DayTomorrow){page=Home;depth=0;}
     if(page==DayWeek){page=Week;if(depth&&history[depth-1]==Week)--depth;}
-    message=editOperation==Report?"Aangevraagd via thermostaat":editOperation==Restart?"Herstart aangevraagd":"Opgeslagen";
+    message=editOperation==Restart?"Herstart aangevraagd":"Opgeslagen";
   }else{message=result==Conflict?"Gewijzigd elders; open opnieuw":result==Invalid?"Ongeldige waarde of tijdvolgorde":result==Unsupported?"Niet beschikbaar": "Niet opgeslagen; open opnieuw";}
 }
-inline void item(Adafruit_GFX&lcd,const char*label,const char*image,int i,int total,uint8_t action,int arg=0,const char*value=nullptr){
-  bool grid=total==4;int x=grid?32+(i%2)*96:32,y=grid?100+(i/2)*88:98+i*62;
-  if(grid){icon(lcd,image,x+24,y+2);fit(lcd,label,x+40,y+43,82,Grey);if(value)small(lcd,value,x+40,y+63,82,Ink);}
+inline void item(Adafruit_GFX&lcd,const char*label,const char*image,int i,int total,uint8_t action,int arg=0,const char*value=nullptr,bool fullSizeLabels=false){
+  bool grid=total==4;int x=grid?32+(i%2)*96:32,y=grid?72+(i/2)*76:78+i*50;
+  if(grid){icon(lcd,image,x+24,y+2);
+    if(fullSizeLabels)text(lcd,font_Noway_Light18,label,x+40-width(font_Noway_Light18,label)/2,y+43,Grey);
+    else fit(lcd,label,x+40,y+43,82,Grey);
+    if(value)small(lcd,value,x+40,y+63,82,Ink);
+  }
   else{icon(lcd,image,x+8,y+9);fit(lcd,label,x+109,y+(value?4:17),124,Grey);if(value)small(lcd,value,x+109,y+29,124,Ink);}
-  add(x,y,grid?80:176,grid?80:54,action,arg);
+  add(x,y,grid?80:176,grid?76:48,action,arg);
 }
 inline void paintMenu(Adafruit_GFX&lcd){
-  const auto&s=state.snapshot.settings;char a[64],b[64];count=0;lcd.fillScreen(White);
+  const auto&s=state.snapshot.settings;char a[64],b[64];count=0;lcd.fillScreen(White);statusIcons(lcd);
   if(page==Home){
     if(state.snapshot.flags&ClockValid){time_t now=state.snapshot.epoch;tm d;localtime_r(&now,&d);snprintf(a,sizeof(a),"%s %02d-%02d   %02d:%02d",shortDays[d.tm_wday],d.tm_mday,d.tm_mon+1,d.tm_hour,d.tm_min);}else strcpy(a,"Even verbinden");
-    fit(lcd,a,120,16);
-    icon(lcd,state.link==1?"/iconWifiConnected.jpg":"/iconWifiLost.jpg",36,44,24);
-    bool known=state.link==1;icon(lcd,(state.snapshot.flags&BoilerOnline)?"/iconBoilerConn.jpg":"/iconBoilerLost.jpg",84,44,24,known?255:64);
-    waterIcon(lcd,132,44,24);
-    snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));icon(lcd,a,180,44,28,state.batteryValid?255:64);
+    fit(lcd,a,120,51);
+    bool known=state.link==1;
     crop(lcd,"/HomeScreen.jpg",64,80,32,60,31,94,26,49);
     if(state.snapshot.flags&RoomValid)snprintf(a,sizeof(a),"%.1f",state.snapshot.roomCenti/100.f);else strcpy(a,"--.-");
     text(lcd,font_Noway_Medium60,a,65,88,known?Ink:Grey);text(lcd,font_Noway_Medium24,"\xB0" "C",187,109);
@@ -145,44 +153,44 @@ inline void paintMenu(Adafruit_GFX&lcd){
     for(int i=0;i<7;++i){int x=26+i*27;small(lcd,(state.snapshot.flags&ClockValid)?shortDays[(date.tm_wday+i)%7]:"--",x+12,191,24);
       if(state.snapshot.flags&DaysValid){icon(lcd,typeIcon(state.snapshot.dayTypes[i]),x,204,24);if(state.snapshot.overrideMask&(1<<i))lcd.fillRect(x+2,229,20,2,0xC207);else if(!i)lcd.drawFastHLine(x+4,229,16,Amber);}
     }
-    control(lcd,"/remote-minus.png",36,232,40,-1);control(lcd,"/remote-menu.png",92,232,1,Main);control(lcd,"/remote-plus.png",148,232,40,1);
+    control(lcd,"/remote-minus.png",28,232,40,-1);control(lcd,"/remote-menu.png",97,232,1,Main);control(lcd,"/remote-plus.png",166,232,40,1);
   }else if(page==Main){title(lcd,"Menu");item(lcd,"Vandaag","/iconToday.jpg",0,4,1,DayToday);item(lcd,"Morgen","/iconTomorrow.jpg",1,4,1,DayTomorrow);item(lcd,"Meer dagen","/iconMultipleDays.jpg",2,4,1,Period);item(lcd,"Instellen","/iconSettings.jpg",3,4,1,SettingsPage);
-  }else if(page==Period){title(lcd,"Meer dagen");duration(a,sizeof(a),s.days,s.forever);small(lcd,a,153,62,104,Amber);
+  }else if(page==Period){title(lcd,"Meer dagen");
     item(lcd,"Dagtype",typeIcon(s.multiple),0,3,1,DayMultiple,types[min(int(s.multiple),4)]);
-    valueLabel(a,sizeof(a),s.days,SetDuration,s.forever);item(lcd,"Aantal dagen","/iconClock.jpg",1,3,2,SetDuration,a);
+    duration(a,sizeof(a),s.days,s.forever);item(lcd,"Aantal dagen","/iconClock.jpg",1,3,2,SetDuration,a);
     item(lcd,"Automatisch","/iconAutomatic.jpg",2,3,3,SetMultiple,s.multiple==Auto?"Geen afwijking":"Afwijking uitschakelen");
   }else if(page==SettingsPage){title(lcd,"Instellingen");item(lcd,"Weekschema","/iconWeekschedule.jpg",0,4,1,Week);item(lcd,"Tijden","/iconClock.jpg",1,4,1,Times);item(lcd,"Temperaturen","/iconSetpoint.jpg",2,4,1,Temperatures);item(lcd,"Meer","/iconSettings.jpg",3,4,1,More);
-  }else if(page==Week){title(lcd,"Weekschema");centered(lcd,font_Noway_Medium24,days[weekDay],101,Grey);icon(lcd,typeIcon(s.week[weekDay]),96,144,48);control(lcd,"/remote-previous.png",36,232,4,-1);control(lcd,"/remote-menu.png",92,232,1,DayWeek);control(lcd,"/remote-next.png",148,232,4,1);
+  }else if(page==Week){title(lcd,"Weekschema");centered(lcd,font_Noway_Medium24,days[weekDay],101,Grey);icon(lcd,typeIcon(s.week[weekDay]),96,144,48);control(lcd,"/remote-previous.png",28,232,4,-1);control(lcd,"/iconEdit.jpg",74,232,1,DayWeek);control(lcd,"/remote-next.png",166,232,4,1);
   }else if(page>=DayToday&&page<=DayWeek){
     title(lcd,page==DayToday?"Vandaag":page==DayTomorrow?"Morgen":page==DayMultiple?"Meer dagen":days[weekDay]);
     int selected=page==DayToday?s.today:page==DayTomorrow?s.tomorrow:page==DayMultiple?s.multiple:s.week[weekDay];
-    for(int i=0;i<5;++i){int x=36+(i%2)*96,y=100+(i/2)*64;bool disabled=page==DayWeek&&i==Auto;icon(lcd,typeIcon(i),x+16,y+8,40,disabled?48:255);if(selected==i)lcd.fillRect(x+18,y+53,36,2,Amber);if(!disabled)add(x,y,72,56,5,i);}
+    for(int i=0;i<5;++i){int x=36+(i%2)*96,y=78+(i/2)*50;bool disabled=page==DayWeek&&i==Auto;icon(lcd,typeIcon(i),x+18,y+6,36,disabled?48:255);if(selected==i)lcd.fillRect(x+18,y+47,36,2,Amber);if(!disabled)add(x,y,72,50,5,i);}
   }else if(page==Times){title(lcd,"Tijden");item(lcd,"Thuiswerken",typeIcon(0),0,3,1,HomeTimes);item(lcd,"Kantoor",typeIcon(1),1,3,1,OfficeTimes);item(lcd,"Weekend",typeIcon(2),2,3,1,WeekendTimes);
   }else if(page==HomeTimes||page==OfficeTimes||page==WeekendTimes){
     int start=page==HomeTimes?0:page==OfficeTimes?2:6,n=page==OfficeTimes?4:2;title(lcd,page==HomeTimes?types[0]:page==OfficeTimes?types[1]:types[2]);
     const char*labels[]={"Opstaan","Vertrekken","Thuiskomen","Slapen"};const char*icons[]={"/remote-wake.png","/remote-leave.png","/remote-arrive.png","/remote-sleep.png"};
-    for(int i=0;i<n;++i){int label=n==2?(i?3:0):i;valueLabel(a,sizeof(a),s.times[start+i],SetTime);item(lcd,labels[label],icons[label],i,n,6,start+i,a);}
+    for(int i=0;i<n;++i){int label=n==2?(i?3:0):i;valueLabel(a,sizeof(a),s.times[start+i],SetTime);item(lcd,labels[label],icons[label],i,n,6,start+i,a,page==OfficeTimes);}
   }else if(page==Temperatures){title(lcd,"Temperaturen");valueLabel(a,sizeof(a),s.comfort,SetComfort);item(lcd,"Comfort","/iconHighTemperature.jpg",0,2,2,SetComfort,a);valueLabel(a,sizeof(a),s.night,SetNight);item(lcd,"Nacht","/iconLowTemperature.jpg",1,2,2,SetNight,a);
-  }else if(page==More){title(lcd,"Meer instellingen");valueLabel(a,sizeof(a),s.offset,SetOffset);item(lcd,"Sensorcorrectie","/iconTemperature.jpg",0,4,2,SetOffset,a);item(lcd,"Automatisch","/iconAutomatic.jpg",1,4,3,Automatic);item(lcd,"Status","/iconWifiConnected.jpg",2,4,1,StatusPage);item(lcd,"Service","/iconSettings.jpg",3,4,1,Service);
+  }else if(page==More){title(lcd,"Meer instellingen");valueLabel(a,sizeof(a),s.offset,SetOffset);item(lcd,"Sensorcorrectie","/iconTemperature.jpg",0,3,2,SetOffset,a);item(lcd,"Status","/iconWifiConnected.jpg",1,3,1,StatusPage);item(lcd,"Service","/iconSettings.jpg",2,3,1,Service);
   }else if(page==StatusPage){title(lcd,"Verbindingsstatus");bool known=state.link==1,boiler=state.snapshot.flags&BoilerOnline;
     const char*names[]={"Thermostaat","Ketel","Warm water","Accu"};const char*icons[]={"/iconWifiConnected.jpg","/iconBoilerConn.jpg","/iconShowerOn.jpg","/battery-75.png"};
-    for(int i=0;i<4;++i){int y=100+i*40;if(i==3)snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));if(i==2)waterIcon(lcd,32,y,28);else icon(lcd,i==3?a:icons[i],32,y,28);small(lcd,names[i],138,y+2,142);
+    for(int i=0;i<4;++i){int y=86+i*34;if(i==3)snprintf(a,sizeof(a),"/battery-%u.png",unsigned(min(100,25*((state.battery+12)/25))));if(i==2)waterIcon(lcd,32,y,28);else icon(lcd,i==3?a:icons[i],32,y,28);small(lcd,names[i],138,y+2,142);
       const char*v=i==0?(known?"Verbonden":"Geen actuele verbinding"):i==1?(!known?"Onbekend":boiler?"Communicatie OK":"Geen ketelantwoord"):i==2?(!known||!boiler?"Onbekend":state.snapshot.flags&HotWaterActive?"In gebruik":"Niet in gebruik"):a;
       if(i==3){if(state.batteryValid)snprintf(a,sizeof(a),"~%u%%",state.battery);else strcpy(a,"Onbekend");}small(lcd,v,138,y+18,142,Ink);
     }footer(lcd,FIRMWARE_VERSION);
-  }else if(page==Service){title(lcd,"Service");item(lcd,"Rapporten","/iconBoilerConn.jpg",0,2,1,Reports);item(lcd,"Herstart","/iconExit.jpg",1,2,10,Restart);
-  }else if(page==Reports){title(lcd,"Rapporten");const char*labels[]={"Ketel","Log","Timing","Debug"};for(int i=0;i<4;++i)item(lcd,labels[i],i==0?"/iconBoilerConn.jpg":i==2?"/iconClock.jpg":"/iconSettings.jpg",i,4,11,i);
+  }else if(page==Service){title(lcd,"Service");item(lcd,"Herstart","/iconAutomatic.jpg",0,1,10,Restart);
   }else if(page==Edit){title(lcd,editTitle);valueLabel(a,sizeof(a),originalValue,editOperation,originalForever);snprintf(b,sizeof(b),"Huidig: %s",a);small(lcd,b,120,94);
     if(editOperation==SetDuration&&forever)infinity(lcd,88,116,64);else{
       const uint8_t*f=editOperation==SetTime?font_Noway_Medium32:font_Noway_Medium60;
       if(editOperation==SetTime)snprintf(a,sizeof(a),"%02d:%02d",editValue/60,editValue%60);else if(editOperation==SetDuration)snprintf(a,sizeof(a),"%d",editValue);else snprintf(a,sizeof(a),"%.1f",editValue/100.f);
       centered(lcd,f,a,120);
     }
-    if(editOperation==SetDuration){infinity(lcd,160,46);add(148,34,56,56,7);if(forever)lcd.drawFastHLine(160,82,32,Amber);fit(lcd,forever?"Onbeperkt":"dagen",120,184);if(!forever){duration(a,sizeof(a),editValue,false);small(lcd,a,120,211,176,Amber);}}
+    if(editOperation==SetDuration){icon(lcd,"/iconUnlimited.jpg",166,182);add(154,174,50,48,7);if(forever)lcd.drawFastHLine(166,216,32,Amber);fit(lcd,forever?"Onbeperkt":"dagen",120,184);if(!forever){duration(a,sizeof(a),editValue,false);small(lcd,a,120,211,176,Amber);}}
     else if(editOperation!=SetTime)centered(lcd,font_Noway_Medium24,"\xB0" "C",181,Grey);
-    control(lcd,"/remote-minus.png",36,232,8,-1);control(lcd,nullptr,92,232,9);control(lcd,"/remote-plus.png",148,232,8,1);
-  }else if(page==Confirm){title(lcd,editOperation==Report?"Rapport aanvragen?":editOperation==Restart?"Thermostaat herstarten?":"Instelling wijzigen?");if(editOperation==SetToday||editOperation==SetTomorrow||editOperation==SetMultiple||editOperation==SetWeek)icon(lcd,typeIcon(editValue),96,106,48);else icon(lcd,"/iconAutomatic.jpg",96,106,48);fit(lcd,editTitle,120,173);if(editOperation==Report)small(lcd,"Via thermostaat naar Telegram",120,204);if(editOperation==SetMultiple&&editValue!=Auto){duration(a,sizeof(a),s.days,s.forever);small(lcd,a,120,204,176,Amber);}control(lcd,nullptr,92,232,9);}
-  if(page!=Home)control(lcd,"/iconExit.jpg",36,34,0);
+    bool temperature=editOperation==SetComfort||editOperation==SetNight||editOperation==SetTarget;
+    control(lcd,temperature?"/remote-minus.png":"/remote-previous.png",28,232,8,-1);control(lcd,nullptr,74,232,9);control(lcd,temperature?"/remote-plus.png":"/remote-next.png",166,232,8,1);
+  }else if(page==Confirm){title(lcd,editOperation==Restart?"Thermostaat herstarten?":"Instelling wijzigen?");if(editOperation==SetToday||editOperation==SetTomorrow||editOperation==SetMultiple||editOperation==SetWeek)icon(lcd,typeIcon(editValue),96,106,48);else icon(lcd,"/iconAutomatic.jpg",96,106,48);fit(lcd,editTitle,120,173);if(editOperation==SetMultiple&&editValue!=Auto){duration(a,sizeof(a),s.days,s.forever);small(lcd,a,120,204,176,Amber);}control(lcd,nullptr,74,232,9);}
+  if(page!=Home)control(lcd,page==Edit||page==Confirm?"/iconCancel.jpg":"/iconBack.jpg",120,232,0);
   if(*message)small(lcd,message,120,293,212,Amber);
 }
 inline void touch(int x,int y){
@@ -205,7 +213,7 @@ inline void touch(int x,int y){
       case 8:forever=false;editValue=constrain(editValue+b.arg*step,minimum,maximum);break;
       case 9:submit();break;
       case 10:if(writable())ask(Restart,0,0,"Opnieuw opstarten",Service);break;
-      case 11:if(writable()&&(state.snapshot.capabilities&TelegramReports))ask(Report,b.arg,0,"Naar Telegram",Reports);else message="Telegram niet beschikbaar";break;
+      case 41:if(state.link==4&&restartLocal)restartLocal();break;
       case 40:if(writable()){
         returnAfter=Home;editOperation=SetTarget;editIndex=0;editValue=constrain(int(lroundf(state.snapshot.setpointCenti/50.f))*50+b.arg*50,400,3000);editRevision=state.snapshot.revision;editBoot=state.snapshot.boot;submit();
       }else message="Wacht op actuele verbinding";break;
@@ -215,14 +223,17 @@ inline void touch(int x,int y){
 inline void paint(Adafruit_ILI9341&lcd,const State&s,const char*version){
   // Welcome/discovery is not measurement data. Keep the wait screen until an
   // authenticated Status/Ack has populated the host boot ID in the snapshot.
-  if(!s.snapshot.boot){
-    count=0;bool repaint=dirty||state.link!=s.link;state=s;
+  if(!s.snapshot.boot||s.link==4){
+    bool repaint=dirty||state.link!=s.link||state.battery!=s.battery||state.batteryValid!=s.batteryValid;state=s;
     if(!repaint)return;
-    if(s.link<3)wake(lcd,version);
+    count=0;
+    if(s.link<3)wake(lcd,version,s.battery,s.batteryValid);
     else{
       lcd.fillScreen(White);
+      offlineStatusIcons(lcd,s.battery,s.batteryValid);
       centered(lcd,font_Noway_Medium24,s.link==4?"Radiofout":"Geen verbinding",124);
-      centered(lcd,font_Noway_Light18,s.link==4?"Start apparaat opnieuw":"Tik om opnieuw te zoeken",158,Grey);
+      centered(lcd,font_Noway_Light18,s.link==4?"Herstart de remote":"Tik om opnieuw te zoeken",158,Grey);
+      if(s.link==4){fit(lcd,"Remote herstarten",120,202);control(lcd,"/iconAutomatic.jpg",97,232,41);}
       footer(lcd,version);
     }
     dirty=false;return;

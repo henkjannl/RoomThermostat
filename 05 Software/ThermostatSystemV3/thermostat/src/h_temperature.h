@@ -3,6 +3,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <OpenTherm.h>
+#include "telemetry_buffer.h"
 
 #define RECONNECT_INTERVAL   5*60*1000
 #define TEMP_MEAS_INTERVAL     10*1000 
@@ -231,6 +232,7 @@ void BoilerCommunicate() {
       if (success) controllerData.hotWaterTemperatureAt = millis();
     }
     if (!success && required) {
+      if (boilerStep == BoilerStep::Status) telemetryObserveStatus(false, false);
       boilerCycleOK = false;
       controllerData.boilerResponse = status == OpenThermResponseStatus::TIMEOUT ? boilerTimeout : boilerInvalid;
       // Abort on failure instead of accumulating multiple response timeouts.
@@ -246,6 +248,7 @@ void BoilerCommunicate() {
       controllerData.centralHeatingActive = opentherm.isCentralHeatingActive(response);
       controllerData.hotWaterActive = opentherm.isHotWaterActive(response);
       controllerData.flameOn = opentherm.isFlameOn(response);
+      telemetryObserveStatus(true, controllerData.hotWaterActive);
     } else if (success && boilerStep == BoilerStep::ReadHeating) controllerData.actualBoilerTemperature = opentherm.getFloat(response);
     else if (success && boilerStep == BoilerStep::ReadHotWater) controllerData.actualDomesticHotWaterTemperature = opentherm.getFloat(response);
     if (boilerStep == BoilerStep::ReadHotWater) { finishBoilerCycle(); return; }

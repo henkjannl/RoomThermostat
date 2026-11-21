@@ -23,6 +23,7 @@ void networkWorker(void *) {
     if (xQueueReceive(networkSnapshots, &packet, 0) == pdPASS) applyNetworkPacket(packet);
     // Keep acknowledgement ordering; never answer using state older than its command.
     NetworkReply reply;
+    if(telegramStarted&&wifiConnected())serviceTelegramAccessReplies();
     if (telegramStarted && wifiConnected() && xQueuePeek(networkReplies, &reply, 0) == pdPASS) {
       if (xQueueReceive(networkSnapshots, &packet, 0) == pdPASS) applyNetworkPacket(packet);
       if (static_cast<int32_t>(networkAppliedRevision - reply.revision) >= 0) {
@@ -37,6 +38,8 @@ void networkWorker(void *) {
     serviceReceiverWifi();
     markNetworkPhase(NetworkPhase::Clock);
     syncTimeIfNeeded(networkData); // Also refresh local DST status while offline.
+    markNetworkPhase(NetworkPhase::Influx);
+    Telemetry::serviceWorker(wifiConnected());
     if (wifiConnected()) {
       markNetworkPhase(NetworkPhase::Timezone);
       requestTimeZoneIfNeeded(networkData);
@@ -61,6 +64,7 @@ void networkWorker(void *) {
 bool startNetworkWorker() {
   // Called before worker creation: this is the only transfer of owning String/container objects.
   networkData = controllerData;
+  if(!initializeTelegramAccess())Serial.println("Telegram ACL storage queues unavailable; owner-only mode");
   networkSnapshots = xQueueCreate(1, sizeof(NetworkPacket));
   networkReplies = xQueueCreate(20, sizeof(NetworkReply));
   networkStatusQueue = xQueueCreate(1, sizeof(NetworkStatus));

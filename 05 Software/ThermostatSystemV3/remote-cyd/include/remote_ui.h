@@ -74,8 +74,19 @@ inline void footer(Adafruit_GFX &lcd,const char *version) {
   lcd.setTextColor(Grey,White);
   lcd.setCursor((240-6*strlen(version))/2,303);lcd.print(version);
 }
-inline void wake(Adafruit_GFX &lcd,const char *version) {
+inline void batteryIcon(Adafruit_GFX &lcd,uint8_t battery,bool valid){
+  char name[32];snprintf(name,sizeof(name),"/battery-%u.png",unsigned(min(100,25*((battery+12)/25))));
+  icon(lcd,name,180,10,28,valid?255:64);
+}
+inline void offlineStatusIcons(Adafruit_GFX &lcd,uint8_t battery=0,bool batteryValid=false){
+  icon(lcd,"/iconWifiLost.jpg",36,12,24);
+  icon(lcd,"/iconBoilerLost.jpg",84,12,24);
+  icon(lcd,"/iconShowerOff.jpg",132,12,24);
+  batteryIcon(lcd,battery,batteryValid);
+}
+inline void wake(Adafruit_GFX &lcd,const char *version,uint8_t battery=0,bool batteryValid=false) {
   lcd.fillScreen(White);
+  offlineStatusIcons(lcd,battery,batteryValid);
   centered(lcd,font_Noway_Medium24,"Even verbinden",124);
   centered(lcd,font_Noway_Light18,"Temperaturen ophalen",158,Grey);
   footer(lcd,version);

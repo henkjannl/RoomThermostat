@@ -7,3 +7,5 @@ thermostat/data/config.jsn
 *.elf
 *.map
 artifacts/
+
+thermostat/include/influx_config.h

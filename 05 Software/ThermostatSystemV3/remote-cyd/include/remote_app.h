@@ -142,10 +142,12 @@ void setup() {
   Serial.begin(115200);
   setenv("TZ","CET-1CEST,M3.5.0,M10.5.0/3",1);tzset();
   RemoteUi::send=queueRemoteCommand;
+  RemoteUi::restartLocal=[](){ESP.restart();};
   initializeCYD(); // Shows wake screen before touch reset, battery reads or radio.
   batteryMillivolts=measureBatteryMillivolts();
   batteryValid=batteryMillivolts>=2800 && batteryMillivolts<=4350;
   batteryPercent=uint8_t(percentFromVoltage(batteryMillivolts/1000.0f)+0.5f);
+  RemoteUi::wake(screen,FIRMWARE_VERSION,batteryPercent,batteryValid);
   beginBatteryLog();
   beginRemoteRadio();
   lastActivity=millis();paintStatus();

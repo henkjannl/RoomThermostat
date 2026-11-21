@@ -23,6 +23,6 @@ for name, width, height, index in entries:
 print(f'{len(files)} assets verified: PNG precedence, white alpha composition, dimensions, pixels, RGB565 and buffers')
 menu=(root/'remote-cyd/include/remote_menu.h').read_text()
 names=set(re.findall(r'"(/[^"\n]+\.(?:jpg|png))"',menu))
-missing=[name for name in names if '%' not in name and not (root/'shared/assets/icons'/name[1:]).is_file()]
+missing=[name for name in names if '%' not in name and name[1:] not in files]
 assert not missing,missing
 print(f'{len(names)} named firmware UI assets exist')
